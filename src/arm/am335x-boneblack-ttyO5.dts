@@ -41,7 +41,7 @@
 #include "am335x-boneblack-emmc.dtsi"
 
 /* Display */
-/* #include "am335x-boneblack-nxp-hdmi.dtsi" */
+/* #include "am335x-boneblack-nxp-hdmi-no-audio.dtsi" */
 
 /* Capes */
 /* http://elinux.org/CircuitCo:Audio_Cape_RevB */
@@ -58,6 +58,5 @@
 /* am335x-boneblack: emmc has to be disabled for lcd7-01-00a2 */
 /* #include "am335x-bone-lcd7-01-00a2.dtsi" */
 /* #include "am335x-bone-lcd7-01-00a3.dtsi" */
-/* #include "am335x-bone-lcd7-01-00a4.dtsi" */
 
 #include "am335x-bone-ttyO5.dtsi"
