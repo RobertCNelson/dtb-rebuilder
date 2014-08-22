@@ -6,6 +6,18 @@
  * published by the Free Software Foundation.
  */
 
-#include "am335x-bone-lcd-gpio-backlight-gpio1-18.dtsi"
-#include "am335x-bone-ti-tscadc-4-wire.dtsi"
-#include "am335x-bone-lcd3.dtsi"
+/ {
+	gpio-leds-cape-lcd {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+
+		pinctrl-0 = <&lcd_gpio1_28_led_pins>;
+
+		lcd-led0 {
+			label = "lcd:green:usr0";
+			gpios = <&gpio1 28 0>;
+			linux,default-trigger = "heartbeat";
+			default-state = "off";
+		};
+	};
+};

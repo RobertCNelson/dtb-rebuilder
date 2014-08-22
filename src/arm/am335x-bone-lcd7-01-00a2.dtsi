@@ -6,16 +6,6 @@
  * published by the Free Software Foundation.
  */
 
-/ {
-	backlight {
-		status = "okay";
-		compatible = "gpio-backlight";
-		pinctrl-names = "default";
-		pinctrl-0 = <&bbcape_backlight_pins>;
-		gpios = <&gpio1 18 GPIO_ACTIVE_HIGH>;
-		default-on;
-	};
-};
-
+#include "am335x-bone-lcd-gpio-backlight-gpio1-18.dtsi"
 #include "am335x-bone-ti-tscadc-4-wire.dtsi"
 #include "am335x-bone-lcd7.dtsi"
