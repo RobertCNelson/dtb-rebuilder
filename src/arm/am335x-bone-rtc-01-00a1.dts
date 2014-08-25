@@ -72,5 +72,4 @@
 /* gpio: gpio1 13 gpio1 17 (gpio NOT IMPLEMENTED YET) */
 /* #include "am335x-bone-crypto-00a0.dtsi" */
 
-/* http://elinux.org/CircuitCo:Basic_Proto_Cape */
-#include "am335x-bone-basic-proto-cape.dtsi"
+#include "am335x-bone-rtc-01-00a1.dtsi"

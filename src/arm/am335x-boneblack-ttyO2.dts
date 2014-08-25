@@ -44,6 +44,12 @@
 #include "am335x-boneblack-nxp-hdmi-no-audio.dtsi"
 
 /* Capes */
+/* http://elinux.org/4D_4.3_LCD_CAPE */
+/* 4DCAPE-43 (Non Touch version): */
+/* #include "am335x-bone-lcd-4dcape-43.dtsi" */
+/* 4DCAPE-43T (Resistive Touch version): */
+/* #include "am335x-bone-lcd-4dcape-43t.dtsi" */
+
 /* http://elinux.org/CircuitCo:Audio_Cape_RevB */
 /* Pins: P9.24, P9.28, P9.29, P9.31, P9.30 */
 /* #include "am335x-bone-audio.dtsi" */
@@ -58,5 +64,15 @@
 /* am335x-boneblack: emmc has to be disabled for lcd7-01-00a2 */
 /* #include "am335x-bone-lcd7-01-00a2.dtsi" */
 /* #include "am335x-bone-lcd7-01-00a3.dtsi" */
+
+/* http://elinux.org/CircuitCo:RTC_Cape */
+/* i2c1: P9.17, P9.18 */
+/* gpio: P8.26 (mfp: wakeup) */
+/* #include "am335x-bone-rtc-01-00a1.dtsi" */
+
+/* http://elinux.org/Cryptotronix:CryptoCape */
+/* uart4: P9.11, P9.13 */
+/* gpio: gpio1 13 gpio1 17 (gpio NOT IMPLEMENTED YET) */
+/* #include "am335x-bone-crypto-00a0.dtsi" */
 
 #include "am335x-bone-ttyO2.dtsi"
