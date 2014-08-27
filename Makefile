@@ -12,6 +12,9 @@ all: $(foreach i,$(ALL_ARCHES),all_$(i))
 PHONY += clean
 clean: $(foreach i,$(ALL_ARCHES),clean_$(i))
 
+PHONY += install
+install: $(foreach i,$(ALL_ARCHES),install_$(i))
+
 # Do not:
 # o  use make's built-in rules and variables
 #    (this increases performance and avoids hard-to-debug behaviour);
@@ -74,6 +77,9 @@ all_%:
 clean_%:
 	$(Q)$(MAKE) ARCH=$* clean_arch
 
+install_%:
+	$(Q)$(MAKE) ARCH=$* install_arch
+
 ifeq ($(ARCH),)
 
 ALL_DTS		:= $(wildcard src/*/*.dts)
@@ -124,6 +130,11 @@ PHONY += all_arch
 all_arch: $(ARCH_DTB)
 	@:
 
+PHONY += install_arch
+install_arch: $(ARCH_DTB)
+	mkdir -p /boot/dtbs/`uname -r`/
+	cp -v $(obj)/*.dtb /boot/dtbs/`uname -r`/
+
 RCS_FIND_IGNORE := \( -name SCCS -o -name BitKeeper -o -name .svn -o -name CVS \
                    -o -name .pc -o -name .hg -o -name .git \) -prune -o
 
@@ -143,9 +154,11 @@ help:
 	@echo "Targets:"
 	@echo "  all:                   Build all device tree binaries for all architectures"
 	@echo "  clean:                 Clean all generated files"
+	@echo "  install:               Install all generated files (sudo)"
 	@echo ""
 	@echo "  all_<ARCH>:            Build all device tree binaries for <ARCH>"
 	@echo "  clean_<ARCH>:          Clean all generated files for <ARCH>"
+	@echo "  install_<ARCH>:        Install all generated files for <ARCH> (sudo)"
 	@echo ""
 	@echo "  src/<ARCH>/<DTS>.dtb   Build a single device tree binary"
 	@echo ""
