@@ -6,16 +6,18 @@
  * published by the Free Software Foundation.
  */
 
-/*/ { */
-/* Untested */
-/*	backlight { */
-/*		compatible = "not-tps65217-backlight"; */
-/*		isel = <1>; */
-/*		fdim = <200>; */
-/*		brightness = <100>; */
-/*		tps = <&tps>; */
-/*	}; */
-/*} */
+/ {
+	gpio-leds-cape-lcd {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
 
-#include "am335x-bone-ti-tscadc-4-wire.dtsi"
-#include "am335x-bone-lcd4.dtsi"
+		pinctrl-0 = <&gpio1_28_led_pins>;
+
+		lcd-led0 {
+			label = "lcd:green:usr0";
+			gpios = <&gpio1 28 0>;
+			linux,default-trigger = "heartbeat";
+			default-state = "off";
+		};
+	};
+};

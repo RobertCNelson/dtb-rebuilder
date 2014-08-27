@@ -55,7 +55,6 @@
 /* #include "am335x-bone-lcd3-01-00a2.dtsi" */
 
 /* http://elinux.org/CircuitCo:BeagleBone_LCD4 */
-/* #include "am335x-bone-lcd4-01-00a0.dtsi" */
 /* #include "am335x-bone-lcd4-01-00a1.dtsi" */
 
 /* http://elinux.org/CircuitCo:BeagleBone_LCD7 */

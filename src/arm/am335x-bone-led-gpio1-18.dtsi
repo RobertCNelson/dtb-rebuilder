@@ -11,11 +11,11 @@
 		compatible = "gpio-leds";
 		pinctrl-names = "default";
 
-		pinctrl-0 = <&lcd_gpio3_19_led_pins>;
+		pinctrl-0 = <&gpio1_18_led_pins>;
 
 		lcd-led0 {
 			label = "lcd:green:usr0";
-			gpios = <&gpio3 19 0>;
+			gpios = <&gpio1 18 0>;
 			linux,default-trigger = "heartbeat";
 			default-state = "off";
 		};

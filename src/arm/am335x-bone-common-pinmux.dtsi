@@ -31,6 +31,13 @@
 		>;
 	};
 
+	bbcape_crypto_pins: pinmux_bbcape_crypto_pins {
+		pinctrl-single,pins = <
+			0x044 0x17	/* gpio1_17 FAST | OUTPUT | PULLUP | MODE7 */
+			0x034 0x2F	/* gpio1_13 FAST | INPUT | PULLDOWN | MODE7 */
+		>;
+	};
+
 	bbcape_lcd_pins: bbcape_lcd_pins {
 		pinctrl-single,pins = <
 			0xa0 (PIN_OUTPUT | MUX_MODE0)	/* lcd_data0.lcd_data0 */
@@ -59,13 +66,6 @@
 	bbcape_lcd4_disen_pins: bbcape_lcd4_disen_pins {
 		pinctrl-single,pins = <
 			0x1a4 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* mcasp0_fsr.gpio3[19] (lcd_disen) */
-		>;
-	};
-
-	cape_crypto_pins: pinmux_cape_crypto_pins {
-		pinctrl-single,pins = <
-			0x044 0x17	/* gpio1_17 FAST | OUTPUT | PULLUP | MODE7 */
-			0x034 0x2F	/* gpio1_13 FAST | INPUT | PULLDOWN | MODE7 */
 		>;
 	};
 
@@ -144,6 +144,34 @@
 		>;
 	};
 
+	/* lcd4-01-00a0 */
+	gpio1_18_led_pins: pinmux_gpio1_18_led_pins {
+		pinctrl-single,pins = <
+			0x48 0x07	/* gpmc_a2.gpio1_18, OUTPUT | MODE7 */
+		>;
+	};
+
+	/* lcd4-01-00a1/lcd7-01-00a2/lcd7-01-00a3 */
+	gpio1_28_led_pins: pinmux_gpio1_28_led_pins {
+		pinctrl-single,pins = <
+			0x078 0x2f	/* gpmc_ben1.gpio1_28, INPUT | PULLDIS | MODE7 */
+		>;
+	};
+
+	/* rtc-01-00a1 */
+	gpio1_29_pins: pinmux_gpio1_29_pins {
+		pinctrl-single,pins = <
+			0x07c 0x3f	/* gpmc_csn0.gpio1_29, INPUT | PULLDIS | MODE 7 */
+		>;
+	};
+
+	/* lcd3-01-00a2 */
+	gpio3_19_led_pins: pinmux_gpio3_19_led_pins {
+		pinctrl-single,pins = <
+			0x1a4 0x07	/* mcasp0_fsr.gpio3_19, OUTPUT | MODE7 */
+		>;
+	};
+
 	i2c0_pins: pinmux_i2c0_pins {
 		pinctrl-single,pins = <
 			0x188 (PIN_INPUT_PULLUP | MUX_MODE0)	/* i2c0_sda.i2c0_sda */
@@ -165,19 +193,19 @@
 		>;
 	};
 
-	lcd_gpio1_28_led_pins: pinmux_lcd_gpio1_28_led_pins {
+	/* lcd3-01-00a2/lcd7-01-00a3/4dcape-70(t) */
+	keymap0_pins: pinmux_keymap0_pins {
 		pinctrl-single,pins = <
-			0x078 0x2f	/* gpmc_ben1.gpio1_28, INPUT | PULLDIS | MODE7 */
+			0x040 0x2f	/* KEY_LEFT gpmc_a0.gpio1_16, INPUT | PULLDIS | MODE7 */
+			0x044 0x2f	/* KEY_RIGHT gpmc_a1.gpio1_17, INPUT | PULLDIS | MODE7 */
+			0x04c 0x2f 	/* KEY_UP gpmc_a3.gpio1_19, INPUT | PULLDIS | MODE7 */
+			0x198 0x2f	/* KEY_DOWN mcasp0_axr0.gpio3_16, INPUT | PULLDIS | MODE7 */
+			0x154 0x2f	/* KEY_ENTER spi0_d0.gpio0_3, INPUT | PULLDIS | MODE7 */
 		>;
 	};
 
-	lcd_gpio3_19_led_pins: pinmux_lcd_gpio3_19_led_pins {
-		pinctrl-single,pins = <
-			0x1a4 0x07	/* mcasp0_fsr.gpio3_19, OUTPUT | MODE7 */
-		>;
-	};
-
-	lcd4_01_00a2_keymap_pins: pinmux_lcd4_01_00a2_keymap_pins {
+	/* lcd4-01-00a1/4dcape-43(t) */
+	keymap1_pins: pinmux_keymap1_pins {
 		pinctrl-single,pins = <
 			0x040 0x2f	/* KEY_LEFT gpmc_a0.gpio1_16, INPUT | PULLDIS | MODE7 */
 			0x044 0x2f	/* KEY_RIGHT gpmc_a1.gpio1_17, INPUT | PULLDIS | MODE7 */
@@ -187,23 +215,14 @@
 		>;
 	};
 
-	lcd7_01_00a2_keymap_pins: pinmux_lcd7_01_00a2_keymap_pins {
+	/* lcd7-01-00a2 */
+	keymap2_pins: pinmux_keymap2_pins {
 		pinctrl-single,pins = <
 			0x040 0x2f	/* KEY_LEFT gpmc_a0.gpio1_16, INPUT | PULLDIS | MODE7 */
 			0x044 0x2f	/* KEY_RIGHT gpmc_a1.gpio1_17, INPUT | PULLDIS | MODE7 */
 			0x04c 0x2f 	/* KEY_UP gpmc_a3.gpio1_19, INPUT | PULLDIS | MODE7 */
 			0x198 0x2f	/* KEY_DOWN mcasp0_axr0.gpio3_16, INPUT | PULLDIS | MODE7 */
 			0x1a4 0x2f	/* KEY_ENTER mcasp0_fsr.gpio3_19, INPUT | PULLDIS | MODE7 */
-		>;
-	};
-
-	lcd7_01_00a3_keymap_pins: pinmux_lcd7_01_00a3_keymap_pins {
-		pinctrl-single,pins = <
-			0x040 0x2f	/* KEY_LEFT gpmc_a0.gpio1_16, INPUT | PULLDIS | MODE7 */
-			0x044 0x2f	/* KEY_RIGHT gpmc_a1.gpio1_17, INPUT | PULLDIS | MODE7 */
-			0x04c 0x2f 	/* KEY_UP gpmc_a3.gpio1_19, INPUT | PULLDIS | MODE7 */
-			0x198 0x2f	/* KEY_DOWN mcasp0_axr0.gpio3_16, INPUT | PULLDIS | MODE7 */
-			0x154 0x2f	/* KEY_ENTER spi0_d0.gpio0_3, INPUT | PULLDIS | MODE7 */
 		>;
 	};
 
@@ -272,12 +291,6 @@
 	nxp_hdmi_bonelt_off_pins: nxp_hdmi_bonelt_off_pins {
 		pinctrl-single,pins = <
 			0x1b0 0x03      /* xdma_event_intr0, OMAP_MUX_MODE3 | AM33XX_PIN_OUTPUT */
-		>;
-	};
-
-	rtc_gpio1_29_pins: pinmux_rtc_gpio1_29_pins {
-		pinctrl-single,pins = <
-			0x07c 0x3f	/* gpmc_csn0.gpio1_29, INPUT | PULLDIS | MODE 7 */
 		>;
 	};
 

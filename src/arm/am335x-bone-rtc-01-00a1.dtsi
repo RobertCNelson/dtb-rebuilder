@@ -10,7 +10,7 @@
 	gpio_keys {
 		compatible = "gpio-keys";
 		pinctrl-names = "default";
-		pinctrl-0 = <&rtc_gpio1_29_pins>;
+		pinctrl-0 = <&gpio1_29_pins>;
 
 		#address-cells = <1>;
 		#size-cells = <0>;

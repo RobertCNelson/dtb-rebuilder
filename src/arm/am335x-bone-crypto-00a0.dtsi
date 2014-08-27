@@ -8,7 +8,7 @@
 
 /*
  * FIXME: gpio
- * (cape_crypto_pins)
+ * (bbcape_crypto_pins)
  * atmega_rst@1 {
  * 	label = "atmega_rst";
  * 	gpio = <&gpio1 17 0x00>;
