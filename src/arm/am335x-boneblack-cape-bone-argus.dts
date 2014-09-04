@@ -59,7 +59,8 @@
 /* #include "am335x-bone-ttyO5.dtsi" */
 
 /* Display */
-#include "am335x-boneblack-nxp-hdmi-no-audio.dtsi"
+#include "am335x-boneblack-nxp-hdmi-audio.dtsi"
+/* #include "am335x-boneblack-nxp-hdmi-no-audio.dtsi" */
 
 /* Capes */
 /* http://elinux.org/4D_4.3_LCD_CAPE */
@@ -98,4 +99,5 @@
 /* uart4: P9.11, P9.13 */
 /* gpio: gpio1 13 gpio1 17 (gpio NOT IMPLEMENTED YET) */
 /* #include "am335x-bone-crypto-00a0.dtsi" */
+
 #include "am335x-bone-argus.dtsi"
