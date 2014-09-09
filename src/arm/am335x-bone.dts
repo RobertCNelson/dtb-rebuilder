@@ -90,4 +90,4 @@
 /* #include "am335x-bone-crypto-00a0.dtsi" */
 
 /* http://elinux.org/CircuitCo:Basic_Proto_Cape */
-#include "am335x-bone-basic-proto-cape.dtsi"
+/* #include "am335x-bone-basic-proto-cape.dtsi" */
