@@ -7,7 +7,10 @@
  */
 
 &ocp {
-	P9_12_pinmux {
+	P8_09_pinmux {
+		status = "disabled";
+	};
+	P8_10_pinmux {
 		status = "disabled";
 	};
 };
@@ -17,12 +20,19 @@
 		compatible = "gpio-leds";
 		pinctrl-names = "default";
 
-		pinctrl-0 = <&gpio1_28_led_pins>;
+		pinctrl-0 = <&user_leds_s1>;
 
 		lcd-led0 {
 			label = "lcd:green:usr0";
-			gpios = <&gpio1 28 0>;
+			gpios = <&gpio2 4 0>;
 			linux,default-trigger = "heartbeat";
+			default-state = "off";
+		};
+
+		lcd-led1 {
+			label = "lcd:green:usr1";
+			gpios = <&gpio2 5 0>;
+			linux,default-trigger = "mmc0";
 			default-state = "off";
 		};
 	};

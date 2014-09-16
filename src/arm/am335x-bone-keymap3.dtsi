@@ -6,20 +6,21 @@
  * published by the Free Software Foundation.
  */
 
+
 &ocp {
+	P9_12_pinmux {
+		status = "disabled";
+	};
 	P9_15_pinmux {
 		status = "disabled";
 	};
 	P9_16_pinmux {
 		status = "disabled";
 	};
-	P9_21_pinmux {
+	P9_27_pinmux {
 		status = "disabled";
 	};
-	P9_23_pinmux {
-		status = "disabled";
-	};
-	P9_30_pinmux {
+	P9_42_pinmux {
 		status = "disabled";
 	};
 };
@@ -28,7 +29,7 @@
 	gpio_keys {
 		compatible = "gpio-keys";
 		pinctrl-names = "default";
-		pinctrl-0 = <&keymap0_pins>;
+		pinctrl-0 = <&keymap3_pins>;
 
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -37,7 +38,7 @@
 			debounce_interval = <50>;
 			linux,code = <105>;
 			label = "left";
-			gpios = <&gpio1 16 0x1>;
+			gpios = <&gpio0 7 0x1>;
 			gpio-key,wakeup;
 			autorepeat;
 		};
@@ -45,7 +46,7 @@
 			debounce_interval = <50>;
 			linux,code = <106>;
 			label = "right";
-			gpios = <&gpio1 17 0x1>;
+			gpios = <&gpio1 28 0x1>;
 			gpio-key,wakeup;
 			autorepeat;
 		};
@@ -53,7 +54,7 @@
 			debounce_interval = <50>;
 			linux,code = <103>;
 			label = "up";
-			gpios = <&gpio1 19 0x1>;
+			gpios = <&gpio1 16 0x1>;
 			gpio-key,wakeup;
 			autorepeat;
 		};
@@ -61,7 +62,7 @@
 			debounce_interval = <50>;
 			linux,code = <108>;
 			label = "down";
-			gpios = <&gpio3 16 0x1>;
+			gpios = <&gpio1 19 0x1>;
 			gpio-key,wakeup;
 			autorepeat;
 		};
@@ -69,7 +70,7 @@
 			debounce_interval = <50>;
 			linux,code = <28>;
 			label = "enter";
-			gpios = <&gpio0 3 0x1>;
+			gpios = <&gpio3 19 0x1>;
 			gpio-key,wakeup;
 		};
 	};

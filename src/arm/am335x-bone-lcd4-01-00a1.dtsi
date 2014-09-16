@@ -10,11 +10,13 @@
 /* #include "am335x-bone-led-gpio1-18.dtsi" */
 #include "am335x-bone-led-gpio1-28.dtsi"
 /* #include "am335x-bone-led-gpio3-19.dtsi" */
+/* #include "am335x-bone-led-gpio2-4-gpio2-5.dtsi" */
 
 /* Keypad */
 /* #include "am335x-bone-keymap0.dtsi" */
 #include "am335x-bone-keymap1.dtsi"
 /* #include "am335x-bone-keymap2.dtsi" */
+/* #include "am335x-bone-keymap3.dtsi" */
 
 /* Backlight */
 #include "am335x-bone-bl-gpio1-18.dtsi"
@@ -26,3 +28,4 @@
 /* #include "am335x-bone-panel-320x240.dtsi" */
 #include "am335x-bone-panel-480x272.dtsi"
 /* #include "am335x-bone-panel-800x480.dtsi" */
+/* #include "am335x-bone-panel-1240x600-24bit.dtsi" */

@@ -11,6 +11,20 @@
 #include "am335x-bone-common.dtsi"
 #include "am335x-bone-common-pinmux.dtsi"
 
+/ {
+	model = "TI AM335x BeagleBone Black";
+	compatible = "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
+};
+
+&dcdc1_reg {
+	/* VDD_DDR3 voltage 1.35V */
+	regulator-name = "vdd_ddr3";
+	regulator-min-microvolt = <1350000>;
+	regulator-max-microvolt = <1350000>;
+	regulator-boot-on;
+	regulator-always-on;
+};
+
 &ldo3_reg {
 	regulator-min-microvolt = <1800000>;
 	regulator-max-microvolt = <1800000>;
@@ -27,6 +41,10 @@
 };
 
 #include "am335x-boneblack-emmc.dtsi"
+/* HDMI: with audio */
+/* #include "am335x-boneblack-nxp-hdmi-audio.dtsi" */
+/* HDMI: without audio */
+/* #include "am335x-boneblack-nxp-hdmi-no-audio.dtsi" */
 
 /* spi0: */
 /* P9.17 spi0_cs0 */
@@ -55,12 +73,8 @@
 /* #include "am335x-bone-ttyO2.dtsi" */
 /* uart4: P9.11, P9.13 */
 /* #include "am335x-bone-ttyO4.dtsi" */
-/* uart5: P8.37, P8.38 am335x-boneblack: hdmi has to be disabled for ttyO5 */
+/* uart5: P8.37, P8.38 boneblack: hdmi has to be disabled for ttyO5 */
 /* #include "am335x-bone-ttyO5.dtsi" */
-
-/* Display */
-/* #include "am335x-boneblack-nxp-hdmi-audio.dtsi" */
-/* #include "am335x-boneblack-nxp-hdmi-no-audio.dtsi" */
 
 /* Capes */
 /* http://elinux.org/4D_4.3_LCD_CAPE */
@@ -89,6 +103,9 @@
 /* am335x-boneblack: emmc has to be disabled for lcd7-01-00a2 */
 /* #include "am335x-bone-lcd7-01-00a2.dtsi" */
 /* #include "am335x-bone-lcd7-01-00a3.dtsi" */
+
+/* http://www.chipsee.com/product/evm/beagle/beaglebone-black-expansion-capacitive.html */
+/* #include "am335x-bone-bbb-exp-c.dtsi" */
 
 /* http://elinux.org/CircuitCo:RTC_Cape */
 /* i2c1: P9.17, P9.18 */
