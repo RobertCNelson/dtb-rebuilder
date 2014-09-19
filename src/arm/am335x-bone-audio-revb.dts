@@ -50,4 +50,4 @@
 	status = "okay";
 };
 
-#include "am335x-bone-audio.dtsi"
+#include "am335x-bone-audio-revb.dtsi"

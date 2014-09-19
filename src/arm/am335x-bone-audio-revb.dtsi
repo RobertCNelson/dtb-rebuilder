@@ -6,6 +6,29 @@
  * published by the Free Software Foundation.
  */
 
+&ocp {
+	P9_25_pinmux {
+		/* mcasp0_ahclkx, OUTPUT | MODE0, Codec MCLK */
+		status = "disabled";
+	};
+	P9_28_pinmux {
+		/* mcasp0_axr2, INPUT | MODE2, Codec DIN */
+		status = "disabled";
+	};
+	P9_29_pinmux {
+		/* mcasp0_fsx, INPUT | MODE0, Codec WCLK */
+		status = "disabled";
+	};
+	P9_30_pinmux {
+		/* mcasp0_axr0, INPUT | MODE0, Codec DOUT */
+		status = "disabled";
+	};
+	P9_31_pinmux {
+		/* mcasp0_aclkx, INPUT | MODE0, Codec BCLK */
+		status = "disabled";
+	};
+};
+
 &i2c2 {
 	tlv320aic3x: tlv320aic3x@18 {
 		compatible = "ti,tlv320aic3x";
@@ -23,7 +46,7 @@
 
 &mcasp0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&mcasp0_pins_audio>;
+	pinctrl-0 = <&mcasp0_pins_audio_revb>;
 	status = "okay";
 	op-mode = <0>;          /* MCASP_IIS_MODE */
 	tdm-slots = <2>;

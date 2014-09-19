@@ -8,18 +8,23 @@
 
 &ocp {
 	P9_15_pinmux {
+		/* gpio1[16] */
 		status = "disabled";
 	};
 	P9_16_pinmux {
+		/* gpio1[19] */
 		status = "disabled";
 	};
 	P9_21_pinmux {
+		/* gpio0[3] */
 		status = "disabled";
 	};
 	P9_23_pinmux {
+		/* gpio1[17] */
 		status = "disabled";
 	};
 	P9_30_pinmux {
+		/* gpio3[16] */
 		status = "disabled";
 	};
 };

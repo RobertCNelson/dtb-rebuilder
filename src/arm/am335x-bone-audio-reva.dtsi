@@ -59,7 +59,7 @@
 
 &mcasp0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&mcasp0_pins_audio3>;
+	pinctrl-0 = <&mcasp0_pins_audio_reva>;
 	status = "okay";
 	op-mode = <0>;          /* MCASP_IIS_MODE */
 	tdm-slots = <2>;

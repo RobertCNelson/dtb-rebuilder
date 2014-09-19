@@ -6,6 +6,21 @@
  * published by the Free Software Foundation.
  */
 
+&ocp {
+	P9_17_pinmux {
+		status = "disabled";
+	};
+	P9_18_pinmux {
+		status = "disabled";
+	};
+	P9_21_pinmux {
+		status = "disabled";
+	};
+	P9_22_pinmux {
+		status = "disabled";
+	};
+};
+
 &spi0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&spi0_pins>;

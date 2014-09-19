@@ -6,18 +6,20 @@
  * published by the Free Software Foundation.
  */
 
-
 &ocp {
 	P9_12_pinmux {
 		status = "disabled";
 	};
 	P9_15_pinmux {
+		/* gpio1[16] */
 		status = "disabled";
 	};
 	P9_16_pinmux {
+		/* gpio1[19] */
 		status = "disabled";
 	};
 	P9_27_pinmux {
+		/* gpio3[19] */
 		status = "disabled";
 	};
 	P9_42_pinmux {

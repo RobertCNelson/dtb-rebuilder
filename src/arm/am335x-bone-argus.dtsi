@@ -6,6 +6,45 @@
  * published by the Free Software Foundation.
  */
 
+&ocp {
+	P8_7_pinmux {
+		/* gpio2[2] */
+		status = "disabled";
+	};
+	P8_8_pinmux {
+		/* gpio2[3] */
+		status = "disabled";
+	};
+	P8_9_pinmux {
+		/* gpio2[5] */
+		status = "disabled";
+	};
+	P8_10_pinmux {
+		/* gpio2[4] */
+		status = "disabled";
+	};
+	P9_11_pinmux {
+		/* gpio0[30] */
+		status = "disabled";
+	};
+	P9_17_pinmux {
+		/* gpio0[5] */
+		status = "disabled";
+	};
+	P9_18_pinmux {
+		/* gpio0[4] */
+		status = "disabled";
+	};
+	P9_41_pinmux {
+		/* gpio0[20] */
+		status = "disabled";
+	};
+	P9_42_pinmux {
+		/* gpio0[7] */
+		status = "disabled";
+	};
+};
+
 / {
 	argus-ups {
 		compatible = "argus-ups";

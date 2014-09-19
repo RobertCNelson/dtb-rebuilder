@@ -6,6 +6,13 @@
  * published by the Free Software Foundation.
  */
 
+&ocp {
+	P8_26_pinmux {
+		/* gpio1[29] */
+		status = "disabled";
+	};
+};
+
 / {
 	gpio_keys {
 		compatible = "gpio-keys";

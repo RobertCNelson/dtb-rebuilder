@@ -6,6 +6,13 @@
  * published by the Free Software Foundation.
  */
 
+&ocp {
+	P9_14_pinmux {
+		/* gpio1[18] */
+		status = "disabled";
+	};
+};
+
 / {
 	gpio-leds-cape-lcd {
 		compatible = "gpio-leds";
