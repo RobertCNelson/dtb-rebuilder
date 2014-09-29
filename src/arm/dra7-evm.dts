@@ -117,8 +117,7 @@
 	};
 
 	aliases {
-		display0 = &tlc59108;
-		display1 = &hdmi0;
+		display0 = &hdmi0;
 	};
 
 	hdmi0: connector@1 {
@@ -592,22 +591,9 @@
 		gpio-controller;
 		#gpio-cells = <2>;
 		interrupt-parent = <&gpio6>;
-		interrupts = <14 IRQ_TYPE_EDGE_FALLING>;
+		interrupts = <11 IRQ_TYPE_EDGE_FALLING>;
 		interrupt-controller;
 		#interrupt-cells = <2>;
-	};
-
-	/* TLC chip for LCD panel power and backlight */
-	tlc59108: tlc59108@40 {
-		compatible = "ti,tlc59108-tfcs9700";
-		reg = <0x40>;
-		enable-gpios = <&pcf_lcd 13 GPIO_ACTIVE_LOW>; /* P15, CON_LCD_PWR_DN */
-
-		port {
-			tlc_in: endpoint {
-				remote-endpoint = <&dpi_out>;
-			};
-		};
 	};
 
 	mxt244: touchscreen@4a {
@@ -825,23 +811,23 @@
 		};
 		partition@5 {
 			label = "QSPI.u-boot-spl-os";
-			reg = <0x00140000 0x00010000>;
+			reg = <0x00140000 0x00080000>;
 		};
 		partition@6 {
 			label = "QSPI.u-boot-env";
-			reg = <0x00150000 0x00010000>;
+			reg = <0x001c0000 0x00010000>;
 		};
 		partition@7 {
 			label = "QSPI.u-boot-env.backup1";
-			reg = <0x00160000 0x0010000>;
+			reg = <0x001d0000 0x0010000>;
 		};
 		partition@8 {
 			label = "QSPI.kernel";
-			reg = <0x00170000 0x0800000>;
+			reg = <0x001e0000 0x0800000>;
 		};
 		partition@9 {
 			label = "QSPI.file-system";
-			reg = <0x00970000 0x01690000>;
+			reg = <0x009e0000 0x01690000>;
 		};
 	};
 };
@@ -983,24 +969,8 @@
 
 &dss {
 	status = "ok";
-	pinctrl-names = "default";
-	pinctrl-0 = <&vout1_pins>;
 
 	vdda_video-supply = <&ldoln_reg>;
-
-	ports {
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		port {
-			reg = <0>;
-
-			dpi_out: endpoint {
-				remote-endpoint = <&tlc_in>;
-				data-lines = <24>;
-			};
-		};
-	};
 };
 
 &hdmi {
