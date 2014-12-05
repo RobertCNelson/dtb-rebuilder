@@ -50,4 +50,5 @@
 	status = "okay";
 };
 
+#include "am335x-bone-i2c2-cape-eeprom.dtsi"
 #include "am335x-bone-lcd4-01-00a1.dtsi"

@@ -44,6 +44,6 @@
 
 #include "am335x-boneblack-emmc.dtsi"
 /* #include "am335x-boneblack-nxp-hdmi-audio.dtsi" */
-
+#include "am335x-bone-i2c2-cape-eeprom.dtsi"
 #include "am335x-bone-audio-reva.dtsi"
 #include "am335x-boneblack-nxp-hdmi-no-audio.dtsi"
