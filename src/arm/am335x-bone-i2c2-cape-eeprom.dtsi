@@ -9,10 +9,10 @@
 &ocp {
 	/* i2c2 */
 	P9_19_pinmux {
-		status = "i2c";
+		mode = "i2c";
 	};
 	P9_20_pinmux {
-		status = "i2c";
+		mode = "i2c";
 	};
 };
 
