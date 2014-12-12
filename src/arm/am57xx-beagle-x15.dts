@@ -184,10 +184,10 @@
 		clocks = <&clkout2_clk>;
 		clock-names = "mclk";
 		ti,audio-routing =
-			"Line Out",		"LLOUT",
-			"Line Out",		"RLOUT",
-			"LINE1L",               "Line In",
-			"LINE1R",               "Line In";
+			"Line Out",	"LLOUT",
+			"Line Out",	"RLOUT",
+			"MIC3L",	"Line In", /* Mic2L/LINE2L on aic3104 */
+			"MIC3R",	"Line In"; /* Mic2R/LINE2R on aic3104 */
 	};
 };
 
@@ -779,6 +779,26 @@
 	};
 };
 
+&mailbox3 {
+	status = "okay";
+	mbox_pru1_0: mbox_pru1_0 {
+		status = "okay";
+	};
+	mbox_pru1_1: mbox_pru1_1 {
+		status = "okay";
+	};
+};
+
+&mailbox4 {
+	status = "okay";
+	mbox_pru2_0: mbox_pru2_0 {
+		status = "okay";
+	};
+	mbox_pru2_1: mbox_pru2_1 {
+		status = "okay";
+	};
+};
+
 &mailbox5 {
 	status = "okay";
 	mbox_ipu1_legacy: mbox_ipu1_legacy {
@@ -884,4 +904,30 @@
 	serial-dir = <	/* 0: INACTIVE, 1: TX, 2: RX */
 		1 2 0 0
 	>;
+};
+
+&pruss1 {
+	status = "okay";
+	pru1_0: pru@4b234000 {
+		mboxes = <&mailbox3 &mbox_pru1_0>;
+		status = "okay";
+	};
+
+	pru1_1: pru@4b238000 {
+		mboxes = <&mailbox3 &mbox_pru1_1>;
+		status = "okay";
+	};
+};
+
+&pruss2 {
+	status = "okay";
+	pru2_0: pru@4b2b4000 {
+		mboxes = <&mailbox4 &mbox_pru2_0>;
+		status = "okay";
+	};
+
+	pru2_1: pru@4b2b8000 {
+		mboxes = <&mailbox4 &mbox_pru2_1>;
+		status = "okay";
+	};
 };
