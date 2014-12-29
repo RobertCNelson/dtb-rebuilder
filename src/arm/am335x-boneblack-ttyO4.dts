@@ -15,10 +15,6 @@
 	compatible = "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
 };
 
-/* Max Core Speed */
-#include "am335x-boneblack-1ghz.dtsi"
-/* #include "am335x-boneblack-800mhz.dtsi" */
-
 &ldo3_reg {
 	regulator-min-microvolt = <1800000>;
 	regulator-max-microvolt = <1800000>;
@@ -52,8 +48,8 @@
 /* #include "am335x-peripheral-ttyO2.dtsi" */
 /* #include "am335x-bone-pinmux-ttyO2.dtsi" */
 
-/* #include "am335x-peripheral-ttyO4.dtsi" */
-/* #include "am335x-bone-pinmux-ttyO4.dtsi" */
+#include "am335x-peripheral-ttyO4.dtsi"
+#include "am335x-bone-pinmux-ttyO4.dtsi"
 
 /* #include "am335x-peripheral-ttyO5.dtsi" */
 /* #include "am335x-bone-pinmux-ttyO5.dtsi" */
