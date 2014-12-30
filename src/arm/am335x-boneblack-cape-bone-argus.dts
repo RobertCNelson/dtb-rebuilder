@@ -46,4 +46,3 @@
 };
 
 #include "am335x-bone-argus.dtsi"
-/* #include "am335x-cape-rtc-ds1307.dtsi" */
