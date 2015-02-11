@@ -20,6 +20,8 @@
 		rtc1 = &rtc;
 		rtc2 = &tps659038_rtc;
 		display0 = &hdmi0;
+		sound0 = &primary_sound;
+		sound1 = &hdmi;
 	};
 
 	memory {
@@ -176,7 +178,15 @@
 		};
 	};
 
-	sound {
+	gpio_fan {
+		/* Based on 5v 500mA AFB02505HHB */
+		compatible = "gpio-fan";
+		gpios =  <&tps659038_gpio 1 GPIO_ACTIVE_HIGH>;
+		gpio-fan,speed-map = <0    0
+				      13000 1>;
+	};
+
+	primary_sound: primary_sound {
 		compatible = "ti,da830-evm-audio";
 		ti,model = "BeagleBoard-X15";
 		ti,audio-codec = <&tlv320aic3104>;
@@ -186,8 +196,8 @@
 		ti,audio-routing =
 			"Line Out",	"LLOUT",
 			"Line Out",	"RLOUT",
-			"MIC3L",	"Line In", /* Mic2L/LINE2L on aic3104 */
-			"MIC3R",	"Line In"; /* Mic2R/LINE2R on aic3104 */
+			"MIC2L",	"Line In",
+			"MIC2R",	"Line In";
 	};
 };
 
@@ -623,6 +633,12 @@
 			wakeup-source;
 			ti,palmas-long-press-seconds = <13>;
 		};
+
+		tps659038_gpio: tps659038_gpio {
+			compatible = "ti,palmas-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+		};
 	};
 
 	tmp102: tmp102@48 {
@@ -636,7 +652,7 @@
 	};
 
 	tlv320aic3104: tlv320aic3104@18 {
-		compatible = "ti,tlv320aic3106";
+		compatible = "ti,tlv320aic3104";
 		reg = <0x18>;
 		pinctrl-names = "default", "sleep";
 		pinctrl-0 = <&clkout2_pins_default>;
@@ -744,7 +760,7 @@
 	pinctrl-1 = <&mmc1_pins_sleep>;
 	vmmc-supply = <&ldo1_reg>;
 	vmmc_aux-supply = <&vdd_3v3>;
-	pbias-supply = <&pbias_regulator>;
+	pbias-supply = <&pbias_mmc_reg>;
 	bus-width = <4>;
 	cd-gpios = <&gpio6 27 0>; /* gpio 219 */
 };

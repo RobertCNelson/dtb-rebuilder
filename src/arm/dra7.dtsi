@@ -34,6 +34,10 @@
 		serial3 = &uart4;
 		serial4 = &uart5;
 		serial5 = &uart6;
+		serial6 = &uart7;
+		serial7 = &uart8;
+		serial8 = &uart9;
+		serial9 = &uart10;
 		ethernet0 = &cpsw_emac0;
 		ethernet1 = &cpsw_emac1;
 		d_can0 = &dcan1;
@@ -384,7 +388,7 @@
 			ti,hwmods = "uart1";
 			clock-frequency = <48000000>;
 			status = "disabled";
-			dmas = <&sdma 49>, <&sdma 50>;
+			dmas = <&sdma 49 &dmacb>, <&sdma 50 &dmacb>;
 			dma-names = "tx", "rx";
 		};
 
@@ -395,7 +399,7 @@
 			ti,hwmods = "uart2";
 			clock-frequency = <48000000>;
 			status = "disabled";
-			dmas = <&sdma 51>, <&sdma 52>;
+			dmas = <&sdma 51 &dmacb>, <&sdma 52 &dmacb>;
 			dma-names = "tx", "rx";
 		};
 
@@ -406,7 +410,7 @@
 			ti,hwmods = "uart3";
 			clock-frequency = <48000000>;
 			status = "disabled";
-			dmas = <&sdma 53>, <&sdma 54>;
+			dmas = <&sdma 53 &dmacb>, <&sdma 54 &dmacb>;
 			dma-names = "tx", "rx";
 		};
 
@@ -417,7 +421,7 @@
 			ti,hwmods = "uart4";
 			clock-frequency = <48000000>;
                         status = "disabled";
-			dmas = <&sdma 55>, <&sdma 56>;
+			dmas = <&sdma 55 &dmacb>, <&sdma 56 &dmacb>;
 			dma-names = "tx", "rx";
 		};
 
@@ -428,7 +432,7 @@
 			ti,hwmods = "uart5";
 			clock-frequency = <48000000>;
 			status = "disabled";
-			dmas = <&sdma 63>, <&sdma 64>;
+			dmas = <&sdma 63 &dmacb>, <&sdma 64 &dmacb>;
 			dma-names = "tx", "rx";
 		};
 
@@ -439,7 +443,7 @@
 			ti,hwmods = "uart6";
 			clock-frequency = <48000000>;
 			status = "disabled";
-			dmas = <&sdma 79>, <&sdma 80>;
+			dmas = <&sdma 79 &dmacb>, <&sdma 80 &dmacb>;
 			dma-names = "tx", "rx";
 		};
 
@@ -1343,8 +1347,8 @@
 				      <0x4A096800 0x40>; /* pll_ctrl */
 				reg-names = "phy_rx", "phy_tx", "pll_ctrl";
 				ctrl-module = <&omap_control_sata>;
-				clocks = <&sys_clkin1>;
-				clock-names = "sysclk";
+				clocks = <&sys_clkin1>, <&sata_ref_clk>;
+				clock-names = "sysclk", "refclk";
 				#phy-cells = <0>;
 			};
 
@@ -1394,7 +1398,6 @@
 			interrupts = <GIC_SPI 49 IRQ_TYPE_LEVEL_HIGH>;
 			phys = <&sata_phy>;
 			phy-names = "sata-phy";
-			clocks = <&sata_ref_clk>;
 			ti,hwmods = "sata";
 		};
 
