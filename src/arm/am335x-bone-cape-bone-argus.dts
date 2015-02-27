@@ -42,13 +42,6 @@
 	/* pinctrl-0 = <&clkout2_pin>; */
 };
 
-&sham {
-	status = "okay";
-};
-
-&aes {
-	status = "okay";
-};
-
 #include "am335x-bone-i2c2-cape-eeprom.dtsi"
+
 #include "am335x-bone-argus.dtsi"
