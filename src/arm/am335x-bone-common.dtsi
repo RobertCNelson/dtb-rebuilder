@@ -287,3 +287,11 @@
 	cd-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
 	cd-inverted;
 };
+
+&sham {
+	status = "okay";
+};
+
+&aes {
+	status = "okay";
+};

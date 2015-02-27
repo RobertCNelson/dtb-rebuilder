@@ -30,14 +30,6 @@
 	pinctrl-0 = <&clkout2_pin>;
 };
 
-&sham {
-	status = "okay";
-};
-
-&aes {
-	status = "okay";
-};
-
 /* #include "am335x-peripheral-can0.dtsi" */
 /* #include "am335x-bone-pinmux-can0.dtsi" */
 
