@@ -11,6 +11,12 @@
 		/* gpio1[29] */
 		status = "disabled";
 	};
+	P9_17_pinmux {
+		status = "disabled";
+	};
+	P9_18_pinmux {
+		status = "disabled";
+	};
 };
 
 / {
