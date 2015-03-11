@@ -198,13 +198,6 @@
 };
 
 &dra7_pmx_core {
-	i2c2_pins: pinmux_i2c2_pins {
-		pinctrl-single,pins = <
-			0x408 (PIN_INPUT | MUX_MODE1) /* hdmi1_ddc_scl */
-			0x40c (PIN_INPUT | MUX_MODE1) /* hdmi1_ddc_sda */
-		>;
-	};
-
 	mmc1_pins_default: mmc1_pins_default {
 		pinctrl-single,pins = <
 			0x36c (PIN_INPUT | MUX_MODE14)	/* mmc1sdcd.gpio219 */
@@ -255,50 +248,6 @@
 			0x90 (PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a20.mmc2_dat5 */
 			0x94 (PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a21.mmc2_dat6 */
 			0x98 (PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a22.mmc2_dat7 */
-		>;
-	};
-
-	mcp79410_pins_default: mcp79410_pins_default {
-		pinctrl-single,pins = <
-			0x424 (PIN_INPUT_PULLUP | MUX_MODE1)	/* wakeup3.sys_nirq1 */
-		>;
-	};
-
-	hdmi_pins: pinmux_hdmi_pins {
-		pinctrl-single,pins = <
-			0x3b0 	(PIN_OUTPUT | MUX_MODE14)	/* gpio7_10 */
-			0x3b8 	(PIN_INPUT | MUX_MODE14)	/* gpio7_12 */
-			0x370 	(PIN_OUTPUT | MUX_MODE14)	/* gpio6_28 */
-		>;
-	};
-
-	clkout2_pins_default: clkout2_pins_default {
-		pinctrl-single,pins = <
-			0x294 (PIN_OUTPUT_PULLDOWN | MUX_MODE9)	/* xref_clk0.clkout2 */
-		>;
-	};
-
-	clkout2_pins_sleep: clkout2_pins_sleep {
-		pinctrl-single,pins = <
-			0x294 (PIN_INPUT | MUX_MODE15)	/* xref_clk0.clkout2 */
-		>;
-	};
-
-	mcasp3_pins_default: mcasp3_pins_default {
-		pinctrl-single,pins = <
-			0x324 (PIN_INPUT_PULLDOWN | MUX_MODE0) /* mcasp3_aclkx.mcasp3_aclkx */
-			0x328 (PIN_INPUT_PULLDOWN | MUX_MODE0) /* mcasp3_fsx.mcasp3_fsx */
-			0x32c (PIN_OUTPUT_PULLDOWN | MUX_MODE0) /* mcasp3_axr0.mcasp3_axr0 */
-			0x330 (PIN_INPUT_PULLDOWN | MUX_MODE0) /* mcasp3_axr1.mcasp3_axr1 */
-		>;
-	};
-
-	mcasp3_pins_sleep: mcasp3_pins_sleep {
-		pinctrl-single,pins = <
-			0x324 (PIN_INPUT | MUX_MODE15)
-			0x328 (PIN_INPUT | MUX_MODE15)
-			0x32c (PIN_INPUT | MUX_MODE15)
-			0x330 (PIN_INPUT | MUX_MODE15)
 		>;
 	};
 };
@@ -472,9 +421,6 @@
 	tlv320aic3104: tlv320aic3104@18 {
 		compatible = "ti,tlv320aic3104";
 		reg = <0x18>;
-		pinctrl-names = "default", "sleep";
-		pinctrl-0 = <&clkout2_pins_default>;
-		pinctrl-1 = <&clkout2_pins_sleep>;
 		status = "okay";
 		adc-settle-ms = <40>;
 
@@ -493,8 +439,6 @@
 		compatible = "microchip,mcp7941x";
 		reg = <0x6f>;
 		vcc-supply = <&vdd_3v3>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&mcp79410_pins_default>;
 
 		/* Rev A1 */
 		interrupts-extended = <&gic GIC_SPI 2 IRQ_TYPE_LEVEL_LOW
@@ -588,8 +532,6 @@
 &hdmi {
 	status = "ok";
 	vdda-supply = <&ldo3_reg>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&hdmi_pins &i2c2_pins>;
 
 	port {
 		hdmi_out: endpoint {
@@ -716,9 +658,6 @@
 };
 
 &mcasp3 {
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&mcasp3_pins_default>;
-	pinctrl-1 = <&mcasp3_pins_sleep>;
 	status = "okay";
 
 	op-mode = <0>;	/* MCASP_IIS_MODE */
@@ -799,13 +738,5 @@
 				  <&gpio_fan THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
 			};
 		};
-	};
-};
-
-&epwmss1 {
-	status = "okay";
-
-	ehrpwm1: ehrpwm@48440200 {
-		status = "okay";
 	};
 };

@@ -197,141 +197,6 @@
 };
 
 &dra7_pmx_core {
-	wlan_pins: pinmux_wlan_pins {
-		pinctrl-single,pins = <
-			0x3e8 (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_ctsn.mmc4_clk */
-			0x3ec (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_rtsn.mmc4_cmd */
-			0x3f0 (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart2_rxd.mmc4_dat0 */
-			0x3f4 (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart2_txd.mmc4_dat1 */
-			0x3f8 (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart2_ctsn.mmc4_dat2 */
-			0x3fc (PIN_INPUT_PULLUP | MUX_MODE3)	/* uart2_rtsn.mmc4_dat3 */
-			0x2cc (PIN_OUTPUT | MUX_MODE14)		/* mcasp1_axr6.gpio5_8 - WLAN_EN */
-		>;
-	};
-
-	wlirq_pins: pinmux_wlirq_pins {
-		pinctrl-single,pins = <
-			0x2c8 (PIN_INPUT_PULLUP | WAKEUP_EN | MUX_MODE14 ) /* mcasp1_axr5.gpio5_7 - WLAN_IRQ */
-		>;
-	};
-
-	cpsw_default: cpsw_default {
-		pinctrl-single,pins = <
-			/* Slave 1 */
-			0x250 (PIN_OUTPUT | MUX_MODE0)	/* rgmii1_tclk */
-			0x254 (PIN_OUTPUT | MUX_MODE0)	/* rgmii1_tctl */
-			0x258 (PIN_OUTPUT | MUX_MODE0)	/* rgmii1_td3 */
-			0x25c (PIN_OUTPUT | MUX_MODE0)	/* rgmii1_td2 */
-			0x260 (PIN_OUTPUT | MUX_MODE0)	/* rgmii1_td1 */
-			0x264 (PIN_OUTPUT | MUX_MODE0)	/* rgmii1_td0 */
-			0x268 (PIN_INPUT | MUX_MODE0)	/* rgmii1_rclk */
-			0x26c (PIN_INPUT | MUX_MODE0)	/* rgmii1_rctl */
-			0x270 (PIN_INPUT | MUX_MODE0)	/* rgmii1_rd3 */
-			0x274 (PIN_INPUT | MUX_MODE0)	/* rgmii1_rd2 */
-			0x278 (PIN_INPUT | MUX_MODE0)	/* rgmii1_rd1 */
-			0x27c (PIN_INPUT | MUX_MODE0)	/* rgmii1_rd0 */
-
-			/* Slave 2 */
-			0x198 (PIN_OUTPUT | MUX_MODE3)	/* rgmii2_tclk */
-			0x19c (PIN_OUTPUT | MUX_MODE3)	/* rgmii2_tctl */
-			0x1a0 (PIN_OUTPUT | MUX_MODE3)	/* rgmii2_td3 */
-			0x1a4 (PIN_OUTPUT | MUX_MODE3)	/* rgmii2_td2 */
-			0x1a8 (PIN_OUTPUT | MUX_MODE3)	/* rgmii2_td1 */
-			0x1ac (PIN_OUTPUT | MUX_MODE3)	/* rgmii2_td0 */
-			0x1b0 (PIN_INPUT | MUX_MODE3)	/* rgmii2_rclk */
-			0x1b4 (PIN_INPUT | MUX_MODE3)	/* rgmii2_rctl */
-			0x1b8 (PIN_INPUT | MUX_MODE3)	/* rgmii2_rd3 */
-			0x1bc (PIN_INPUT | MUX_MODE3)	/* rgmii2_rd2 */
-			0x1c0 (PIN_INPUT | MUX_MODE3)	/* rgmii2_rd1 */
-			0x1c4 (PIN_INPUT | MUX_MODE3)	/* rgmii2_rd0 */
-		>;
-
-	};
-
-	cpsw_sleep: cpsw_sleep {
-		pinctrl-single,pins = <
-			/* Slave 1 */
-			0x250 (PIN_OFF_NONE)
-			0x254 (PIN_OFF_NONE)
-			0x258 (PIN_OFF_NONE)
-			0x25c (PIN_OFF_NONE)
-			0x260 (PIN_OFF_NONE)
-			0x264 (PIN_OFF_NONE)
-			0x268 (PIN_OFF_NONE)
-			0x26c (PIN_OFF_NONE)
-			0x270 (PIN_OFF_NONE)
-			0x274 (PIN_OFF_NONE)
-			0x278 (PIN_OFF_NONE)
-			0x27c (PIN_OFF_NONE)
-
-			/* Slave 1 */
-			0x198 (PIN_OFF_NONE)
-			0x19c (PIN_OFF_NONE)
-			0x1a0 (PIN_OFF_NONE)
-			0x1a4 (PIN_OFF_NONE)
-			0x1a8 (PIN_OFF_NONE)
-			0x1ac (PIN_OFF_NONE)
-			0x1b0 (PIN_OFF_NONE)
-			0x1b4 (PIN_OFF_NONE)
-			0x1b8 (PIN_OFF_NONE)
-			0x1bc (PIN_OFF_NONE)
-			0x1c0 (PIN_OFF_NONE)
-			0x1c4 (PIN_OFF_NONE)
-		>;
-	};
-
-	davinci_mdio_default: davinci_mdio_default {
-		pinctrl-single,pins = <
-			/* MDIO */
-			0x23c (PIN_OUTPUT_PULLUP | MUX_MODE0)	/* mdio_data */
-			0x240 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mdio_clk */
-		>;
-	};
-
-	davinci_mdio_sleep: davinci_mdio_sleep {
-		pinctrl-single,pins = <
-			0x23c (PIN_OFF_NONE)
-			0x240 (PIN_OFF_NONE)
-		>;
-	};
-
-	nand_flash_x16: nand_flash_x16 {
-		/* On DRA7 EVM, GPMC_WPN and NAND_BOOTn comes from DIP switch
-		 * So NAND flash requires following switch settings:
-		 * SW5.9 (GPMC_WPN) = LOW
-		 * SW5.1 (NAND_BOOTn) = HIGH */
-		pinctrl-single,pins = <
-			0x0 	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad0	*/
-			0x4 	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad1	*/
-			0x8 	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad2	*/
-			0xc 	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad3	*/
-			0x10	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad4	*/
-			0x14	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad5	*/
-			0x18	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad6	*/
-			0x1c	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad7	*/
-			0x20	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad8	*/
-			0x24	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad9	*/
-			0x28	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad10	*/
-			0x2c	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad11	*/
-			0x30	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad12	*/
-			0x34	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad13	*/
-			0x38	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad14	*/
-			0x3c	(PIN_INPUT  | MUX_MODE0)	/* gpmc_ad15	*/
-			0xd8	(PIN_INPUT_PULLUP  | MUX_MODE0)	/* gpmc_wait0	*/
-			0xcc	(PIN_OUTPUT | MUX_MODE0)	/* gpmc_wen	*/
-			0xb4	(PIN_OUTPUT_PULLUP | MUX_MODE0)	/* gpmc_csn0	*/
-			0xc4	(PIN_OUTPUT | MUX_MODE0)	/* gpmc_advn_ale */
-			0xc8	(PIN_OUTPUT | MUX_MODE0)	/* gpmc_oen_ren	 */
-			0xd0	(PIN_OUTPUT | MUX_MODE0)	/* gpmc_be0n_cle */
-		>;
-	};
-
-	tsc_pins: pinmux_tsc_pins {
-		pinctrl-single,pins = <
-			0x420 (PIN_INPUT_PULLUP | MUX_MODE1) /* sys_nirq2 */
-		>;
-	};
-
 	dcan1_pins_default: dcan1_pins_default {
 		pinctrl-single,pins = <
 			0x3d0   (PIN_OUTPUT_PULLUP | MUX_MODE0)	/* dcan1_tx */
@@ -343,31 +208,6 @@
 		pinctrl-single,pins = <
 			0x3d0   (MUX_MODE15 | PULL_UP)	/* dcan1_tx.off */
 			0x418   (MUX_MODE15 | PULL_UP)	/* wakeup0.off */
-		>;
-	};
-
-	atl_pins: pinmux_atl_pins {
-		pinctrl-single,pins = <
-			0x298 (PIN_OUTPUT | MUX_MODE5)	/* xref_clk1.atl_clk1 */
-			0x29c (PIN_OUTPUT | MUX_MODE5)	/* xref_clk2.atl_clk2 */
-		>;
-	};
-
-	mcasp3_pins: pinmux_mcasp3_pins {
-		pinctrl-single,pins = <
-			0x324 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)	/* mcasp3_aclkx */
-			0x328 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)	/* mcasp3_fsx */
-			0x32c (PIN_OUTPUT_PULLDOWN | MUX_MODE0)	/* mcasp3_axr0 */
-			0x330 (PIN_INPUT_PULLDOWN | MUX_MODE0)	/* mcasp3_axr1 */
-		>;
-	};
-
-	mcasp3_sleep_pins: pinmux_mcasp3_sleep_pins {
-		pinctrl-single,pins = <
-			0x324 (PIN_OFF_NONE)
-			0x328 (PIN_OFF_NONE)
-			0x32c (PIN_OFF_NONE)
-			0x330 (PIN_OFF_NONE)
 		>;
 	};
 
@@ -735,8 +575,6 @@
 	status = "okay";
 	vmmc-supply = <&vmmcwl_fixed>;
 	bus-width = <4>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&wlan_pins &wlirq_pins>;
 	cap-power-off-card;
 	keep-power-in-suspend;
 	ti,non-removable;
@@ -1057,9 +895,6 @@
 };
 
 &atl {
-	pinctrl-names = "default";
-	pinctrl-0 = <&atl_pins>;
-
 	status = "okay";
 
 	atl2 {
@@ -1069,10 +904,6 @@
 };
 
 &mcasp3 {
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&mcasp3_pins>;
-	pinctrl-1 = <&mcasp3_sleep_pins>;
-
 	fck_parent = "atl_clkin2_ck";
 
 	status = "okay";

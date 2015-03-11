@@ -61,9 +61,6 @@
 
 		label = "lcd";
 
-		pinctrl-names = "default";
-		pinctrl-0 = <&lcd_pins>;
-
 		enable-gpios = <&gpio2 5 GPIO_ACTIVE_HIGH>;
 
 		panel-timing {
@@ -90,14 +87,13 @@
 	};
 
 	backlight {
-		compatible = "gpio-backlight";
+		compatible = "pwm-backlight";
+		pwms = <&ehrpwm1 0 50000 0>;
 
-		pinctrl-names = "default";
-		pinctrl-0 = <&bl_pins>;
+		/* Anything lower than 241 is no longer visible */
+		brightness-levels = <0 243 245 247 249 251 252 253 255>;
 
-		gpios = <&gpio6 10 GPIO_ACTIVE_LOW>;
-
-		default-on;
+		default-brightness-level = <8>;
 	};
 
 	vmmcwl_fixed: fixedregulator-mmcwl {
@@ -128,118 +124,8 @@
 	};
 };
 
-&dra7_pmx_core {
-	vout1_pins: pinmux_vout1_pins {
-		pinctrl-single,pins = <
-			0x1C8	(PIN_OUTPUT | MUX_MODE0)	/* vout1_clk */
-			0x1CC	(PIN_OUTPUT | MUX_MODE0)	/* vout1_de */
-			0x1D4	(PIN_OUTPUT | MUX_MODE0)	/* vout1_hsync */
-			0x1D8	(PIN_OUTPUT | MUX_MODE0)	/* vout1_vsync */
-			0x1DC	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d0 */
-			0x1E0	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d1 */
-			0x1E4	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d2 */
-			0x1E8	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d3 */
-			0x1EC	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d4 */
-			0x1F0	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d5 */
-			0x1F4	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d6 */
-			0x1F8	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d7 */
-			0x1FC	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d8 */
-			0x200	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d9 */
-			0x204	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d10 */
-			0x208	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d11 */
-			0x20C	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d12 */
-			0x210	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d13 */
-			0x214	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d14 */
-			0x218	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d15 */
-			0x21C	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d16 */
-			0x220	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d17 */
-			0x224	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d18 */
-			0x228	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d19 */
-			0x22C	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d20 */
-			0x230	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d21 */
-			0x234	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d22 */
-			0x238	(PIN_OUTPUT | MUX_MODE0)	/* vout1_d23 */
-		>;
-	};
-
-	bl_pins: pinmux_bl_pins {
-		pinctrl-single,pins = <
-			0x374 	(PIN_OUTPUT | MUX_MODE14)	/* gpio6_10.gpio6_10 */
-		>;
-	};
-
-	lcd_pins: pinmux_lcd_pins {
-		pinctrl-single,pins = <
-			0x7c 	(PIN_OUTPUT | MUX_MODE14)	/* gpmc_a15.gpio2_5 */
-		>;
-	};
-
-	bt_uart8_pins: pinmux_uart8_pins {
-		pinctrl-single,pins = <
-			0x334 (PIN_INPUT  | MUX_MODE3)		/* mcasp4_aclkx.uart8_rxd */
-			0x338 (PIN_OUTPUT | MUX_MODE3)		/* mcasp4_fsx.uart8_txd */
-			0x33c (PIN_INPUT  | MUX_MODE3)		/* mcasp4_axr0.uart8_ctsn */
-			0x340 (PIN_OUTPUT | MUX_MODE3)		/* mcasp4_axr1.uart8_rtsn */
-			0x2bc (PIN_OUTPUT | MUX_MODE14) 	/* mcasp1_axr2.gpio5_4 - BT_EN */
-		>;
-	};
-
-	wlan_pins: pinmux_wlan_pins {
-		pinctrl-single,pins = <
-			0x37C (PIN_INPUT | MUX_MODE0) 		/* mmc3_clk.clk */
-			0x380 (PIN_INPUT | MUX_MODE0) 		/* mmc3_cmd.cmd */
-			0x384 (PIN_INPUT | MUX_MODE0) 		/* mmc3_dat0.dat0 */
-			0x388 (PIN_INPUT | MUX_MODE0) 		/* mmc3_dat1.dat1 */
-			0x38C (PIN_INPUT | MUX_MODE0) 		/* mmc3_dat2.dat2 */
-			0x390 (PIN_INPUT | MUX_MODE0) 		/* mmc3_dat3.dat3 */
-			0x2cc (PIN_OUTPUT | MUX_MODE14)	    	/* mcasp1_axr6.gpio5_8 - WLAN_EN */
-		>;
-	};
-
-	wlirq_pins: pinmux_wlirq_pins {
-		pinctrl-single,pins = <
-			0x2c8 (PIN_INPUT_PULLUP | MUX_MODE14 ) 	/* mcasp1_axr5.gpio5_7 - WLAN_IRQ */
-		>;
-	};
-
-	i2c5_pins: pinmux_i2c5_pins {
-		pinctrl-single,pins = <
-			0x2b4 (PIN_INPUT | MUX_MODE10) /* mcasp1_axr0.i2c5_sda */
-			0x2b8 (PIN_INPUT | MUX_MODE10) /* mcasp1_axr1.i2c5_scl */
-		>;
-	};
-
-	mt9t11x_pins: pinmux_mt9t11x_pins {
-		pinctrl-single,pins = <
-			0x2e0 (PIN_OUTPUT | MUX_MODE14) /* mcasp1_axr11.gpio4_17 */
-			0x2d4 (PIN_OUTPUT | MUX_MODE14) /* mcasp1_axr8.gpio5_10 */
-			0x2d8 (PIN_OUTPUT | MUX_MODE14) /* mcasp1_axr9.gpio5_11 */
-			0x2dc (PIN_OUTPUT | MUX_MODE14) /* mcasp1_axr10.gpio5_12 */
-			0x378 (PIN_OUTPUT | MUX_MODE0)  /* gpio6_11378.gpio6_11*/
-		>;
-	};
-
-	vin3a_pins: pinmux_vin3a_pins {
-		pinctrl-single,pins = <
-			0x0BC   (PIN_INPUT | MUX_MODE2) /* gpmc_cs3.vin3a_clk0 */
-			0x060   (PIN_INPUT | MUX_MODE2) /* gpmc_a8.vin3a_hsync0 */
-			0x064   (PIN_INPUT | MUX_MODE2) /* gpmc_a9.vin3a_vsync0 */
-			0x000   (PIN_INPUT | MUX_MODE2) /* gpmc_ad0.vin3a_d0 */
-			0x004   (PIN_INPUT | MUX_MODE2) /* gpmc_ad1.vin3a_d1 */
-			0x008   (PIN_INPUT | MUX_MODE2) /* gpmc_ad2.vin3a_d2 */
-			0x00C   (PIN_INPUT | MUX_MODE2) /* gpmc_ad3.vin3a_d3 */
-			0x010   (PIN_INPUT | MUX_MODE2) /* gpmc_ad4.vin3a_d4 */
-			0x014   (PIN_INPUT | MUX_MODE2) /* gpmc_ad5.vin3a_d5 */
-			0x018   (PIN_INPUT | MUX_MODE2) /* gpmc_ad6.vin3a_d6 */
-			0x01C   (PIN_INPUT | MUX_MODE2) /* gpmc_ad7.vin3a_d7 */
-		>;
-	};
-};
-
 &i2c5 {
 	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c5_pins &mt9t11x_pins>;
 	clock-frequency = <400000>;
 
 	mt9t11x@3C {
@@ -267,9 +153,6 @@
 };
 
 &dss {
-	pinctrl-names = "default";
-	pinctrl-0 = <&vout1_pins>;
-
 	ports {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -287,16 +170,12 @@
 
 &uart8 {
 	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&bt_uart8_pins>;
 };
 
 &mmc3 {
 	status = "okay";
 	vmmc-supply = <&vmmcwl_fixed>;
 	bus-width = <4>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&wlan_pins &wlirq_pins>;
 	cap-power-off-card;
 	keep-power-in-suspend;
 	ti,non-removable;
@@ -312,8 +191,6 @@
 };
 
 &vip2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&vin3a_pins>;
 	status = "okay";
 };
 
@@ -321,5 +198,13 @@
 	endpoint {
 		slave-mode;
 		remote-endpoint = <&cam>;
+	};
+};
+
+&epwmss1 {
+	status = "okay";
+
+	ehrpwm1: ehrpwm@48440200 {
+		status = "okay";
 	};
 };
