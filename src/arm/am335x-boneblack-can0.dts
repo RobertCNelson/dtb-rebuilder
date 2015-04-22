@@ -45,8 +45,8 @@
 	system-power-controller;
 };
 
-/* #include "am335x-peripheral-can0.dtsi" */
-/* #include "am335x-bone-pinmux-can0.dtsi" */
+#include "am335x-peripheral-can0.dtsi"
+#include "am335x-bone-pinmux-can0.dtsi"
 
 /* #include "am335x-peripheral-can1.dtsi" */
 /* #include "am335x-bone-pinmux-can1.dtsi" */

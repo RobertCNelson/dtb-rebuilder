@@ -54,8 +54,8 @@
 /* #include "am335x-peripheral-ttyO1.dtsi" */
 /* #include "am335x-bone-pinmux-ttyO1.dtsi" */
 
-/* #include "am335x-peripheral-ttyO2.dtsi" */
-/* #include "am335x-bone-pinmux-ttyO2.dtsi" */
+#include "am335x-peripheral-ttyO2.dtsi"
+#include "am335x-bone-pinmux-ttyO2.dtsi"
 
 /* #include "am335x-peripheral-ttyO4.dtsi" */
 /* #include "am335x-bone-pinmux-ttyO4.dtsi" */
