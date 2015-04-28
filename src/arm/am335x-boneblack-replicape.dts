@@ -11,8 +11,8 @@
 #include "am335x-bone-common.dtsi"
 
 / {
-       model = "TI AM335x BeagleBone Black";
-       compatible = "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
+	model = "TI AM335x BeagleBone Black";
+	compatible = "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
 };
 
 /* Max Core Speed */
@@ -20,18 +20,18 @@
 /* #include "am335x-boneblack-800mhz.dtsi" */
 
 &ldo3_reg {
-       regulator-min-microvolt = <1800000>;
-       regulator-max-microvolt = <1800000>;
-       regulator-always-on;
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1800000>;
+	regulator-always-on;
 };
 
 &mmc1 {
-       vmmc-supply = <&vmmcsd_fixed>;
+	vmmc-supply = <&vmmcsd_fixed>;
 };
 
 &am33xx_pinmux {
-       pinctrl-names = "default";
-       pinctrl-0 = <&clkout2_pin>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&clkout2_pin>;
 };
 
 #include "am335x-peripheral-emmc.dtsi"
@@ -42,7 +42,7 @@
 #include "am335x-bone-pinmux-nxp-hdmi.dtsi"
 
 &rtc {
-       system-power-controller;
+	system-power-controller;
 };
 
 #include "am335x-bone-replicape.dtsi"

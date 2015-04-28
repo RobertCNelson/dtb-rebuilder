@@ -51,6 +51,10 @@
 /* #include "am335x-peripheral-can1.dtsi" */
 /* #include "am335x-bone-pinmux-can1.dtsi" */
 
+/* #include "am335x-peripheral-i2c2.dtsi" */
+/* #include "am335x-bone-pinmux-i2c2.dtsi" */
+/* #include "am335x-cape-i2c2-eeprom.dtsi" */
+
 #include "am335x-peripheral-ttyS1.dtsi"
 #include "am335x-bone-pinmux-ttyS1.dtsi"
 

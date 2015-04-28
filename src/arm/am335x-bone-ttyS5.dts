@@ -30,19 +30,15 @@
 	pinctrl-0 = <&clkout2_pin>;
 };
 
-&sham {
-	status = "okay";
-};
-
-&aes {
-	status = "okay";
-};
-
 /* #include "am335x-peripheral-can0.dtsi" */
 /* #include "am335x-bone-pinmux-can0.dtsi" */
 
 /* #include "am335x-peripheral-can1.dtsi" */
 /* #include "am335x-bone-pinmux-can1.dtsi" */
+
+/* #include "am335x-peripheral-i2c2.dtsi" */
+/* #include "am335x-bone-pinmux-i2c2.dtsi" */
+/* #include "am335x-cape-i2c2-eeprom.dtsi" */
 
 /* #include "am335x-peripheral-ttyS1.dtsi" */
 /* #include "am335x-bone-pinmux-ttyS1.dtsi" */
