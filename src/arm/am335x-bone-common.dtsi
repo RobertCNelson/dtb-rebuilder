@@ -170,12 +170,10 @@
 		ldo4_reg: regulator@6 {
 			regulator-always-on;
 		};
-	};
-};
 
-&ocp {
-	rtc@44e3e000 {
-		ti,system-power-controller;
+		rtc@44e3e000 {
+			ti,system-power-controller;
+		};
 	};
 };
 
@@ -214,6 +212,10 @@
 
 &wkup_m3 {
 	ti,scale-data-fw = "am335x-bone-scale-data.bin";
+};
+
+&rtc {
+	ti,system-power-controller;
 };
 
 &aes {

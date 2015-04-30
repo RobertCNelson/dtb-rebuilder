@@ -891,7 +891,7 @@
 		compatible = "ti,wlcore";
 		reg = <2>;
 		interrupt-parent = <&gpio3>;
-		interrupts = <17 IRQ_TYPE_NONE>;
+		interrupts = <17 IRQ_TYPE_LEVEL_HIGH>;
 	};
 };
 
@@ -917,4 +917,8 @@
 	status = "disabled";	/* Enable only if Profile 1 is selected */
 	pinctrl-names = "default";
 	pinctrl-0 = <&dcan1_pins_default>;
+};
+
+&rtc {
+	ti,system-power-controller;
 };

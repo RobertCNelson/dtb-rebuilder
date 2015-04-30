@@ -640,7 +640,7 @@
 		compatible = "ti,wlcore";
 		reg = <2>;
 		interrupt-parent = <&gpio0>;
-		interrupts = <31 IRQ_TYPE_NONE>;
+		interrupts = <31 IRQ_TYPE_LEVEL_HIGH>;
 	};
 };
 
@@ -760,6 +760,9 @@
 		interrupts = <17 0>;
 
 		attb-gpio = <&gpio1 17 GPIO_ACTIVE_HIGH>;
+
+		interrupts-extended = <&gpio1 17 GPIO_ACTIVE_HIGH>,
+				      <&am43xx_pinmux 0x44>;
 
 		touchscreen-size-x = <1024>;
 		touchscreen-size-y = <600>;

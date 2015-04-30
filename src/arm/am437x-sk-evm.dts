@@ -49,7 +49,7 @@
 		pinctrl-0 = <&matrix_keypad_pins>;
 
 		debounce-delay-ms = <5>;
-		col-scan-delay-us = <1500>;
+		col-scan-delay-us = <5>;
 
 		row-gpios = <&gpio5 5 GPIO_ACTIVE_HIGH		/* Bank5, pin5 */
 				&gpio5 6 GPIO_ACTIVE_HIGH>;	/* Bank5, pin6 */
@@ -100,7 +100,7 @@
 	};
 
 	lcd0: display {
-		compatible = "osddisplays,osd057T0559-34ts", "panel-dpi";
+		compatible = "newhaven,nhd-4.3-480272ef-atxl", "panel-dpi";
 		label = "lcd";
 
 		pinctrl-names = "default";
@@ -112,11 +112,11 @@
 			clock-frequency = <9000000>;
 			hactive = <480>;
 			vactive = <272>;
-			hfront-porch = <8>;
-			hback-porch = <43>;
-			hsync-len = <4>;
-			vback-porch = <12>;
-			vfront-porch = <4>;
+			hfront-porch = <2>;
+			hback-porch = <2>;
+			hsync-len = <41>;
+			vfront-porch = <2>;
+			vback-porch = <2>;
 			vsync-len = <10>;
 			hsync-active = <0>;
 			vsync-active = <0>;
@@ -363,8 +363,7 @@
 
 	lcd_pins: lcd_pins {
 		pinctrl-single,pins = <
-			/* GPIO 5_8 to select LCD / HDMI */
-			0x238 (PIN_OUTPUT_PULLUP | MUX_MODE7)
+			0x1c (PIN_OUTPUT_PULLDOWN | MUX_MODE7) /* gpcm_ad7.gpio1_7 */
 		>;
 	};
 
@@ -420,6 +419,7 @@
 			regulator-name = "vdds_ddr";
 			regulator-min-microvolt = <1500000>;
 			regulator-max-microvolt = <1500000>;
+			regulator-suspend-enable;
 			regulator-boot-on;
 			regulator-always-on;
 		};
@@ -429,6 +429,26 @@
 			regulator-name = "v3_3d";
 			regulator-min-microvolt = <3300000>;
 			regulator-max-microvolt = <3300000>;
+			regulator-boot-on;
+			regulator-always-on;
+		};
+
+		dcdc5: regulator-dcdc5 {
+			compatible = "ti,tps65218-dcdc5";
+			regulator-name = "v1_0bat";
+			regulator-min-microvolt = <1000000>;
+			regulator-max-microvolt = <1000000>;
+			regulator-suspend-enable;
+			regulator-boot-on;
+			regulator-always-on;
+		};
+
+		dcdc6: regulator-dcdc6 {
+			compatible = "ti,tps65218-dcdc6";
+			regulator-name = "v1_8bat";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			regulator-suspend-enable;
 			regulator-boot-on;
 			regulator-always-on;
 		};
@@ -481,7 +501,7 @@
 		interrupt-parent = <&gpio0>;
 		interrupts = <31 0>;
 
-		wake-gpios = <&gpio1 28 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&gpio1 28 GPIO_ACTIVE_LOW>;
 
 		touchscreen-size-x = <480>;
 		touchscreen-size-y = <272>;
