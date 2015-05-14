@@ -24,32 +24,3 @@
 &mmc1 {
 	vmmc-supply = <&ldo3_reg>;
 };
-
-&am33xx_pinmux {
-	pinctrl-names = "default";
-	pinctrl-0 = <&clkout2_pin>;
-};
-
-/* Pins conflict with i2c2 */
-/* #include "am335x-peripheral-can0.dtsi" */
-/* #include "am335x-bone-pinmux-can0.dtsi" */
-
-/* #include "am335x-peripheral-can1.dtsi" */
-/* #include "am335x-bone-pinmux-can1.dtsi" */
-
-/* Pins conflict with can0 */
-#include "am335x-peripheral-i2c2.dtsi"
-#include "am335x-bone-pinmux-i2c2.dtsi"
-#include "am335x-cape-i2c2-eeprom.dtsi"
-
-/* #include "am335x-peripheral-ttyS1.dtsi" */
-/* #include "am335x-bone-pinmux-ttyS1.dtsi" */
-
-/* #include "am335x-peripheral-ttyS2.dtsi" */
-/* #include "am335x-bone-pinmux-ttyS2.dtsi" */
-
-/* #include "am335x-peripheral-ttyS4.dtsi" */
-/* #include "am335x-bone-pinmux-ttyS4.dtsi" */
-
-/* #include "am335x-peripheral-ttyS5.dtsi" */
-/* #include "am335x-bone-pinmux-ttyS5.dtsi" */
