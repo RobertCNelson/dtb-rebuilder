@@ -28,7 +28,3 @@
 &mmc1 {
 	vmmc-supply = <&vmmcsd_fixed>;
 };
-
-&rtc {
-	system-power-controller;
-};

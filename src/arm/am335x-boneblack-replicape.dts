@@ -41,8 +41,4 @@
 #include "am335x-peripheral-nxp-hdmi.dtsi"
 #include "am335x-bone-pinmux-nxp-hdmi.dtsi"
 
-&rtc {
-	system-power-controller;
-};
-
 #include "am335x-bone-replicape.dtsi"
