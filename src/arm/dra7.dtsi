@@ -811,6 +811,7 @@
 			reg-names = "l2ram";
 			ti,hwmods = "ipu1";
 			iommus = <&mmu_ipu1>;
+			ti,rproc-standby-info = <0x4a005520>;
 			status = "disabled";
 		};
 
@@ -820,6 +821,7 @@
 			reg-names = "l2ram";
 			ti,hwmods = "ipu2";
 			iommus = <&mmu_ipu2>;
+			ti,rproc-standby-info = <0x4a008920>;
 			status = "disabled";
 		};
 
@@ -829,6 +831,7 @@
 			reg-names = "l2ram";
 			ti,hwmods = "dsp1";
 			iommus = <&mmu0_dsp1>, <&mmu1_dsp1>;
+			ti,rproc-standby-info = <0x4a005420>;
 			status = "disabled";
 		};
 
@@ -1952,6 +1955,16 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "disabled";
+			csi2_0: port@0 {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <0>;
+			};
+			csi2_1: port@1 {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <1>;
+			};
 		};
 
 		epwmss0: epwmss@4843e000 {

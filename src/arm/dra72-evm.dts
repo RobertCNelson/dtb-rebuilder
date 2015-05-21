@@ -662,7 +662,7 @@
 				remote-endpoint = <&vin2a>;
 				hsync-active = <1>;
 				vsync-active = <1>;
-				pclk-sample = <1>;
+				pclk-sample = <0>;
 			};
 		};
 	};
@@ -1080,4 +1080,8 @@
 		slave-mode;
 		remote-endpoint = <&onboardLI>;
 	};
+};
+
+&cal {
+	status = "okay";
 };
