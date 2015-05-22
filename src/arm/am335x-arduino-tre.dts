@@ -67,6 +67,19 @@
 		status = "okay";
 	};
 
+	sound {
+		compatible = "ti,da830-evm-audio";
+		ti,model = "DA830 EVM";
+		ti,audio-codec = <&tlv320aic3x>;
+		ti,mcasp-controller = <&mcasp0>;
+		ti,codec-clock-rate = <12000000>;
+		ti,audio-routing =
+			"Headphone Jack",       "HPLOUT",
+			"Headphone Jack",       "HPROUT",
+			"LINE2L",               "Line In",
+			"LINE2R",               "Line In";
+	};
+
 	vmmcsd_fixed: fixedregulator@0 {
 		compatible = "regulator-fixed";
 		regulator-name = "vmmcsd_fixed";
@@ -254,6 +267,16 @@
 		>;
 	};
 
+	tre_audio_pins: pinmux_tre_audio_pins {
+		pinctrl-single,pins = <
+			0x1ac 0x00	/*mcasp0_ahclkx       (AUD_MCLK)->12MHz, INPUT | MODE0*/
+			0x190 0x20	/* mcasp0_aclkx        (AUD_BCLK)->, 	 INPUT | MODE0*/
+			0x194 0x20	/* mcasp0_fsx          (AUD_FSX)-> , 	 INPUT | MODE0*/
+			0x198 0x20	/* mcasp0_axr0         (AUD_DIN)<-, 	 INPUT | MODE0*/
+			0x19c 0x22	/* mcasp0_ahclkr-_axr2 (AUD_DOUT)->, 	       | MODE2*/
+		>;
+	};
+
 	spi1_pins: pinmux_spi1_pins {
 		pinctrl-single,pins = <
 			0x168 0x14 	/* MOSI1 OUTPUT_PULLUP | MODE0 */
@@ -311,6 +334,12 @@
 	rtc@6f {
 		compatible = "microchip,mcp7941x";
 		reg = <0x6f>;
+	};
+
+	tlv320aic3x: tlv320aic3x@18 {
+		compatible = "ti,tlv320aic3x";
+		reg = <0x18>;
+		status = "okay";
 	};
 };
 
@@ -498,6 +527,25 @@
 			ti,system-power-controller;
 		};
 	};
+};
+
+&mcasp0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&tre_audio_pins>;
+
+	status = "okay";
+
+	op-mode = <0>;          /* MCASP_IIS_MODE */
+	tdm-slots = <2>;
+	num-serializer = <16>;
+	serial-dir = <  /* 0: INACTIVE, 1: TX, 2: RX */
+		2 0 1 0
+		0 0 0 0
+		0 0 0 0
+		0 0 0 0
+	>;
+	tx-num-evt = <1>;
+	rx-num-evt = <1>;
 };
 
 &mac {
