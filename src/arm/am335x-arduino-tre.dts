@@ -208,6 +208,20 @@
 		>;
 	};
 
+	tre_ehrpwm1_pins: pinmux_tre_ehrpwm1_pins {
+		pinctrl-single,pins = <
+			0x48 0x06	/* PWM1A	~102	MODE6 */
+			0x4c 0x06	/* PWM1B	~103	MODE6 */
+		>;
+	};
+
+	tre_ehrpwm2_pins: pinmux_tre_ehrpwm2_pins {
+		pinctrl-single,pins = <
+			0x20 0x04	/* PWM2A	~100	MODE4 */
+			0x24 0x04	/* PWM2B	~101	MODE4 */
+		>;
+	};
+
 	nxp_hdmi_bonelt_pins: nxp_hdmi_bonelt_pins {
 		pinctrl-single,pins = <
 			0x1b0 0x03      /* xdma_event_intr0, OMAP_MUX_MODE3 | AM33XX_PIN_OUTPUT */
@@ -233,6 +247,7 @@
 			0xec 0x00       /* lcd_ac_bias_en.lcd_ac_bias_en, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT */
 		>;
 	};
+
 	nxp_hdmi_bonelt_off_pins: nxp_hdmi_bonelt_off_pins {
 		pinctrl-single,pins = <
 			0x1b0 0x03      /* xdma_event_intr0, OMAP_MUX_MODE3 | AM33XX_PIN_OUTPUT */
@@ -319,8 +334,20 @@
 	status = "okay";
 };
 
+&ehrpwm1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&tre_ehrpwm1_pins>;
+};
+
 &epwmss2 {
 	status = "okay";
+};
+
+&ehrpwm2 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&tre_ehrpwm2_pins>;
 };
 
 &lcdc {
