@@ -127,10 +127,21 @@
 			BONE_P8_30 (PIN_OUTPUT | MUX_MODE0)
 		>;
 	};
-	nxp_hdmi_bonelt_off_pins: nxp_hdmi_bonelt_off_pins {
+
+	nxp_hdmi_off_pins: nxp_hdmi_off_pins {
 		pinctrl-single,pins = <
 			/* xdma_event_intr0 */
 			0x1B0 (PIN_OUTPUT | MUX_MODE3)
+		>;
+	};
+
+	mcasp0_pins: mcasp0_pins {
+		pinctrl-single,pins = <
+			0x1ac (PIN_INPUT_PULLUP | MUX_MODE0)	/* mcasp0_ahclkx.mcasp0_ahclkx */
+			0x19c (PIN_OUTPUT_PULLDOWN | MUX_MODE2) /* mcasp0_ahclkr.mcasp0_axr2 */
+			0x194 (PIN_OUTPUT_PULLUP | MUX_MODE0)	/* mcasp0_fsx.mcasp0_fsx */
+			0x190 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)	/* mcasp0_aclkx.mcasp0_aclkx */
+			0x06c (PIN_OUTPUT_PULLDOWN | MUX_MODE7)	/* gpmc_a11.GPIO1_27 */
 		>;
 	};
 };
@@ -138,6 +149,10 @@
 / {
 	hdmi {
 		pinctrl-0 = <&nxp_hdmi_pins>;
-		pinctrl-1 = <&nxp_hdmi_bonelt_off_pins>;
+		pinctrl-1 = <&nxp_hdmi_off_pins>;
 	};
 };
+
+//&mcasp0 {
+//	pinctrl-0 = <&mcasp0_pins>;
+//};

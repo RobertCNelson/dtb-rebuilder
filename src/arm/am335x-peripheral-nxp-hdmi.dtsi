@@ -14,8 +14,8 @@
 	hdmi {
 		compatible = "ti,tilcdc,slave";
 		i2c = <&i2c0>;
-		pinctrl-names = "default", "off";
 
+		pinctrl-names = "default", "off";
 		status = "okay";
 	};
 };
