@@ -120,8 +120,6 @@
 
 		digital;
 
-		ddc-i2c-bus = <&i2c3>;
-
 		port {
 			dvi_connector_in: endpoint {
 				remote-endpoint = <&tfp410_out>;
@@ -271,7 +269,16 @@
 			codec {
 			};
 		};
+
+		twl_power: power {
+			compatible = "ti,twl4030-power-reset";
+			ti,use_poweroff;
+		};
 	};
+};
+
+&i2c2 {
+	clock-frequency = <400000>;
 };
 
 #include "twl4030.dtsi"
