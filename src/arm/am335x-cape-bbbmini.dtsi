@@ -57,9 +57,9 @@
 #include "am335x-bone-pinmux-ttyS5.dtsi"
 
 &pruss {
-		status = "okay";
-		pinctrl-names = "default";
-		pinctrl-0 = <&bb_pruss_pins>;
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&bb_pruss_pins>;
 };
 
 &spi0 {
