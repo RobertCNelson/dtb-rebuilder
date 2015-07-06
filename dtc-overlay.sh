@@ -21,7 +21,9 @@ if [ "${deb_pkgs}" ] ; then
 	sudo apt-get clean
 fi
 
-git_sha="origin/master"
+#git_sha="origin/master"
+#follow master, but use the git sha, just incase of git breakage...
+git_sha="f6dbc6ca9618391e4f30c415a0a09b7af35f7647"
 project="dtc"
 server="git://git.kernel.org/pub/scm/utils/dtc"
 
@@ -52,3 +54,4 @@ make clean
 make PREFIX=/usr/local/ CC=gcc CROSS_COMPILE= all
 echo "Installing into: /usr/local/bin/"
 sudo make PREFIX=/usr/local/ install
+echo "dtc: `/usr/local/bin/dtc --version`"
