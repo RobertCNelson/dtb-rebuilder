@@ -79,6 +79,11 @@
 			0x0a8 0x25	/* lcd_data2.pr1_pru1_pru_r30_2, MODE5 | OUTPUT | PRU, CH_10 */
 			0x0a4 0x25	/* lcd_data1.pr1_pru1_pru_r30_1, MODE5 | OUTPUT | PRU, CH_11 */
 			0x0a0 0x25	/* lcd_data0.pr1_pru1_pru_r30_0, MODE5 | OUTPUT | PRU, CH_12 */
+
+			BONE_P8_12 (PIN_OUTPUT_PULLDOWN | MUX_MODE6) /* HC-SR04 TRIG */
+			BONE_P8_16 (PIN_INPUT_PULLDOWN | MUX_MODE6) /* HC-SR04 ECHO */
+
+			BONE_P9_25 (PIN_INPUT_PULLDOWN | MUX_MODE6) /* MPU9250 INT */
 		>;
 	};
 };
