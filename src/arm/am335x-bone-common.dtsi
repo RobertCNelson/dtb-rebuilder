@@ -405,7 +405,7 @@
 		compatible = "ti,bone-capemgr";
 		status = "okay";
 
-		nvmem-cell = <&baseboard_data &cape0_data &cape1_data &cape2_data &cape3_data>;
+		nvmem-cells = <&baseboard_data &cape0_data &cape1_data &cape2_data &cape3_data>;
 		nvmem-cell-names = "baseboard", "slot0", "slot1", "slot2", "slot3";
 		#slots = <4>;
 
