@@ -54,7 +54,13 @@
 		debounce-delay-ms = <5>;
 		col-scan-delay-us = <2>;
 
-		row-gpios = <&gpio3 21 GPIO_ACTIVE_HIGH /* Bank3, pin21 */
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&matrix_keypad_default>;
+		pinctrl-1 = <&matrix_keypad_sleep>;
+
+		linux,wakeup;
+
+		row-gpios = <&gpio0 3 GPIO_ACTIVE_HIGH /* Bank0, pin3 */
 				&gpio4 3 GPIO_ACTIVE_HIGH /* Bank4, pin3 */
 				&gpio4 2 GPIO_ACTIVE_HIGH>; /* Bank4, pin2 */
 
@@ -390,6 +396,24 @@
 			0x144 (PIN_INPUT_PULLDOWN | MUX_MODE7)
 		>;
 	};
+
+	matrix_keypad_default: matrix_keypad_default {
+		pinctrl-single,pins = <
+			0x1a4 (PIN_OUTPUT | MUX_MODE7)
+			0x1a8 (PIN_OUTPUT | MUX_MODE7)
+			0x1ac (PIN_INPUT | PULL_DISABLE | MUX_MODE9)	/* mcasp0_ahclkx.gpio0_3 */
+			0x154 (PIN_INPUT_PULLDOWN | MUX_MODE0)
+		>;
+	};
+
+	matrix_keypad_sleep: matrix_keypad_sleep {
+		pinctrl-single,pins = <
+			0x1a4 (PULL_UP | MUX_MODE7)
+			0x1a8 (PULL_UP | MUX_MODE7)
+			0x1ac (PIN_INPUT | PULL_DISABLE | MUX_MODE9)
+			0x154 (PIN_INPUT_PULLDOWN | MUX_MODE0)
+		>;
+	};
 };
 
 &i2c0 {
@@ -436,6 +460,8 @@
 			regulator-name = "v1_0bat";
 			regulator-min-microvolt = <1000000>;
 			regulator-max-microvolt = <1000000>;
+			regulator-boot-on;
+			regulator-always-on;
 		};
 
 		dcdc6: regulator-dcdc6 {
@@ -443,6 +469,8 @@
 			regulator-name = "v1_8bat";
 			regulator-min-microvolt = <1800000>;
 			regulator-max-microvolt = <1800000>;
+			regulator-boot-on;
+			regulator-always-on;
 		};
 
 		ldo1: regulator-ldo1 {
@@ -483,6 +511,9 @@
 		interrupts = <22 0>;
 
 		attb-gpio = <&gpio3 22 GPIO_ACTIVE_HIGH>;
+
+		interrupts-extended = <&gpio3 22 GPIO_ACTIVE_HIGH>,
+				      <&am43xx_pinmux 0x264>;
 
 		touchscreen-size-x = <1024>;
 		touchscreen-size-y = <600>;
@@ -783,4 +814,9 @@
 
 &cpu {
 	cpu0-supply = <&dcdc2>;
+};
+
+&rtc {
+	status = "okay";
+	ext-clk-src;
 };
