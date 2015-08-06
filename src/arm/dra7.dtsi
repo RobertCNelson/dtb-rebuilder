@@ -211,7 +211,7 @@
 			#address-cells = <1>;
 			ranges = <0x51000000 0x51000000 0x3000
 				  0x0	     0x20000000 0x10000000>;
-			pcie@51000000 {
+			pcie1: pcie@51000000 {
 				compatible = "ti,dra7-pcie";
 				reg = <0x51000000 0x2000>, <0x51002000 0x14c>, <0x1000 0x2000>;
 				reg-names = "rc_dbics", "ti_conf", "config";
@@ -1196,8 +1196,10 @@
 
 		qspi: qspi@4b300000 {
 			compatible = "ti,dra7xxx-qspi";
-			reg = <0x4b300000 0x100>;
-			reg-names = "qspi_base";
+			reg = <0x4b300000 0x100>, <0x4a002558 0x4>,
+			      <0x5c000000 0x3ffffff>;
+			reg-names = "qspi_base", "qspi_ctrlmod",
+				    "qspi_mmap";
 			#address-cells = <1>;
 			#size-cells = <0>;
 			ti,hwmods = "qspi";
@@ -1389,7 +1391,12 @@
 			usb1: usb@48890000 {
 				compatible = "snps,dwc3";
 				reg = <0x48890000 0x17000>;
-				interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
+				interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>,
+					     <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>,
+					     <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-names = "peripheral",
+						  "host",
+						  "otg";
 				phys = <&usb2_phy1>, <&usb3_phy1>;
 				phy-names = "usb2-phy", "usb3-phy";
 				tx-fifo-resize;
@@ -1412,7 +1419,12 @@
 			usb2: usb@488d0000 {
 				compatible = "snps,dwc3";
 				reg = <0x488d0000 0x17000>;
-				interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>;
+				interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>,
+					     <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>,
+					     <GIC_SPI 87 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-names = "peripheral",
+						  "host",
+						  "otg";
 				phys = <&usb2_phy2>;
 				phy-names = "usb2-phy";
 				tx-fifo-resize;
@@ -1437,7 +1449,12 @@
 			usb3: usb@48910000 {
 				compatible = "snps,dwc3";
 				reg = <0x48910000 0x17000>;
-				interrupts = <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>;
+				interrupts = <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
+					     <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
+					     <GIC_SPI 344 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-names = "peripheral",
+						  "host",
+						  "otg";
 				tx-fifo-resize;
 				maximum-speed = "high-speed";
 				dr_mode = "otg";
@@ -1541,6 +1558,16 @@
 			       0x48485200 0x2E00>;
 			#address-cells = <1>;
 			#size-cells = <1>;
+
+			/*
+			 * Do not allow gating of cpsw clock as workaround
+			 * for errata i877. Keeping internal clock disabled
+			 * causes the device switching characteristics
+			 * to degrade over time and eventually fail to meet
+			 * the data manual delay time/skew specs.
+			 */
+			ti,no-idle;
+
 			/*
 			 * rx_thresh_pend
 			 * rx_pend

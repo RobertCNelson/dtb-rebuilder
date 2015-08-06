@@ -72,10 +72,6 @@
 	status = "okay";
 };
 
-&rtc {
-	system-power-controller;
-};
-
 / {
 	hdmi {
 		compatible = "ti,tilcdc,slave";
