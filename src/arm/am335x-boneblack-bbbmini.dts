@@ -54,6 +54,9 @@
 #include "am335x-peripheral-i2c2.dtsi"
 #include "am335x-bone-pinmux-i2c2.dtsi"
 #include "am335x-cape-i2c2-eeprom.dtsi"
+&i2c2 {
+    clock-frequency = <400000>;
+};
 
 #include "am335x-peripheral-ttyS4.dtsi"
 #include "am335x-bone-pinmux-ttyS4.dtsi"
