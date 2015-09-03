@@ -21,8 +21,7 @@
 	};
 
 	aliases {
-		display0 = &tlc59108;
-		display1 = &hdmi0;
+		display0 = &hdmi0;
 
 		sound0 = &sound0;
 		sound1 = &hdmi;
@@ -223,22 +222,6 @@
 		>;
 	};
 
-	vin2a_pins: pinmux_vin2a_pins {
-		pinctrl-single,pins = <
-			0x154   (PIN_INPUT | MUX_MODE0) /* vin2a_clk0 */
-			0x160   (PIN_INPUT | MUX_MODE0) /* vin2a_hsync0 */
-			0x164   (PIN_INPUT | MUX_MODE0) /* vin2a_vsync0 */
-			0x168   (PIN_INPUT | MUX_MODE0) /* vin2a_d0 */
-			0x16c   (PIN_INPUT | MUX_MODE0) /* vin2a_d1 */
-			0x170   (PIN_INPUT | MUX_MODE0) /* vin2a_d2 */
-			0x174   (PIN_INPUT | MUX_MODE0) /* vin2a_d3 */
-			0x178   (PIN_INPUT | MUX_MODE0) /* vin2a_d4 */
-			0x17c   (PIN_INPUT | MUX_MODE0) /* vin2a_d5 */
-			0x180   (PIN_INPUT | MUX_MODE0) /* vin2a_d6 */
-			0x184   (PIN_INPUT | MUX_MODE0) /* vin2a_d7 */
-		>;
-	};
-
 	dcan1_pins_default: dcan1_pins_default {
 		pinctrl-single,pins = <
 			0x3d0   (PIN_OUTPUT_PULLUP | MUX_MODE0) /* dcan1_tx */
@@ -426,19 +409,6 @@
 		IOVDD-supply = <&evm_3v3>;
 		DRVDD-supply = <&evm_3v3>;
 		DVDD-supply = <&aic_dvdd>;
-	};
-
-	/* TLC chip for LCD panel power and backlight */
-	tlc59108: tlc59108@40 {
-		compatible = "ti,tlc59108-lp101";
-		reg = <0x40>;
-		enable-gpios = <&pcf_lcd 13 GPIO_ACTIVE_LOW>; /* P15, CON_LCD_PWR_DN */
-
-		port {
-			tlc_in: endpoint {
-				remote-endpoint = <&dpi_out>;
-			};
-		};
 	};
 };
 
@@ -766,20 +736,6 @@
 	status = "ok";
 
 	vdda_video-supply = <&ldo5_reg>;
-
-	ports {
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		port {
-			reg = <0>;
-
-			dpi_out: endpoint {
-				remote-endpoint = <&tlc_in>;
-				data-lines = <24>;
-			};
-		};
-	};
 };
 
 &hdmi {
@@ -820,12 +776,11 @@
 };
 
 &vip1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&vin2a_pins>;
 	status = "okay";
 };
 
 &vin2a {
+	status = "okay";
 	endpoint@0 {
 		slave-mode;
 		remote-endpoint = <&onboardLI>;
