@@ -32,3 +32,7 @@
 	bus-width = <8>;
 	status = "okay";
 };
+
+&sgx {
+	status = "okay";
+};
