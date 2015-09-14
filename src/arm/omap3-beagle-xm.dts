@@ -173,10 +173,6 @@
 	};
 };
 
-&dpll2_ck {
-	ti,omap3630-dpll-usb-clock-errata;
-};
-
 &omap3_pmx_wkup {
 	gpio1_pins: pinmux_gpio1_pins {
 		pinctrl-single,pins = <
