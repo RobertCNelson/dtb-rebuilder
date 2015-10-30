@@ -27,44 +27,44 @@
 
 	memory {
 		device_type = "memory";
-		reg = <0x80000000 0x80000000>;
+		reg = <0x0 0x80000000 0x0 0x80000000>;
 	};
 
 	reserved-memory {
-		#address-cells = <1>;
-		#size-cells = <1>;
+		#address-cells = <2>;
+		#size-cells = <2>;
 		ranges;
 
 		ipu2_cma_pool: ipu2_cma@95800000 {
 			compatible = "shared-dma-pool";
-			reg = <0x95800000 0x3800000>;
+			reg = <0x0 0x95800000 0x0 0x3800000>;
 			reusable;
 			status = "okay";
 		};
 
 		dsp1_cma_pool: dsp1_cma@99000000 {
 			compatible = "shared-dma-pool";
-			reg = <0x99000000 0x4000000>;
+			reg = <0x0 0x99000000 0x0 0x4000000>;
 			reusable;
 			status = "okay";
 		};
 
 		ipu1_cma_pool: ipu1_cma@9d000000 {
 			compatible = "shared-dma-pool";
-			reg = <0x9d000000 0x2000000>;
+			reg = <0x0 0x9d000000 0x0 0x2000000>;
 			reusable;
 			status = "okay";
 		};
 
 		dsp2_cma_pool: dsp2_cma@9f000000 {
 			compatible = "shared-dma-pool";
-			reg = <0x9f000000 0x1000000>;
+			reg = <0x0 0x9f000000 0x0 0x1000000>;
 			reusable;
 			status = "okay";
 		};
 
 		cmem_block_mem_0: cmem_block_mem@a0000000 {
-			reg = <0xa0000000 0xa000000>;
+			reg = <0x0 0xa0000000 0x0 0x0a000000>;
 			no-map;
 			status = "okay";
 		};
@@ -216,12 +216,15 @@
 		compatible = "ti,cmem";
 		#address-cells = <1>;
 		#size-cells = <0>;
+
+		#pool-size-cells = <2>;
+
 		status = "okay";
 
 		cmem_block_0: cmem_block@0 {
 			reg = <0>;
 			memory-region = <&cmem_block_mem_0>;
-			cmem-buf-pools = <0x1 0xa000000>;
+			cmem-buf-pools = <1 0x0 0x0a000000>;
 		};
 	};
 };
@@ -639,6 +642,11 @@
 	bus-width = <4>;
 	cd-gpios = <&gpio6 27 0>; /* gpio 219 */
 	max-frequency = <96000000>;
+	/delete-property/ sd-uhs-sdr104;
+	/delete-property/ sd-uhs-sdr50;
+	/delete-property/ sd-uhs-ddr50;
+	/delete-property/ sd-uhs-sdr25;
+	/delete-property/ sd-uhs-sdr12;
 };
 
 &mmc2 {
@@ -774,6 +782,11 @@
 	rx-num-evt = <8>;
 };
 
+&rtc {
+	status = "okay";
+	ext-clk-src;
+};
+
 &mailbox3 {
 	status = "okay";
 	mbox_pru1_0: mbox_pru1_0 {
@@ -891,9 +904,4 @@
 		mboxes = <&mailbox4 &mbox_pru2_1>;
 		status = "okay";
 	};
-};
-
-&rtc {
-	status = "okay";
-	ext-clk-src;
 };
