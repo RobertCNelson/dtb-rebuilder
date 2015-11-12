@@ -39,9 +39,6 @@
 	system-power-controller;
 };
 
-#include "am335x-peripheral-spi1.dtsi"
-#include "am335x-bone-pinmux-spi1.dtsi"
-
 #include "am335x-peripheral-can1.dtsi"
 #include "am335x-bone-pinmux-can1.dtsi"
 
@@ -96,6 +93,28 @@
 			BONE_P9_17 (PIN_OUTPUT_PULLUP | MUX_MODE0)
 		>;
 	};
+
+	spi1_pins: pinmux_spi1_pins {
+		pinctrl-single,pins = <
+			/* P9_31: mcasp0_aclkx.spi1_sclk */
+			BONE_P9_31 (PIN_INPUT_PULLUP | MUX_MODE3)
+
+			/* P9_29: mcasp0_fsx.spi1_d0 */
+			BONE_P9_29 (PIN_INPUT_PULLUP | MUX_MODE3)
+
+			/* P9_30: mcasp0_axr0.spi1_d1 */
+			BONE_P9_30 (PIN_OUTPUT_PULLUP | MUX_MODE3)
+
+			/* P9_28: mcasp0_ahclkr.spi1_cs0 */
+			BONE_P9_28 (PIN_OUTPUT_PULLUP | MUX_MODE3)
+
+			/* P9_19: uart1_rtsn.spi1_cs1 */
+/*			BONE_P9_19 (PIN_OUTPUT_PULLUP | MUX_MODE4)*/
+
+			/* P9_42: ecap0_in_pwm0_out.spi1_cs1 */
+			BONE_P9_42A (PIN_OUTPUT_PULLUP | MUX_MODE2)
+		>;
+	};
 };
 
 &spi0 {
@@ -108,6 +127,28 @@
 		#size-cells = <0>;
 		spi-max-frequency = <24000000>;
 		reg = <0>;
+		compatible = "spidev";
+	};
+};
+
+&spi1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_pins>;
+	status = "okay";
+
+	spi1_0 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0>;
+		spi-max-frequency = <24000000>;
+		compatible = "spidev";
+	};
+
+	spi1_1 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <1>;
+		spi-max-frequency = <24000000>;
 		compatible = "spidev";
 	};
 };
