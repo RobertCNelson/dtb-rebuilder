@@ -39,13 +39,6 @@
 	system-power-controller;
 };
 
-#include "am335x-peripheral-i2c2.dtsi"
-#include "am335x-bone-pinmux-i2c2.dtsi"
-#include "am335x-cape-i2c2-eeprom.dtsi"
-&i2c2 {
-    clock-frequency = <400000>;
-};
-
 #include "am335x-peripheral-ttyS4.dtsi"
 #include "am335x-bone-pinmux-ttyS4.dtsi"
 
@@ -60,6 +53,15 @@
 			BONE_P9_26 (PIN_OUTPUT_PULLUP | MUX_MODE2)
 			/* P9_24: uart1_txd.d_can1_rx */
 			BONE_P9_24 (PIN_INPUT_PULLUP | MUX_MODE2)
+		>;
+	};
+
+	i2c2_pins: pinmux_i2c2_pins {
+		pinctrl-single,pins = <
+			/* P9_20: uart1_ctsn.i2c2_sda */
+			BONE_P9_20 (SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE3)
+			/* P9_19: uart1_rtsn.i2c2_scl */
+			BONE_P9_19 (SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE3)
 		>;
 	};
 
@@ -127,6 +129,54 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&dcan1_pins>;
 	status = "okay";
+};
+
+&i2c2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c2_pins>;
+
+	status = "okay";
+	clock-frequency = <400000>;
+
+	cape_eeprom0: cape_eeprom0@54 {
+		compatible = "at,24c256";
+		reg = <0x54>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		cape0_data: cape_data@0 {
+			reg = <0 0x100>;
+		};
+	};
+
+	cape_eeprom1: cape_eeprom1@55 {
+		compatible = "at,24c256";
+		reg = <0x55>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		cape1_data: cape_data@0 {
+			reg = <0 0x100>;
+		};
+	};
+
+	cape_eeprom2: cape_eeprom2@56 {
+		compatible = "at,24c256";
+		reg = <0x56>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		cape2_data: cape_data@0 {
+			reg = <0 0x100>;
+		};
+	};
+
+	cape_eeprom3: cape_eeprom3@57 {
+		compatible = "at,24c256";
+		reg = <0x57>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		cape3_data: cape_data@0 {
+			reg = <0 0x100>;
+		};
+	};
 };
 
 &spi0 {
