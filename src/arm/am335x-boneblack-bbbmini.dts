@@ -39,9 +39,6 @@
 	system-power-controller;
 };
 
-#include "am335x-peripheral-spi0.dtsi"
-#include "am335x-bone-pinmux-spi0.dtsi"
-
 #include "am335x-peripheral-spi1.dtsi"
 #include "am335x-bone-pinmux-spi1.dtsi"
 
@@ -85,6 +82,33 @@
 
 			BONE_P9_25 (PIN_INPUT_PULLDOWN | MUX_MODE6) /* MPU9250 INT */
 		>;
+	};
+
+	spi0_pins: pinmux_spi0_pins {
+		pinctrl-single,pins = <
+			/* P9_22: spi0_sclk.spi0_sclk */
+			BONE_P9_22 (PIN_INPUT_PULLUP | MUX_MODE0)
+			/* P9_21: spi0_d0.spi0_d0 */
+			BONE_P9_21 (PIN_INPUT_PULLUP | MUX_MODE0)
+			/* P9_18: spi0_d1.spi0_d1 */
+			BONE_P9_18 (PIN_OUTPUT_PULLUP | MUX_MODE0)
+			/* P9_17: spi0_cs0.spi0_cs0 */
+			BONE_P9_17 (PIN_OUTPUT_PULLUP | MUX_MODE0)
+		>;
+	};
+};
+
+&spi0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi0_pins>;
+	status = "okay";
+
+	spi0_0 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		spi-max-frequency = <24000000>;
+		reg = <0>;
+		compatible = "spidev";
 	};
 };
 
