@@ -6,7 +6,6 @@
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
  */
-
 /dts-v1/;
 
 #include "am33xx.dtsi"
@@ -33,10 +32,6 @@
 	pinctrl-0 = <&emmc_pins>;
 	bus-width = <8>;
 	status = "okay";
-};
-
-&rtc {
-	system-power-controller;
 };
 
 #include "am335x-peripheral-ttyS4.dtsi"
