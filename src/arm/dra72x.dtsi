@@ -73,20 +73,34 @@
 	clock-names = "fck", "video1_clk";
 };
 
-&mmc1 {
-	compatible = "ti,omap4-hsmmc";
-};
-
-&mmc2 {
-	compatible = "ti,omap4-hsmmc";
-};
-
-&mmc3 {
-	compatible = "ti,omap4-hsmmc";
-};
-
 &mmc4 {
 	compatible = "ti,omap4-hsmmc";
+};
+
+&mailbox3 {
+	mbox_pru1_0: mbox_pru1_0 {
+		ti,mbox-tx = <0 0 0>;
+		ti,mbox-rx = <1 0 0>;
+		status = "disabled";
+	};
+	mbox_pru1_1: mbox_pru1_1 {
+		ti,mbox-tx = <2 0 0>;
+		ti,mbox-rx = <3 0 0>;
+		status = "disabled";
+	};
+};
+
+&mailbox4 {
+	mbox_pru2_0: mbox_pru2_0 {
+		ti,mbox-tx = <0 0 0>;
+		ti,mbox-rx = <1 0 0>;
+		status = "disabled";
+	};
+	mbox_pru2_1: mbox_pru2_1 {
+		ti,mbox-tx = <2 0 0>;
+		ti,mbox-rx = <3 0 0>;
+		status = "disabled";
+	};
 };
 
 &mailbox5 {

@@ -340,3 +340,76 @@
 	pinctrl-1 = <&dcan1_pins_sleep>;
 	pinctrl-2 = <&dcan1_pins_default>;
 };
+
+&mmc1 {
+	status = "okay";
+	pinctrl-names = "default", "hs";
+	pinctrl-0 = <&mmc1_pins_default>;
+	pinctrl-1 = <&mmc1_pins_hs>;
+	vmmc-supply = <&ldo1_reg>;
+	bus-width = <4>;
+	cd-gpios = <&gpio6 27 0>; /* gpio 219 */
+	max-frequency = <96000000>;
+	/delete-property/ sd-uhs-sdr104;
+	/delete-property/ sd-uhs-sdr50;
+	/delete-property/ sd-uhs-ddr50;
+	/delete-property/ sd-uhs-sdr25;
+	/delete-property/ sd-uhs-sdr12;
+};
+
+&mmc2 {
+	status = "okay";
+	pinctrl-names = "default", "hs";
+	pinctrl-0 = <&mmc2_pins_default>;
+	pinctrl-1 = <&mmc2_pins_hs>;
+	vmmc-supply = <&v3_3d>;
+	bus-width = <8>;
+	ti,non-removable;
+	max-frequency = <96000000>;
+};
+
+&mailbox3 {
+	status = "okay";
+	mbox_pru1_0: mbox_pru1_0 {
+		status = "okay";
+	};
+	mbox_pru1_1: mbox_pru1_1 {
+		status = "okay";
+	};
+};
+
+&mailbox4 {
+	status = "okay";
+	mbox_pru2_0: mbox_pru2_0 {
+		status = "okay";
+	};
+	mbox_pru2_1: mbox_pru2_1 {
+		status = "okay";
+	};
+};
+
+&pruss1 {
+	status = "okay";
+	pru1_0: pru@4b234000 {
+		mboxes = <&mailbox3 &mbox_pru1_0>;
+		status = "okay";
+	};
+
+	pru1_1: pru@4b238000 {
+		mboxes = <&mailbox3 &mbox_pru1_1>;
+		status = "okay";
+	};
+};
+
+&pruss2 {
+	status = "okay";
+	pru2_0: pru@4b2b4000 {
+		mboxes = <&mailbox4 &mbox_pru2_0>;
+		status = "okay";
+	};
+
+	pru2_1: pru@4b2b8000 {
+		mboxes = <&mailbox4 &mbox_pru2_1>;
+		status = "okay";
+	};
+};
