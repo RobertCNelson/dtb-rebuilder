@@ -171,6 +171,12 @@
 	};
 };
 
+&tscadc {
+	adc {
+		ti,adc-channels = <0 1>;
+	};
+};
+
 &pruss {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pru_pins>;
