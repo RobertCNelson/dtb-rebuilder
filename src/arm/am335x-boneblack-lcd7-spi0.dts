@@ -8,7 +8,7 @@
 /dts-v1/;
 
 #include "am33xx.dtsi"
-#include "am335x-bone-common.dtsi"
+#include "am335x-bone-common-no-capemgr.dtsi"
 #include <dt-bindings/board/am335x-bbw-bbb-base.h>
 #include <dt-bindings/gpio/gpio.h>
 
