@@ -10,6 +10,8 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
+#include <dt-bindings/board/am335x-bbw-bbb-base.h>
+#include <dt-bindings/pinctrl/am33xx.h>
 
 / {
 	model = "TI AM335x BeagleBone Black";
@@ -33,9 +35,6 @@
 	bus-width = <8>;
 	status = "okay";
 };
-
-#include "am335x-peripheral-ttyS5.dtsi"
-#include "am335x-bone-pinmux-ttyS5.dtsi"
 
 &am33xx_pinmux {
 	dcan1_pins: pinmux_dcan1_pins {
@@ -189,10 +188,8 @@
 	status = "okay";
 };
 
-/*
 &uart5 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart5_pins>;
 	status = "okay";
 };
-*/
