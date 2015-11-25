@@ -10,6 +10,8 @@
 	aliases {
 		rtc0 = &tps659038_rtc;
 		rtc1 = &rtc;
+		display0 = &hdmi0;
+		sound0 = &hdmi;
 	};
 
 	vmain: fixedregulator-vmain {
@@ -40,6 +42,54 @@
 		regulator-max-microvolt = <3300000>;
 		regulator-always-on;
 		regulator-boot-on;
+	};
+
+	hdmi0: connector@0 {
+		compatible = "hdmi-connector";
+		label = "hdmi";
+
+		type = "a";
+
+		port {
+			hdmi_connector_in: endpoint {
+				remote-endpoint = <&tpd12s015_out>;
+			};
+		};
+	};
+
+	tpd12s015: encoder@0 {
+		compatible = "ti,tpd12s016", "ti,tpd12s015";
+
+		gpios = <0>, /* optional CT_CP_HPD */
+			<0>, /* optional LS_OE */
+			<&gpio7 12 GPIO_ACTIVE_HIGH>;	/* HPD */
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+
+				tpd12s015_in: endpoint@0 {
+					remote-endpoint = <&hdmi_out>;
+				};
+			};
+
+			port@1 {
+				reg = <1>;
+
+				tpd12s015_out: endpoint@0 {
+					remote-endpoint = <&hdmi_connector_in>;
+				};
+			};
+		};
+	};
+
+	src_clk_x1: src_clk_x1 {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <20000000>;
 	};
 };
 
@@ -96,7 +146,8 @@
 				};
 
 				smps45_reg: smps45 {
-					/* VDD_DSPEVE */
+					/* VDD_DSPEVE on AM572 */
+					/* VDD_IVA + VDD_DSP on AM571 */
 					vin-supply = <&vmain>;
 					regulator-name = "smps45";
 					regulator-min-microvolt = <850000>;
@@ -119,8 +170,8 @@
 					/* VDD_CORE */
 					vin-supply = <&vmain>;
 					regulator-name = "smps7";
-					regulator-min-microvolt = <1020000>;
-					regulator-max-microvolt = <1160000>;
+					regulator-min-microvolt = <850000>;
+					regulator-max-microvolt = <1150000>;
 					regulator-always-on;
 					regulator-boot-on;
 				};
@@ -130,10 +181,6 @@
 					/* 5718 - N.C. test point */
 					vin-supply = <&vmain>;
 					regulator-name = "smps8";
-					regulator-min-microvolt = <850000>;
-					regulator-max-microvolt = <1250000>;
-					regulator-always-on;
-					regulator-boot-on;
 				};
 
 				smps9_reg: smps9 {
@@ -148,11 +195,13 @@
 
 				ldo1_reg: ldo1 {
 					/* VDDSHV8 - VSDMMC  */
+					/* NOTE: on rev 1.3a, data supply */
 					vin-supply = <&vmain>;
 					regulator-name = "ldo1";
 					regulator-min-microvolt = <3300000>;
 					regulator-max-microvolt = <3300000>;
 					regulator-boot-on;
+					regulator-always-on;
 				};
 
 				ldo2_reg: ldo2 {
@@ -166,9 +215,9 @@
 				};
 
 				ldo3_reg: ldo3 {
-					/* VDDA_SATA */
-					/* AM572x-idk VDDA_USB1,2,3 */
-					/* AM571x-idk VDDA_USB1,2 */
+					/* R1.2a 572x V1_8PHY: USB1,2,3, SATA, PCIE, HDMI */
+					/* R1.3a 572x V1_8PHY_LDO3: USB, SATA */
+					/* R1.2a 571x V1_8PHY_LDO3: USB1,2, CSI; V1_8PHYA: SATA */
 					vin-supply = <&vmain>;
 					regulator-name = "ldo3";
 					regulator-min-microvolt = <1800000>;
@@ -178,16 +227,21 @@
 				};
 
 				ldo4_reg: ldo4 {
-					/* VDDA_HDMI VDDA_PCIe */
-					/* AM571x-idk - VDDA_USB3 */
+					/* R1.2a 572x - unused */
+					/* R1.3a 572x V1_8PHY_LDO4: PCIE, HDMI */
+					/* R1.2a 571x V1_8PHY_LDO4: V1_8PHYB: USB3, PCIE, HDMI */
 					vin-supply = <&vmain>;
 					regulator-name = "ldo4";
 					regulator-min-microvolt = <1800000>;
 					regulator-max-microvolt = <1800000>;
+					regulator-always-on;
+					regulator-boot-on;
 				};
 
+				/* LDO5-8 unused */
+
 				ldo9_reg: ldo9 {
-					/* VDD_RTC */
+					/* VDD_RTC (unused in rev 1.3a am572x-idk) */
 					vin-supply = <&vmain>;
 					regulator-name = "ldo9";
 					regulator-min-microvolt = <840000>;
@@ -212,11 +266,12 @@
 					regulator-name = "ldousb";
 					regulator-min-microvolt = <3300000>;
 					regulator-max-microvolt = <3300000>;
+					regulator-always-on;
 					regulator-boot-on;
 				};
 
 				ldortc_reg: ldortc {
-					/* VDDA_RTC */
+					/* VDDA_RTC  (unused on rev am572x 1.3a) */
 					vin-supply = <&vmain>;
 					regulator-name = "ldortc";
 					regulator-min-microvolt = <1800000>;
@@ -260,6 +315,57 @@
 			compatible = "ti,palmas-gpio";
 			gpio-controller;
 			#gpio-cells = <2>;
+		};
+	};
+
+	tc358778: tc358778@0e {
+		compatible = "toshiba,tc358778", "toshiba,tc358768";
+		reg = <0x0e>;
+		status = "disabled";
+
+		clocks = <&src_clk_x1>;
+		clock-names = "refclk";
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				tc358778_in: endpoint {
+					remote-endpoint = <&dpi_out>;
+					data-lines = <24>;
+				};
+			};
+
+			port@1 {
+				reg = <1>;
+				tc358778_out: endpoint {
+					/*
+					 * lanes and remote-endpoint defined per
+					 * panel.
+					 */
+				};
+			};
+		};
+	};
+
+	ov2659: ov2659@30 {
+		compatible = "ovti,ov2659";
+		reg = <0x30>;
+
+		clocks = <&src_clk_x1>;
+		clock-names = "xvclk";
+
+		pwrdn-gpios = <&gpio6 14 GPIO_ACTIVE_LOW>;
+
+		port {
+			ov2659_1: endpoint {
+				hsync-active = <1>;
+				vsync-active = <1>;
+				pclk-sample = <1>;
+				link-frequencies = /bits/ 64 <70000000>;
+			};
 		};
 	};
 };
@@ -411,5 +517,42 @@
 	pru2_1: pru@4b2b8000 {
 		mboxes = <&mailbox4 &mbox_pru2_1>;
 		status = "okay";
+	};
+};
+
+&hdmi {
+	status = "okay";
+	/*
+	 * XXX: Support AM572x-Rev 1.2a. this is wrong for AM571x-rev 1.3a,
+	 * AM572x-Rev1.3a - but thanks to always-on, they work.
+	 * TODO: SWITCH TO LDO4 once rev 1.2a is deprecated
+	 * (on rev 1.3a availability)
+	 */
+	vdda-supply = <&ldo3_reg>;
+
+	port {
+		hdmi_out: endpoint {
+			remote-endpoint = <&tpd12s015_in>;
+		};
+	};
+};
+
+&dss {
+	status = "okay";
+
+	vdda_video-supply = <&ldoln_reg>;
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		port@0 {
+			reg = <0>;
+
+			dpi_out: endpoint {
+				remote-endpoint = <&tc358778_in>;
+				data-lines = <24>;
+			};
+		};
 	};
 };
