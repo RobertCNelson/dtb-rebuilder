@@ -22,22 +22,22 @@ if [ "${deb_pkgs}" ] ; then
 fi
 
 #git_sha="origin/master"
-#follow master, but use the git sha, just incase of git breakage...
-git_sha="f6dbc6ca9618391e4f30c415a0a09b7af35f7647"
+git_sha="origin/bb.org-4.1-dt-overlays5"
 project="dtc"
-server="git://git.kernel.org/pub/scm/utils/dtc"
+#server="https://git.kernel.org/pub/scm/utils/dtc"
+server="https://github.com/RobertCNelson"
 
-if [ ! -f ${HOME}/git/${project}/.git/config ] ; then
-	git clone ${server}/${project}.git ${HOME}/git/${project}/
+if [ ! -f ${HOME}/git/bb.org-${project}/.git/config ] ; then
+	git clone ${server}/${project}.git ${HOME}/git/bb.org-${project}/
 fi
 
-if [ ! -f ${HOME}/git/${project}/.git/config ] ; then
-	rm -rf ${HOME}/git/${project}/ || true
+if [ ! -f ${HOME}/git/bb.org-${project}/.git/config ] ; then
+	rm -rf ${HOME}/git/bb.org-${project}/ || true
 	echo "error: git failure, try re-runing"
 	exit
 fi
 
-cd ${HOME}/git/${project}/
+cd ${HOME}/git/bb.org-${project}/
 make clean
 git checkout master -f
 git pull || true
@@ -48,7 +48,6 @@ if [ "x${test_for_branch}" != "x" ] ; then
 fi
 
 git checkout ${git_sha} -b ${git_sha}-build
-git pull --no-edit https://github.com/pantoniou/dtc dt-overlays5
 
 make clean
 make PREFIX=/usr/local/ CC=gcc CROSS_COMPILE= all
