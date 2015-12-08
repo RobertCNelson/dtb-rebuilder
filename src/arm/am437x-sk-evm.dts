@@ -15,7 +15,6 @@
 #include <dt-bindings/pwm/pwm.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
-#include <dt-bindings/interrupt-controller/irq.h>
 
 / {
 	model = "TI AM437x SK EVM";
@@ -23,6 +22,13 @@
 
 	aliases {
 		display0 = &lcd0;
+	};
+
+	/* fixed 32k external oscillator clock */
+	clk_32k_rtc: clk_32k_rtc {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <32768>;
 	};
 
 	backlight {
@@ -36,10 +42,13 @@
 		compatible = "simple-audio-card";
 		simple-audio-card,name = "AM437x-SK-EVM";
 		simple-audio-card,widgets =
-			"Headphone", "Headphone Jack";
+			"Headphone", "Headphone Jack",
+			"Line", "Line In";
 		simple-audio-card,routing =
 			"Headphone Jack",	"HPLOUT",
-			"Headphone Jack",	"HPROUT";
+			"Headphone Jack",	"HPROUT",
+			"LINE1L",		"Line In",
+			"LINE1R",		"Line In";
 		simple-audio-card,format = "dsp_b";
 		simple-audio-card,bitclock-master = <&sound_master>;
 		simple-audio-card,frame-master = <&sound_master>;
@@ -143,15 +152,6 @@
 			};
 		};
 	};
-
-	vmmcwl_fixed: fixedregulator-mmcwl {
-		compatible = "regulator-fixed";
-		regulator-name = "vmmcwl_fixed";
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <1800000>;
-		gpio = <&gpio4 8 GPIO_ACTIVE_HIGH>;
-		enable-active-high;
-	};
 };
 
 &am43xx_pinmux {
@@ -249,12 +249,6 @@
 			0x21c (DS0_PULL_UP_DOWN_EN | INPUT_EN | MUX_MODE7)
 			0x220 (DS0_PULL_UP_DOWN_EN | INPUT_EN | MUX_MODE7)
 			0x224 (DS0_PULL_UP_DOWN_EN | INPUT_EN | MUX_MODE7)
-		>;
-	};
-
-	clkout1_pin: pinmux_clkout1_pin {
-		pinctrl-single,pins = <
-			0x270 (PIN_OUTPUT_PULLDOWN | MUX_MODE3)	/* XDMA_EVENT_INTR0/CLKOUT1 */
 		>;
 	};
 
@@ -392,6 +386,15 @@
 		>;
 	};
 
+	mcasp1_pins_sleep: mcasp1_pins_sleep {
+		pinctrl-single,pins = <
+			0x10c (PIN_INPUT_PULLDOWN | MUX_MODE7)
+			0x110 (PIN_INPUT_PULLDOWN | MUX_MODE7)
+			0x108 (PIN_INPUT_PULLDOWN | MUX_MODE7)
+			0x144 (PIN_INPUT_PULLDOWN | MUX_MODE7)
+		>;
+	};
+
 	lcd_pins: lcd_pins {
 		pinctrl-single,pins = <
 			0x1c (PIN_OUTPUT_PULLDOWN | MUX_MODE7) /* gpcm_ad7.gpio1_7 */
@@ -409,69 +412,13 @@
 			0x2c4 (PIN_OUTPUT | MUX_MODE0) /* usb0_drvvbus.usb0_drvvbus */
 		>;
 	};
-
-	mmc3_pins_default: pinmux_mmc3_pins_default {
-		pinctrl-single,pins = <
-			0x1f0 (PIN_INPUT_PULLUP | MUX_MODE3) /* (AD21) cam1_data2.mmc2_clk */
-			0x1f4 (PIN_INPUT_PULLUP | MUX_MODE3) /* (AE22) cam1_data3.mmc2_cmd */
-			0x1f8 (PIN_INPUT_PULLUP | MUX_MODE3) /* (AD22) cam1_data4.mmc2_dat0 */
-			0x1fc (PIN_INPUT_PULLUP | MUX_MODE3) /* (AE23) cam1_data5.mmc2_dat1 */
-			0x200 (PIN_INPUT_PULLUP | MUX_MODE3) /* (AD23) cam1_data6.mmc2_dat2 */
-			0x204 (PIN_INPUT_PULLUP | MUX_MODE3) /* (AE24) cam1_data7.mmc2_dat3 */
-		>;
-	};
-
-	mmc3_pins_sleep: pinmux_mmc3_pins_sleep {
-		pinctrl-single,pins = <
-			0x1f0 (PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AD21) cam1_data2.mmc2_clk */
-			0x1f4 (PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AE22) cam1_data3.mmc2_cmd */
-			0x1f8 (PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AD22) cam1_data4.mmc2_dat0 */
-			0x1fc (PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AE23) cam1_data5.mmc2_dat1 */
-			0x200 (PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AD23) cam1_data6.mmc2_dat2 */
-			0x204 (PIN_INPUT_PULLDOWN | MUX_MODE7) /* (AE24) cam1_data7.mmc2_dat3 */
-		>;
-	};
-
-	wlan_pins_default: pinmux_wlan_pins_default {
-		pinctrl-single,pins = <
-			0x1d0 (PIN_OUTPUT_PULLDOWN | MUX_MODE7)		/* cam1_data8.gpio4_8 WL_EN */
-			0x1e4 (PIN_INPUT | WAKEUP_ENABLE | MUX_MODE7)	/* cam1_wen.gpio4_13 WL_IRQ */
-		>;
-	};
-
-	wlan_pins_sleep: pinmux_wlan_pins_sleep {
-		pinctrl-single,pins = <
-			0x1d0 (PIN_OUTPUT_PULLDOWN | MUX_MODE7)		/* cam1_data8.gpio4_8 WL_EN */
-			0x1e4 (PIN_INPUT | WAKEUP_ENABLE | MUX_MODE7)	/* cam1_wen.gpio4_13 WL_IRQ */
-		>;
-	};
-
-	uart1_bt_pins_default: pinmux_uart1_bt_pins_default {
-		pinctrl-single,pins = <
-			0x180 (PIN_INPUT | MUX_MODE0)		/* uart1_rxd.uart1_rxd */
-			0x184 (PIN_OUTPUT_PULLDOWN | MUX_MODE0) /* uart1_txd.uart1_txd */
-			0x178 (PIN_INPUT_PULLUP | MUX_MODE0)	/* uart1_ctsn.uart1_ctsn */
-			0x17c (PIN_OUTPUT_PULLDOWN | MUX_MODE0) /* uart1_rtsn.uart1_rtsn */
-			0x1cc (PIN_OUTPUT_PULLDOWN | MUX_MODE7)	/* cam1_data9.gpiop BT_EN */
-		>;
-	};
-
-	uart1_bt_pins_sleep: pinmux_uart1_bt_pins_sleep {
-		pinctrl-single,pins = <
-			0x180 (PIN_OUTPUT_PULLDOWN | MUX_MODE7)	/* uart1_rxd.uart1_rxd */
-			0x184 (PIN_OUTPUT_PULLDOWN | MUX_MODE7) /* uart1_txd.uart1_txd */
-			0x178 (PIN_OUTPUT_PULLDOWN | MUX_MODE7)	/* uart1_ctsn.uart1_ctsn */
-			0x17c (PIN_OUTPUT_PULLDOWN | MUX_MODE7) /* uart1_rtsn.uart1_rtsn */
-			0x1cc (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* cam1_data9.gpio4_7 BT_EN */
-		>;
-	};
 };
 
 &i2c0 {
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c0_pins>;
-	clock-frequency = <100000>;
+	clock-frequency = <400000>;
 
 	tps@24 {
 		compatible = "ti,tps65218";
@@ -507,12 +454,6 @@
 			regulator-max-microvolt = <1500000>;
 			regulator-boot-on;
 			regulator-always-on;
-			regulator-state-mem {
-				regulator-on-in-suspend;
-			};
-			regulator-state-disk {
-				regulator-off-in-suspend;
-			};
 		};
 
 		dcdc4: regulator-dcdc4 {
@@ -522,30 +463,6 @@
 			regulator-max-microvolt = <3300000>;
 			regulator-boot-on;
 			regulator-always-on;
-		};
-
-		dcdc5: regulator-dcdc5 {
-			compatible = "ti,tps65218-dcdc5";
-			regulator-name = "v1_0bat";
-			regulator-min-microvolt = <1000000>;
-			regulator-max-microvolt = <1000000>;
-			regulator-boot-on;
-			regulator-always-on;
-			regulator-state-mem {
-				regulator-on-in-suspend;
-			};
-		};
-
-		dcdc6: regulator-dcdc6 {
-			compatible = "ti,tps65218-dcdc6";
-			regulator-name = "v1_8bat";
-			regulator-min-microvolt = <1800000>;
-			regulator-max-microvolt = <1800000>;
-			regulator-boot-on;
-			regulator-always-on;
-			regulator-state-mem {
-				regulator-on-in-suspend;
-			};
 		};
 
 		ldo1: regulator-ldo1 {
@@ -577,25 +494,6 @@
 	pinctrl-0 = <&i2c1_pins>;
 	clock-frequency = <400000>;
 
-	ov2659@30 {
-		compatible = "ovti,ov2659";
-		reg = <0x30>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&clkout1_pin>;
-
-		clocks = <&clkout1_mux_ck>;
-		clock-names = "xvclk";
-		assigned-clocks = <&clkout1_mux_ck>;
-		assigned-clock-parents = <&clkout1_osc_div_ck>;
-
-		port {
-			ov2659_1: endpoint {
-				remote-endpoint = <&vpfe0_ep>;
-				link-frequencies = /bits/ 64 <70000000>;
-			};
-		};
-	};
-
 	edt-ft5306@38 {
 		status = "okay";
 		compatible = "edt,edt-ft5306", "edt,edt-ft5x06";
@@ -604,7 +502,7 @@
 
 		reg = <0x38>;
 		interrupt-parent = <&gpio0>;
-		interrupts = <31 0>;
+		interrupts = <31 IRQ_TYPE_EDGE_FALLING>;
 
 		reset-gpios = <&gpio1 28 GPIO_ACTIVE_LOW>;
 
@@ -654,10 +552,6 @@
 	status = "okay";
 };
 
-&gpio4 {
-	status = "okay";
-};
-
 &gpio5 {
 	status = "okay";
 };
@@ -669,48 +563,7 @@
 
 	vmmc-supply = <&dcdc4>;
 	bus-width = <4>;
-	cd-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
-};
-
-&uart1 {
-	status = "okay";
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&uart1_bt_pins_default>;
-	pinctrl-1 = <&uart1_bt_pins_sleep>;
-};
-
-&mmc3 {
-	status = "okay";
-	/* these are on the crossbar and are outlined in the
-	   xbar-event-map element */
-	dmas = <&edma 30
-		&edma 31>;
-	dma-names = "tx", "rx";
-	vmmc-supply = <&vmmcwl_fixed>;
-	bus-width = <4>;
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&mmc3_pins_default>;
-	pinctrl-1 = <&mmc3_pins_sleep>;
-	cap-power-off-card;
-	keep-power-in-suspend;
-	ti,non-removable;
-
-	#address-cells = <1>;
-	#size-cells = <0>;
-	wlcore: wlcore@0 {
-		compatible = "ti,wl1835";
-		pinctrl-names = "default", "sleep";
-		pinctrl-0 = <&wlan_pins_default>;
-		pinctrl-1 = <&wlan_pins_sleep>;
-		reg = <2>;
-		interrupt-parent = <&gpio4>;
-		interrupts = <13 IRQ_TYPE_LEVEL_HIGH>;
-	};
-};
-
-&edma {
-	ti,edma-xbar-event-map = /bits/ 16 <1 30
-					    2 31>;
+	cd-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
 };
 
 &usb2_phy1 {
@@ -718,7 +571,7 @@
 };
 
 &usb1 {
-	dr_mode = "otg";
+	dr_mode = "peripheral";
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&usb1_pins>;
@@ -820,8 +673,9 @@
 
 &mcasp1 {
 	#sound-dai-cells = <0>;
-	pinctrl-names = "default";
+	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&mcasp1_pins>;
+	pinctrl-1 = <&mcasp1_pins_sleep>;
 
 	status = "okay";
 
@@ -850,8 +704,9 @@
 };
 
 &rtc {
+	clocks = <&clk_32k_rtc>, <&clk_32768_ck>;
+	clock-names = "ext-clk", "int-clk";
 	status = "okay";
-	ext-clk-src;
 };
 
 &wdt {
@@ -871,19 +726,11 @@
 	/* Camera port */
 	port {
 		vpfe0_ep: endpoint {
-			remote-endpoint = <&ov2659_1>;
+			/* remote-endpoint = <&sensor>; add once we have it */
 			ti,am437x-vpfe-interface = <0>;
 			bus-width = <8>;
 			hsync-active = <0>;
 			vsync-active = <0>;
 		};
 	};
-};
-
-&wkup_m3_ipc {
-	ti,scale-data-fw = "am43x-evm-scale-data.bin";
-};
-
-&sgx {
-	status = "okay";
 };

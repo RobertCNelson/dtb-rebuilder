@@ -43,13 +43,6 @@
 		};
 	};
 
-	aliases {
-		rproc0 = &ipu1;
-		rproc1 = &ipu2;
-		rproc2 = &dsp1;
-		rproc3 = &dsp2;
-	};
-
 	pmu {
 		compatible = "arm,cortex-a15-pmu";
 		interrupt-parent = <&wakeupgen>;
@@ -58,12 +51,6 @@
 	};
 
 	ocp {
-		debugss {
-			compatible = "ti,dra7xx-debugss";
-			clocks = <0xe>;
-			clock-names = "sysclockin1";
-		};
-
 		dsp2_system: dsp_system@41500000 {
 			compatible = "syscon";
 			reg = <0x41500000 0x100>;
@@ -113,43 +100,22 @@
 			ti,syscon-mmuconfig = <&dsp2_system 0x1>;
 			status = "disabled";
 		};
-
-		dsp2: dsp@41000000 {
-			compatible = "ti,dra7-rproc-dsp";
-			reg = <0x41000000 0x48000>;
-			reg-names = "l2ram";
-			ti,hwmods = "dsp2";
-			syscon-bootreg = <&scm_conf 0x560>;
-			iommus = <&mmu0_dsp2>, <&mmu1_dsp2>;
-			status = "disabled";
-		};
 	};
 };
 
-&mailbox3 {
-	mbox_pru1_0: mbox_pru1_0 {
-		ti,mbox-tx = <0 0 0>;
-		ti,mbox-rx = <1 0 0>;
-		status = "disabled";
-	};
-	mbox_pru1_1: mbox_pru1_1 {
-		ti,mbox-tx = <2 0 0>;
-		ti,mbox-rx = <3 0 0>;
-		status = "disabled";
-	};
-};
+&dss {
+	reg = <0x58000000 0x80>,
+	      <0x58004054 0x4>,
+	      <0x58004300 0x20>,
+	      <0x58005054 0x4>,
+	      <0x58005300 0x20>;
+	reg-names = "dss", "pll1_clkctrl", "pll1",
+		    "pll2_clkctrl", "pll2";
 
-&mailbox4 {
-	mbox_pru2_0: mbox_pru2_0 {
-		ti,mbox-tx = <0 0 0>;
-		ti,mbox-rx = <1 0 0>;
-		status = "disabled";
-	};
-	mbox_pru2_1: mbox_pru2_1 {
-		ti,mbox-tx = <2 0 0>;
-		ti,mbox-rx = <3 0 0>;
-		status = "disabled";
-	};
+	clocks = <&dss_dss_clk>,
+		 <&dss_video1_clk>,
+		 <&dss_video2_clk>;
+	clock-names = "fck", "video1_clk", "video2_clk";
 };
 
 &mailbox5 {
@@ -176,19 +142,4 @@
 		ti,mbox-rx = <1 2 2>;
 		status = "disabled";
 	};
-};
-
-&dss {
-	reg = <0x58000000 0x80>,
-	      <0x58004054 0x4>,
-	      <0x58004300 0x20>,
-	      <0x58005054 0x4>,
-	      <0x58005300 0x20>;
-	reg-names = "dss", "pll1_clkctrl", "pll1",
-		    "pll2_clkctrl", "pll2";
-
-	clocks = <&dss_dss_clk>,
-		 <&dss_video1_clk>,
-		 <&dss_video2_clk>;
-	clock-names = "fck", "video1_clk", "video2_clk";
 };

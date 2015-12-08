@@ -38,27 +38,10 @@
 		};
 	};
 
-	aliases {
-		rproc0 = &ipu1;
-		rproc1 = &ipu2;
-		rproc2 = &dsp1;
-	};
-
 	pmu {
 		compatible = "arm,cortex-a15-pmu";
 		interrupt-parent = <&wakeupgen>;
 		interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
-	};
-};
-
-&scm {
-	dra72_vip_mux: pinmux@4a002e8c {
-		compatible = "pinctrl-single";
-		reg = <0xe8c 0x4>;
-		#address-cells = <1>;
-		#size-cells = <0>;
-		pinctrl-single,register-width = <32>;
-		pinctrl-single,function-mask = <0x7f>;
 	};
 };
 
@@ -71,36 +54,6 @@
 	clocks = <&dss_dss_clk>,
 		 <&dss_video1_clk>;
 	clock-names = "fck", "video1_clk";
-};
-
-&mmc4 {
-	compatible = "ti,omap4-hsmmc";
-};
-
-&mailbox3 {
-	mbox_pru1_0: mbox_pru1_0 {
-		ti,mbox-tx = <0 0 0>;
-		ti,mbox-rx = <1 0 0>;
-		status = "disabled";
-	};
-	mbox_pru1_1: mbox_pru1_1 {
-		ti,mbox-tx = <2 0 0>;
-		ti,mbox-rx = <3 0 0>;
-		status = "disabled";
-	};
-};
-
-&mailbox4 {
-	mbox_pru2_0: mbox_pru2_0 {
-		ti,mbox-tx = <0 0 0>;
-		ti,mbox-rx = <1 0 0>;
-		status = "disabled";
-	};
-	mbox_pru2_1: mbox_pru2_1 {
-		ti,mbox-tx = <2 0 0>;
-		ti,mbox-rx = <3 0 0>;
-		status = "disabled";
-	};
 };
 
 &mailbox5 {

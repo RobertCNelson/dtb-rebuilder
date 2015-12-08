@@ -1,7 +1,7 @@
 /*
  * Common Device Tree Source for IGEP COM MODULE
  *
- * Copyright (C) 2014 Javier Martinez Canillas <javier@collabora.co.uk>
+ * Copyright (C) 2014 Javier Martinez Canillas <javier@osg.samsung.com>
  * Copyright (C) 2014 Enric Balletbo i Serra <eballetbo@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -57,8 +57,4 @@
 &uart2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart2_pins>;
-};
-
-&gpmc {
-	ranges = <0 0 0x30000000 0x01000000>;   /* CS0: 16MB for NAND */
 };

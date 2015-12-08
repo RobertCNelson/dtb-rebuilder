@@ -25,8 +25,6 @@
 		serial1 = &uart2;
 		serial2 = &uart3;
 		serial3 = &uart4;
-		rproc0 = &dsp;
-		rproc1 = &ipu;
 	};
 
 	cpus {
@@ -94,6 +92,11 @@
 			compatible = "ti,omap4-mpu";
 			ti,hwmods = "mpu";
 			sram = <&ocmcram>;
+		};
+
+		dsp {
+			compatible = "ti,omap3-c64";
+			ti,hwmods = "dsp";
 		};
 
 		iva {
@@ -193,9 +196,10 @@
 					reg = <0x5a0 0x170>;
 					#address-cells = <1>;
 					#size-cells = <1>;
+					ranges = <0 0x5a0 0x170>;
 
 					pbias_regulator: pbias_regulator {
-						compatible = "ti,pbias-omap";
+						compatible = "ti,pbias-omap4", "ti,pbias-omap";
 						reg = <0x60 0x4>;
 						syscon = <&omap4_padconf_global>;
 						pbias_mmc_reg: pbias_mmc_omap4 {
@@ -350,8 +354,6 @@
 			#address-cells = <2>;
 			#size-cells = <1>;
 			interrupts = <GIC_SPI 20 IRQ_TYPE_LEVEL_HIGH>;
-			dmas = <&sdma 4>;
-			dma-names = "rxtx";
 			gpmc,num-cs = <8>;
 			gpmc,num-waitpins = <4>;
 			ti,hwmods = "gpmc";
@@ -816,23 +818,6 @@
 			interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
 			ti,hwmods = "timer11";
 			ti,timer-pwm;
-		};
-
-		dsp: dsp {
-			compatible = "ti,omap4-rproc-dsp";
-			ti,hwmods = "dsp";
-			syscon-bootreg = <&scm_conf 0x304>;
-			iommus = <&mmu_dsp>;
-			mboxes = <&mailbox &mbox_dsp>;
-			status = "disabled";
-		};
-
-		ipu: ipu {
-			compatible = "ti,omap4-rproc-ipu";
-			ti,hwmods = "ipu";
-			iommus = <&mmu_ipu>;
-			mboxes = <&mailbox &mbox_ipu>;
-			status = "disabled";
 		};
 
 		usbhstll: usbhstll@4a062000 {
