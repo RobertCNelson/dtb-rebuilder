@@ -659,11 +659,12 @@
 
 &dss {
 	status = "ok";
+	vdda_video-supply = <&ldoln_reg>;
 };
 
 &hdmi {
 	status = "ok";
-	vdda_video-supply = <&ldo4_reg>;
+	vdda-supply = <&ldo4_reg>;
 
 	pinctrl-names = "default";
 	pinctrl-0 = <&dss_hdmi_pins>;
