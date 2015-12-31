@@ -95,6 +95,11 @@
 };
 
 &mmc3 {
+	/* these are on the crossbar and are outlined in the
+	   xbar-event-map element */
+	dmas = <&edma 12
+		&edma 13>;
+	dma-names = "tx", "rx";
 	status = "okay";
 	vmmc-supply = <&wlan_en_reg>;
 	bus-width = <4>;
