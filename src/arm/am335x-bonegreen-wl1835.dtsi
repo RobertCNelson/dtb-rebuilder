@@ -121,6 +121,11 @@
 	};
 };
 
+&edma {
+	ti,edma-xbar-event-map = /bits/ 16 <1 12
+					    2 13>;
+};
+
 &uart3 {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&uart3_pins_default>;
