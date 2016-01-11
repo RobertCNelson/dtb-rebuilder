@@ -9,6 +9,7 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
+#include "am33xx-overlay-edma-fix.dtsi"
 
 / {
 	model = "TI AM335x BeagleBone Black";
@@ -91,7 +92,6 @@
 		pinctrl-names = "default", "off";
 		pinctrl-0 = <&nxp_hdmi_bonelt_pins>;
 		pinctrl-1 = <&nxp_hdmi_bonelt_off_pins>;
-
 		port {
 			hdmi_0: endpoint@0 {
 				remote-endpoint = <&lcdc_0>;
