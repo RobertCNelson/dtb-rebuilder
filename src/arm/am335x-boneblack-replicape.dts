@@ -9,6 +9,7 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
+#include "am33xx-overlay-edma-fix.dtsi"
 
 / {
 	model = "TI AM335x BeagleBone Black";
@@ -30,10 +31,6 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&emmc_pins>;
 	bus-width = <8>;
-	status = "okay";
-};
-
-&sgx {
 	status = "okay";
 };
 
@@ -93,4 +90,8 @@
 		pinctrl-1 = <&nxp_hdmi_bonelt_off_pins>;
 		status = "okay";
 	};
+};
+
+&rtc {
+	system-power-controller;
 };

@@ -10,6 +10,8 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
+#include "am33xx-overlay-edma-fix.dtsi"
+
 #include <dt-bindings/board/am335x-bbw-bbb-base.h>
 #include <dt-bindings/pinctrl/am33xx.h>
 
@@ -192,4 +194,8 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart5_pins>;
 	status = "okay";
+};
+
+&rtc {
+	system-power-controller;
 };

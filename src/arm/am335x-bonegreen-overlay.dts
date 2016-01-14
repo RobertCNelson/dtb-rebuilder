@@ -9,6 +9,7 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
+#include "am33xx-overlay-edma-fix.dtsi"
 
 / {
 	model = "TI AM335x BeagleBone Green";
@@ -25,10 +26,6 @@
 	vmmc-supply = <&vmmcsd_fixed>;
 };
 
-&sgx {
-	status = "okay";
-};
-
 /* EMMC in reset */
 &gpio1 {
 	emmc_rst {
@@ -37,4 +34,8 @@
 		output-high;
 		line-name = "EMMC ResetN";
 	};
+};
+
+&rtc {
+	system-power-controller;
 };
