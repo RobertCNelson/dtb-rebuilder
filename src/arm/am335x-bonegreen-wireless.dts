@@ -8,11 +8,12 @@
 /dts-v1/;
 
 #include "am33xx.dtsi"
-#include "am335x-bone-common-no-capemgr.dtsi"
+#include "am335x-bone-common.dtsi"
+#include "am335x-bonegreen-wl1835.dtsi"
 
 / {
-	model = "TI AM335x BeagleBone Black";
-	compatible = "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
+	model = "TI AM335x BeagleBone Green";
+	compatible = "ti,am335x-bone-green", "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
 };
 
 &ldo3_reg {
@@ -25,11 +26,6 @@
 	vmmc-supply = <&vmmcsd_fixed>;
 };
 
-&am33xx_pinmux {
-	pinctrl-names = "default";
-	pinctrl-0 = <&clkout2_pin>;
-};
-
 &mmc2 {
 	vmmc-supply = <&vmmcsd_fixed>;
 	pinctrl-names = "default";
@@ -38,8 +34,14 @@
 	status = "okay";
 };
 
-&rtc {
-	system-power-controller;
+&uart3 {
+	status = "okay";
 };
 
-#include "am335x-cape-bbb-exp-r.dtsi"
+&mmc3 {
+	status = "okay";
+};
+
+&mac {
+	status = "disabled";
+};
