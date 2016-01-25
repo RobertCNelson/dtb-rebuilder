@@ -37,6 +37,7 @@
 			pinctrl-0 = <&uart4_pins>;
 			status = "okay";
 		};
+
 		epwmss0: epwmss@48300000 {
 			status = "okay";
 
@@ -84,11 +85,9 @@
 			status = "okay";
 			clock-frequency = <100000>;
 
-
 			tps: tps@24 {
 				reg = <0x24>;
 			};
-
 		};
 	};
 
@@ -100,14 +99,14 @@
 	};
 
 	dcdc2_fixed: fixedregulator@1 {
-                        /* VDD_MPU voltage limits 0.95V - 1.325V with +/-4% tolerance */
-                         compatible = "regulator-fixed";
-	                regulator-name = "dcdc2_fixed";
+		/* VDD_MPU voltage limits 0.95V - 1.325V with +/-4% tolerance */
+		 compatible = "regulator-fixed";
+		regulator-name = "dcdc2_fixed";
 
-			regulator-min-microvolt = <1378000>;
-                        regulator-max-microvolt = <1378000>;
-                        regulator-boot-on;
-                        regulator-always-on;
+		regulator-min-microvolt = <1378000>;
+		regulator-max-microvolt = <1378000>;
+		regulator-boot-on;
+		regulator-always-on;
 	};
 
 	leds {
@@ -134,27 +133,36 @@
 			linux,default-trigger = "heartbeat";
 		};
 
-		 led@4 {
-                        label = "bkl";
-                        gpios = <&gpio3 19 GPIO_ACTIVE_HIGH>;
-                        linux,default-trigger = "default-on";
-                };
-
+		led@4 {
+			label = "bkl";
+			gpios = <&gpio3 19 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "default-on";
+		};
 	};
 
 	backlight {
-                compatible = "pwm-backlight";
-                pwms = <&ecap0 0 50000 1>;
-                brightness-levels = <0 51 53 56 62 75 101 152 255>;
-                default-brightness-level = <8>;
-        };
-
+		compatible = "pwm-backlight";
+		pwms = <&ecap0 0 500000 1>;
+		brightness-levels = <
+			0  1  2  3  4  5  6  7  8  9
+			10 11 12 13 14 15 16 17 18 19
+			20 21 22 23 24 25 26 27 28 29
+			30 31 32 33 34 35 36 37 38 39
+			40 41 42 43 44 45 46 47 48 49
+			50 51 52 53 54 55 56 57 58 59
+			60 61 62 63 64 65 66 67 68 69
+			70 71 72 73 74 75 76 77 78 79
+			80 81 82 83 84 85 86 87 88 89
+			90 91 92 93 94 95 96 97 98 99
+			100
+		>;
+		default-brightness-level = <50>;
+	};
 };
 
 &am33xx_pinmux {
 		pinctrl-names = "default";
 		pinctrl-0 = <&clkout2_pin>;
-
 
 		user_leds_s0: user_leds_s0 {
 			pinctrl-single,pins = <
@@ -162,7 +170,6 @@
 				0x198 (PIN_OUTPUT_PULLDOWN | MUX_MODE7)	/* mcasp0_axr0.gpio3_20 */
 				0x1a8 (PIN_OUTPUT_PULLDOWN | MUX_MODE7)	/* mcasp0_axr1.gpio3_21 */
 				0x1a4 (PIN_OUTPUT_PULLDOWN | MUX_MODE7) /* mcasp0_fsr.gpio3[19], INPUT_PULLDOWN | MODE7 */
-
 			>;
 		};
 
@@ -234,7 +241,6 @@
 				0x070 (PIN_INPUT_PULLUP | MUX_MODE1 )   /* gpmc_wait0.gmii2_crs, INPUT_PULLUP | MODE1 */
 				0x074 (PIN_INPUT_PULLUP | MUX_MODE1 )   /* gpmc_wpn.gmii2_rxer, INPUT_PULLUP | MODE1 */
 				0x078 (PIN_INPUT_PULLUP | MUX_MODE1 )   /* gpmc_ben1.gmii2_col, INPUT_PULLUP | MODE1 */
-
 			>;
 		};
 
@@ -349,16 +355,19 @@
 		};
 	};
 
-
-/include/ "tps65217.dtsi"
-
 &tps {
+	compatible = "ti,tps65217";
 	regulators {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
 		dcdc1_reg: regulator@0 {
+			reg = <0>;
 			regulator-always-on;
 		};
 
 		dcdc2_reg: regulator@1 {
+			reg = <1>;
 			/* VDD_MPU voltage limits 0.95V - 1.325V with +/-4% tolerance */
 			regulator-name = "vdd_mpu";
 			regulator-min-microvolt = <925000>;
@@ -368,6 +377,7 @@
 		};
 
 		dcdc3_reg: regulator@2 {
+			reg = <2>;
 			/* VDD_CORE voltage limits 0.95V - 1.1V with +/-4% tolerance */
 			regulator-name = "vdd_core";
 			regulator-min-microvolt = <925000>;
@@ -377,18 +387,22 @@
 		};
 
 		ldo1_reg: regulator@3 {
+			reg = <3>;
 			regulator-always-on;
 		};
 
 		ldo2_reg: regulator@4 {
+			reg = <4>;
 			regulator-always-on;
 		};
 
 		ldo3_reg: regulator@5 {
+			reg = <5>;
 			regulator-always-on;
 		};
 
 		ldo4_reg: regulator@6 {
+			reg = <6>;
 			regulator-always-on;
 		};
 	};
@@ -431,21 +445,21 @@
 };
 
 &dcan0 {
-        pinctrl-names = "default";
-        pinctrl-0 = <&dcan0_default>;
-        status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&dcan0_default>;
+	status = "okay";
 };
 
 &tscadc {
-        status = "okay";
-        tsc {
-                ti,wires = <4>;
-                ti,x-plate-resistance = <200>;
-                ti,coordinate-readouts = <5>;
-                ti,wire-config = <0x00 0x11 0x22 0x33>;
-        };
+	status = "okay";
+	tsc {
+		ti,wires = <4>;
+		ti,x-plate-resistance = <200>;
+		ti,coordinate-readouts = <5>;
+		ti,wire-config = <0x00 0x11 0x22 0x33>;
+	};
 
-        adc {
-                ti,adc-channels = <0 1 2 3>;
-        };
+	adc {
+		ti,adc-channels = <0 1 2 3>;
+	};
 };
