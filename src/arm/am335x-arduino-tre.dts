@@ -8,6 +8,7 @@
 /dts-v1/;
 
 #include "am33xx.dtsi"
+#include "am335x-bbb-broken-voltdm.dtsi"
 
 / {
 	model = "TI AM335x Arduino Tre";
@@ -25,32 +26,33 @@
 	};
 
 	leds {
-		compatible = "gpio-leds";
 		pinctrl-names = "default";
 		pinctrl-0 = <&userled_pins>;
 
-		led0 {
+		compatible = "gpio-leds";
+
+		led@0 {
 			label = "arduino_tre:yel:usr0";
 			gpios = <&gpio1 21 0>;
 			linux,default-trigger = "mmc0";
 			default-state = "off";
 		};
 
-		led1 {
+		led@1 {
 			label = "arduino_tre:red:usr1";
 			gpios = <&gpio1 22 0>;
 			linux,default-trigger = "none";
 			default-state = "off";
 		};
 
-		led2 {
+		led@2 {
 			label = "arduino_tre:blu:usr2";
 			gpios = <&gpio1 23 0>;
 			linux,default-trigger = "none";
 			default-state = "off";
 		};
 
-		led3 {
+		led@3 {
 			label = "arduino_tre:grn:usr3";
 			gpios = <&gpio1 24 0>;
 			linux,default-trigger = "cpu0";
@@ -441,16 +443,19 @@
 	};
 };
 
-#include "tps65217.dtsi"
-
 &tps {
+	compatible = "ti,tps65217";
 	ti,pmic-shutdown-controller;
 
 	interrupt-parent = <&intc>;
 	interrupts = <7>;	/* NNMI */
 
 	regulators {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
 		dcdc1_reg: regulator@0 {
+			reg = <0>;
 			regulator-name = "vdd_ddr";
 			regulator-min-microvolt = <1350000>;
 			regulator-max-microvolt = <1350000>;
@@ -459,7 +464,8 @@
 		};
 
 		dcdc2_reg: regulator@1 {
-			/* VDD_MPU voltage limits 0.925V - 1.325V with +/-4% tolerance */
+			reg = <1>;
+			/* VDD_MPU voltage limits 0.95V - 1.26V with +/-4% tolerance */
 			regulator-name = "vdd_mpu";
 			regulator-min-microvolt = <925000>;
 			regulator-max-microvolt = <1325000>;
@@ -468,7 +474,8 @@
 		};
 
 		dcdc3_reg: regulator@2 {
-			/* VDD_CORE voltage limits 0.925V - 1.15V with +/-4% tolerance */
+			reg = <2>;
+			/* VDD_CORE voltage limits 0.95V - 1.1V with +/-4% tolerance */
 			regulator-name = "vdd_core";
 			regulator-min-microvolt = <925000>;
 			regulator-max-microvolt = <1150000>;
@@ -477,20 +484,24 @@
 		};
 
 		ldo1_reg: regulator@3 {
+			reg = <3>;
 			regulator-always-on;
 		};
 
 		ldo2_reg: regulator@4 {
+			reg = <4>;
 			regulator-always-on;
 		};
 
 		ldo3_reg: regulator@5 {
+			reg = <5>;
 			regulator-min-microvolt = <1800000>;
 			regulator-max-microvolt = <1800000>;
 			regulator-always-on;
 		};
 
 		ldo4_reg: regulator@6 {
+			reg = <6>;
 			regulator-always-on;
 		};
 
