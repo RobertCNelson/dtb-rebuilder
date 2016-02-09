@@ -35,6 +35,12 @@
 		phy1 = &usb1_phy;
 		ethernet0 = &cpsw_emac0;
 		ethernet1 = &cpsw_emac1;
+		pwm0 = &ecap0;
+		pwm1 = &ehrpwm0;
+		pwm2 = &ecap1;
+		pwm3 = &ehrpwm1;
+		pwm4 = &ecap2;
+		pwm5 = &ehrpwm2;
 	};
 
 	cpus {
