@@ -2280,7 +2280,7 @@
 		};
 
 		cal: cal@4845b000 {
-			compatible = "ti,cal";
+			compatible = "ti,dra72-cal";
 			ti,hwmods = "cal";
 			reg = <0x4845B000 0x400>,
 			      <0x4845B800 0x40>,
@@ -2317,6 +2317,8 @@
 		#include "omap4-cpu-thermal.dtsi"
 		#include "omap5-gpu-thermal.dtsi"
 		#include "omap5-core-thermal.dtsi"
+		#include "dra7-dspeve-thermal.dtsi"
+		#include "dra7-iva-thermal.dtsi"
 	};
 
 };
