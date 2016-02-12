@@ -29,11 +29,6 @@
 	status = "okay";
 };
 
-&am33xx_pinmux {
-	pinctrl-names = "default";
-	pinctrl-0 = <&clkout2_pin>;
-};
-
 #include "am335x-peripheral-emmc.dtsi"
 #include "am335x-bone-pinmux-emmc.dtsi"
 /* #include "am335x-bone-emmc-in-reset.dtsi" */

@@ -92,12 +92,6 @@
 		>;
 	};
 
-	clkout2_pin: pinmux_clkout2_pin {
-		pinctrl-single,pins = <
-			0x1b4 (PIN_OUTPUT_PULLDOWN | MUX_MODE3)	/* xdma_event_intr1.clkout2 */
-		>;
-	};
-
 	cpsw_default: cpsw_default {
 		pinctrl-single,pins = <
 			/* Slave 1 */
