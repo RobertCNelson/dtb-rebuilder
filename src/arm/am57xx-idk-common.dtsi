@@ -12,6 +12,8 @@
 		rtc1 = &rtc;
 		display0 = &hdmi0;
 		sound0 = &hdmi;
+		ethernet2 = &pruss2_emac0;
+		ethernet3 = &pruss2_emac1;
 	};
 
 	vmain: fixedregulator-vmain {
@@ -90,6 +92,57 @@
 		#clock-cells = <0>;
 		compatible = "fixed-clock";
 		clock-frequency = <20000000>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led@0 {
+			label = "out0";
+			gpios = <&tpic2810 0 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@1 {
+			label = "out1";
+			gpios = <&tpic2810 1 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@2 {
+			label = "out2";
+			gpios = <&tpic2810 2 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@3 {
+			label = "out3";
+			gpios = <&tpic2810 3 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@4 {
+			label = "out4";
+			gpios = <&tpic2810 4 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@5 {
+			label = "out5";
+			gpios = <&tpic2810 5 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@6 {
+			label = "out6";
+			gpios = <&tpic2810 6 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@7 {
+			label = "out7";
+			gpios = <&tpic2810 7 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
 	};
 };
 
@@ -368,6 +421,13 @@
 			};
 		};
 	};
+
+	tpic2810: gpio@60 {
+		compatible = "ti,tpic2810";
+		reg = <0x60>;
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
 };
 
 &uart3 {
@@ -505,12 +565,12 @@
 
 &pruss1 {
 	status = "okay";
-	pru1_0: pru@4b234000 {
+	pru1_0: pru0@4b234000 {
 		mboxes = <&mailbox3 &mbox_pru1_0>;
 		status = "okay";
 	};
 
-	pru1_1: pru@4b238000 {
+	pru1_1: pru1@4b238000 {
 		mboxes = <&mailbox3 &mbox_pru1_1>;
 		status = "okay";
 	};
@@ -518,14 +578,52 @@
 
 &pruss2 {
 	status = "okay";
-	pru2_0: pru@4b2b4000 {
+	pru2_0: pru0@4b2b4000 {
 		mboxes = <&mailbox4 &mbox_pru2_0>;
 		status = "okay";
 	};
 
-	pru2_1: pru@4b2b8000 {
+	pru2_1: pru1@4b2b8000 {
 		mboxes = <&mailbox4 &mbox_pru2_1>;
 		status = "okay";
+	};
+
+	pruss2_mdio: mdio@4b2b2400 {
+		status = "okay";
+		pruss2_eth0_phy: ethernet-phy@0 {
+			reg = <0>;
+			interrupt-parent = <&gpio3>;
+			interrupts = <30 IRQ_TYPE_EDGE_FALLING>;
+		};
+
+		pruss2_eth1_phy: ethernet-phy@1 {
+			reg = <1>;
+			interrupt-parent = <&gpio3>;
+			interrupts = <31 IRQ_TYPE_EDGE_FALLING>;
+		};
+	};
+
+	/* Dual mac ethernet application node on icss2 */
+	pruss2_eth {
+		compatible = "ti,am57-prueth";
+		pruss = <&pruss2>;
+		sram = <&ocmcram1>;
+
+		pruss2_emac0: ethernet-mii0 {
+			phy-handle = <&pruss2_eth0_phy>;
+			phy-mode = "mii";
+			sysevent-rx = <20>;	/* PRU_ARM_EVENT0 */
+			/* Filled in by bootloader */
+			local-mac-address = [00 00 00 00 00 00];
+		};
+
+		pruss2_emac1: ethernet-mii1 {
+			phy-handle = <&pruss2_eth1_phy>;
+			phy-mode = "mii";
+			sysevent-rx = <21>;	/* PRU_ARM_EVENT1 */
+			/* Filled in by bootloader */
+			local-mac-address = [00 00 00 00 00 00];
+		};
 	};
 };
 

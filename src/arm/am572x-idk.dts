@@ -61,12 +61,54 @@
 		compatible = "linux,extcon-usb-gpio";
 		id-gpio = <&gpio3 16 GPIO_ACTIVE_HIGH>;
 	};
+
+	leds {
+		compatible = "gpio-leds";
+		led@0 {
+			label = "status0:red:cpu0";
+			gpios = <&gpio4 0 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			linux,default-trigger = "cpu0";
+		};
+
+		led@1 {
+			label = "status0:green:usr";
+			gpios = <&gpio3 11 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@2 {
+			label = "status0:blue:heartbeat";
+			gpios = <&gpio3 12 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			linux,default-trigger = "heartbeat";
+		};
+
+		led@3 {
+			label = "status1:red:cpu1";
+			gpios = <&gpio3 10 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			linux,default-trigger = "cpu1";
+		};
+
+		led@4 {
+			label = "status1:green:usr";
+			gpios = <&gpio7 23 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@5 {
+			label = "status1:blue:mmc0";
+			gpios = <&gpio7 22 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			linux,default-trigger = "mmc0";
+		};
+	};
 };
 
 &dra7_pmx_core {
 	mmc1_pins_default: mmc1_pins_default {
 		pinctrl-single,pins = <
-			0x36c (PIN_INPUT | MUX_MODE14)	/* mmc1sdcd.gpio219 */
 			0x354 (PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_clk.clk */
 			0x358 (PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_cmd.cmd */
 			0x35c (PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_dat0.dat0 */
@@ -400,4 +442,21 @@
 	bus-width = <4>;
 	cd-gpios = <&gpio6 27 0>; /* gpio 219 */
 	max-frequency = <192000000>;
+};
+
+&mcspi3 {
+	status = "okay";
+	ti,pindir-d0-out-d1-in;
+
+	gpio@0 {
+		compatible = "pisosr-gpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+
+		load-gpios = <&gpio3 19 GPIO_ACTIVE_LOW>;
+
+		reg = <0>;
+		spi-max-frequency = <1000000>;
+		spi-cpol;
+	};
 };

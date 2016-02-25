@@ -326,7 +326,6 @@
 			0x360 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc1_dat1.dat1 */
 			0x364 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc1_dat2.dat2 */
 			0x368 (PIN_INPUT_PULLUP | MUX_MODE0)	/* mmc1_dat3.dat3 */
-			0x36c (PIN_INPUT | MUX_MODE14)		/* mmc1sdcd.gpio187 */
 		>;
 	};
 
@@ -1078,15 +1077,13 @@
 &qspi {
 	status = "okay";
 
-	spi-max-frequency = <48000000>;
+	spi-max-frequency = <64000000>;
 	m25p80@0 {
 		compatible = "s25fl256s1";
-		spi-max-frequency = <48000000>;
+		spi-max-frequency = <64000000>;
 		reg = <0>;
 		spi-tx-bus-width = <1>;
 		spi-rx-bus-width = <4>;
-		spi-cpol;
-		spi-cpha;
 		#address-cells = <1>;
 		#size-cells = <1>;
 

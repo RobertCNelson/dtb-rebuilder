@@ -302,7 +302,6 @@
 
 	mmc1_pins_default: mmc1_pins_default {
 		pinctrl-single,pins = <
-			0x36c (PIN_INPUT | MUX_MODE14)	/* mmc1sdcd.gpio219 */
 			0x354 (PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_clk.clk */
 			0x358 (PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_cmd.cmd */
 			0x35c (PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_dat0.dat0 */
@@ -940,12 +939,12 @@
 
 &pruss1 {
 	status = "okay";
-	pru1_0: pru@4b234000 {
+	pru1_0: pru0@4b234000 {
 		mboxes = <&mailbox3 &mbox_pru1_0>;
 		status = "okay";
 	};
 
-	pru1_1: pru@4b238000 {
+	pru1_1: pru1@4b238000 {
 		mboxes = <&mailbox3 &mbox_pru1_1>;
 		status = "okay";
 	};
@@ -953,12 +952,12 @@
 
 &pruss2 {
 	status = "okay";
-	pru2_0: pru@4b2b4000 {
+	pru2_0: pru0@4b2b4000 {
 		mboxes = <&mailbox4 &mbox_pru2_0>;
 		status = "okay";
 	};
 
-	pru2_1: pru@4b2b8000 {
+	pru2_1: pru1@4b2b8000 {
 		mboxes = <&mailbox4 &mbox_pru2_1>;
 		status = "okay";
 	};
