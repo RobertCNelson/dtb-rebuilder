@@ -9,8 +9,8 @@
 		regulator-max-microvolt = <1800000>;
 
 		/* WL_EN */
-		//gpio = <&gpio0 26 1>;
-		//enable-active-high;
+		gpio = <&gpio0 26 0>;
+		enable-active-high;
 	};
 
 	tibt {
@@ -92,17 +92,12 @@
 	};
 };
 
-&edma {
-	ti,edma-xbar-event-map = /bits/ 16 <1 12 2 13>;
-};
-
 &mmc3 {
 	dmas = <&edma 12
 		&edma 13>;
 	dma-names = "tx", "rx";
 	status = "okay";
-	//vmmc-supply = <&wlan_en_reg>;
-	vmmc-supply = <&vmmcsd_fixed>;
+	vmmc-supply = <&wlan_en_reg>;
 	bus-width = <4>;
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&mmc3_pins &wlan_pins>;
@@ -122,13 +117,8 @@
 	};
 };
 
-&gpio0 {
-	wl_en {
-		gpio-hog;
-		gpios = <26 GPIO_ACTIVE_HIGH>;
-		output-high;
-		line-name = "WL_EN";
-	};
+&edma {
+	ti,edma-xbar-event-map = /bits/ 16 <1 12 2 13>;
 };
 
 &uart3 {
