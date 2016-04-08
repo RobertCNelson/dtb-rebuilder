@@ -10,11 +10,30 @@
 /dts-v1/;
 
 #include "keystone.dtsi"
-#include "k2e.dtsi"
+#include "keystone-k2e.dtsi"
 
 / {
 	compatible = "ti,k2e-evm", "ti,k2e", "ti,keystone";
 	model = "Texas Instruments Keystone 2 Edison EVM";
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		dsp_common_cma_pool: dsp_common_cma_pool {
+			compatible = "shared-dma-pool";
+			reg = <0x00000008 0x1f800000 0x00000000 0x800000>;
+			reusable;
+		};
+
+		dsp_common_mpm_area: dsp_reserved_mpm_area {
+			compatible = "shared-dma-pool";
+			reg = <0x00000008 0x20000000 0x00000000 0x20000000>;
+			no-map;
+			status = "okay";
+		};
+	};
 
 	soc {
 
@@ -39,6 +58,12 @@
 				clock-frequency = <100000000>;
 				clock-output-names = "refclk-ddr3a";
 			};
+		};
+
+		mpm_mem: dspmem {
+			compatible = "ti,keystone-dsp-mem";
+			reg = <0x0c000000 0x00200000>,
+			      <0xa0000000 0x20000000>;
 		};
 	};
 };
@@ -151,4 +176,20 @@
 		compatible = "marvell,88E1514", "marvell,88E1510", "ethernet-phy-ieee802.3-c22";
 		reg = <1>;
 	};
+};
+
+&gbe_serdes0 {
+	status = "okay";
+};
+
+&pcie1_phy {
+	status = "okay";
+};
+
+&pcie1 {
+	status = "okay";
+};
+
+&dsp0 {
+	memory-region = <&dsp_common_cma_pool>;
 };
