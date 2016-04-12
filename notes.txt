@@ -1,0 +1,1 @@
+dtc -I dtb -O dts am57xx-beagle-x15.dtb > am57xx-beagle-x15.dts
