@@ -298,6 +298,53 @@
 			};
 		};
 
+		ocmcram1: ocmcram@40300000 {
+			compatible = "mmio-sram";
+			reg = <0x40300000 0x80000>;
+			ranges = <0x0 0x40300000 0x80000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			/*
+			 * This is a placeholder for an optional reserved
+			 * region for use by secure software. The size
+			 * of this region is not known until runtime so it
+			 * is set as zero to either be updated to reserve
+			 * space or left unchanged to leave all SRAM for use.
+			 * On HS parts that that require the reserved region
+			 * either the bootloader can update the size to
+			 * the required amount or the node can be overriden
+			 * from the board dts file for the secure platform.
+			 */
+			sram-hs@0 {
+				compatible = "ti,secure-ram";
+				reg = <0x0 0x0>;
+			};
+		};
+
+		/*
+		 * NOTE: ocmcram2 and ocmcram3 are not available on all
+		 * DRA7xx and AM57xx variants. Confirm availability in
+		 * the data manual for the exact part number in use
+		 * before enabling these nodes in the board dts file.
+		 */
+		ocmcram2: ocmcram@40400000 {
+			status = "disabled";
+			compatible = "mmio-sram";
+			reg = <0x40400000 0x100000>;
+			ranges = <0x0 0x40400000 0x100000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+		};
+
+		ocmcram3: ocmcram@40500000 {
+			status = "disabled";
+			compatible = "mmio-sram";
+			reg = <0x40500000 0x100000>;
+			ranges = <0x0 0x40500000 0x100000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+		};
+
 		bandgap: bandgap@4a0021e0 {
 			reg = <0x4a0021e0 0xc
 				0x4a00232c 0xc
@@ -1913,6 +1960,90 @@
 				#address-cells = <1>;
 				#size-cells = <0>;
 				reg = <3>;
+				status = "disabled";
+			};
+		};
+
+		epwmss0: epwmss@4843e000 {
+			compatible = "ti,dra7xx-pwmss", "ti,am33xx-pwmss";
+			reg = <0x4843e000 0x30>;
+			ti,hwmods = "epwmss0";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			status = "disabled";
+			ranges;
+
+			ehrpwm0: pwm@4843e200 {
+				compatible = "ti,dra7xx-ehrpwm",
+					     "ti,am33xx-ehrpwm";
+				#pwm-cells = <3>;
+				reg = <0x4843e200 0x80>;
+				clocks = <&ehrpwm0_tbclk>;
+				clock-names = "tbclk";
+				status = "disabled";
+			};
+
+			ecap0: ecap@4843e100 {
+				compatible = "ti,dra7xx-ecap",
+					     "ti,am33xx-ecap";
+				#pwm-cells = <3>;
+				reg = <0x4843e100 0x80>;
+				status = "disabled";
+			};
+		};
+
+		epwmss1: epwmss@48440000 {
+			compatible = "ti,dra7xx-pwmss", "ti,am33xx-pwmss";
+			reg = <0x48440000 0x30>;
+			ti,hwmods = "epwmss1";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			status = "disabled";
+			ranges;
+
+			ehrpwm1: pwm@48440200 {
+				compatible = "ti,dra7xx-ehrpwm",
+					     "ti,am33xx-ehrpwm";
+				#pwm-cells = <3>;
+				reg = <0x48440200 0x80>;
+				clocks = <&ehrpwm1_tbclk>;
+				clock-names = "tbclk";
+				status = "disabled";
+			};
+
+			ecap1: ecap@48440100 {
+				compatible = "ti,dra7xx-ecap",
+					     "ti,am33xx-ecap";
+				#pwm-cells = <3>;
+				reg = <0x48440100 0x80>;
+				status = "disabled";
+			};
+		};
+
+		epwmss2: epwmss@48442000 {
+			compatible = "ti,dra7xx-pwmss", "ti,am33xx-pwmss";
+			reg = <0x48442000 0x30>;
+			ti,hwmods = "epwmss2";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			status = "disabled";
+			ranges;
+
+			ehrpwm2: pwm@48442200 {
+				compatible = "ti,dra7xx-ehrpwm",
+					     "ti,am33xx-ehrpwm";
+				#pwm-cells = <3>;
+				reg = <0x48442200 0x80>;
+				clocks = <&ehrpwm2_tbclk>;
+				clock-names = "tbclk";
+				status = "disabled";
+			};
+
+			ecap2: ecap@48442100 {
+				compatible = "ti,dra7xx-ecap",
+					     "ti,am33xx-ecap";
+				#pwm-cells = <3>;
+				reg = <0x48442100 0x80>;
 				status = "disabled";
 			};
 		};

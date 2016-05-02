@@ -130,11 +130,6 @@
 		#cooling-cells = <2>;
 	};
 
-	extcon_usb1: extcon_usb1 {
-		compatible = "linux,extcon-usb-gpio";
-		id-gpio = <&gpio7 25 GPIO_ACTIVE_HIGH>;
-	};
-
 	hdmi0: connector {
 		compatible = "hdmi-connector";
 		label = "hdmi";
@@ -262,7 +257,7 @@
 					/* VDD_DSPEVE, VDD_IVA, VDD_GPU */
 					regulator-name = "smps45";
 					regulator-min-microvolt = < 850000>;
-					regulator-max-microvolt = <1150000>;
+					regulator-max-microvolt = <1250000>;
 					regulator-always-on;
 					regulator-boot-on;
 				};
@@ -271,7 +266,7 @@
 					/* VDD_CORE */
 					regulator-name = "smps6";
 					regulator-min-microvolt = <850000>;
-					regulator-max-microvolt = <1030000>;
+					regulator-max-microvolt = <1150000>;
 					regulator-always-on;
 					regulator-boot-on;
 				};
@@ -495,10 +490,6 @@
 
 &usb1 {
 	dr_mode = "host";
-};
-
-&omap_dwc3_1 {
-	extcon = <&extcon_usb1>;
 };
 
 &omap_dwc3_2 {

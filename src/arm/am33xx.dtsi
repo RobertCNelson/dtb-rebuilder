@@ -691,15 +691,6 @@
 				reg = <0x48300100 0x80>;
 				interrupts = <31>;
 				interrupt-names = "ecap0";
-				ti,hwmods = "ecap0";
-				status = "disabled";
-			};
-
-			ehrpwm0: ehrpwm@48300200 {
-				compatible = "ti,am33xx-ehrpwm";
-				#pwm-cells = <3>;
-				reg = <0x48300200 0x80>;
-				ti,hwmods = "ehrpwm0";
 				status = "disabled";
 			};
 
@@ -709,6 +700,15 @@
 				interrupt-parent = <&intc>;
 				interrupts = <79>;
 				ti,hwmods = "eqep0";
+				status = "disabled";
+			};
+
+			ehrpwm0: pwm@48300200 {
+				compatible = "ti,am33xx-ehrpwm";
+				#pwm-cells = <3>;
+				reg = <0x48300200 0x80>;
+				clocks = <&ehrpwm0_tbclk>;
+				clock-names = "tbclk";
 				status = "disabled";
 			};
 		};
@@ -730,17 +730,9 @@
 				reg = <0x48302100 0x80>;
 				interrupts = <47>;
 				interrupt-names = "ecap1";
-				ti,hwmods = "ecap1";
 				status = "disabled";
 			};
 
-			ehrpwm1: ehrpwm@48302200 {
-				compatible = "ti,am33xx-ehrpwm";
-				#pwm-cells = <3>;
-				reg = <0x48302200 0x80>;
-				ti,hwmods = "ehrpwm1";
-				status = "disabled";
-			};
 
 			eqep1: eqep@0x48302180 {
 				compatible = "ti,am33xx-eqep";
@@ -748,6 +740,15 @@
 				interrupt-parent = <&intc>;
 				interrupts = <88>;
 				ti,hwmods = "eqep1";
+				status = "disabled";
+			};
+
+			ehrpwm1: pwm@48302200 {
+				compatible = "ti,am33xx-ehrpwm";
+				#pwm-cells = <3>;
+				reg = <0x48302200 0x80>;
+				clocks = <&ehrpwm1_tbclk>;
+				clock-names = "tbclk";
 				status = "disabled";
 			};
 		};
@@ -769,15 +770,6 @@
 				reg = <0x48304100 0x80>;
 				interrupts = <61>;
 				interrupt-names = "ecap2";
-				ti,hwmods = "ecap2";
-				status = "disabled";
-			};
-
-			ehrpwm2: ehrpwm@48304200 {
-				compatible = "ti,am33xx-ehrpwm";
-				#pwm-cells = <3>;
-				reg = <0x48304200 0x80>;
-				ti,hwmods = "ehrpwm2";
 				status = "disabled";
 			};
 
@@ -787,6 +779,15 @@
 				interrupt-parent = <&intc>;
 				interrupts = <89>;
 				ti,hwmods = "eqep2";
+				status = "disabled";
+			};
+
+			ehrpwm2: pwm@48304200 {
+				compatible = "ti,am33xx-ehrpwm";
+				#pwm-cells = <3>;
+				reg = <0x48304200 0x80>;
+				clocks = <&ehrpwm2_tbclk>;
+				clock-names = "tbclk";
 				status = "disabled";
 			};
 		};
@@ -851,8 +852,13 @@
 
 		ocmcram: ocmcram@40300000 {
 			compatible = "mmio-sram";
-			reg = <0x40300000 0x10000>; /* 64k */
+			reg = <0x40300000 0x2000>; /* 8k */
 			map-exec;
+		};
+
+		ocmcram_nocache: ocmcram_nocache@40302000 {
+			compatible = "mmio-sram";
+			reg = <0x40302000 0xe000>; /* 64k - 8k */
 		};
 
 		elm: elm@48080000 {
