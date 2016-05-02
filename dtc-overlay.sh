@@ -53,4 +53,5 @@ make clean
 make PREFIX=/usr/local/ CC=gcc CROSS_COMPILE= all
 echo "Installing into: /usr/local/bin/"
 sudo make PREFIX=/usr/local/ install
-echo "dtc: `/usr/local/bin/dtc --version`"
+sudo ln -sf /usr/local/bin/dtc /usr/bin/dtc-v4.1.x
+echo "dtc: `/usr/bin/dtc-v4.1.x --version`"
