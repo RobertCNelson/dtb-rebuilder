@@ -38,3 +38,7 @@
 &mmc1 {
 	vmmc-supply = <&vmmcsd_fixed>;
 };
+
+&sgx {
+	status = "okay";
+};

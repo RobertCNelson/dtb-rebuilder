@@ -575,3 +575,8 @@
 &aes {
 	status = "okay";
 };
+
+
+&sgx {
+	status = "okay";
+};

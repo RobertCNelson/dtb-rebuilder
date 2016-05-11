@@ -305,6 +305,14 @@
 				ti,mbox-tx = <0 0 0>;
 				ti,mbox-rx = <0 0 3>;
 			};
+			mbox_pru1_0: mbox_pru1_0 {
+				ti,mbox-tx = <2 0 0>;
+				ti,mbox-rx = <3 0 0>;
+			};
+			mbox_pru1_1: mbox_pru1_1 {
+				ti,mbox-tx = <4 0 0>;
+				ti,mbox-rx = <5 0 0>;
+			};
 		};
 
 		timer1: timer@44e31000 {
@@ -865,6 +873,68 @@
 			interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
 		};
 
+		pruss1: pruss@54400000 {
+			compatible = "ti,am4372-pruss";
+			ti,hwmods = "pruss";
+			reg = <0x54400000 0x2000>,
+			      <0x54402000 0x2000>,
+			      <0x54410000 0x8000>,
+			      <0x54420000 0x2000>,
+			      <0x54426000 0x2000>,
+			      <0x5442e000 0x31c>,
+			      <0x54432000 0x58>;
+			reg-names = "dram0", "dram1", "shrdram2", "intc", "cfg",
+				    "iep", "mii_rt";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+
+			pruss1_intc: intc@54420000 {
+				compatible = "ti,am4372-pruss-intc";
+				interrupts = <GIC_SPI 20 IRQ_TYPE_LEVEL_HIGH
+					      GIC_SPI 21 IRQ_TYPE_LEVEL_HIGH
+					      GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH
+					      GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH
+					      GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH
+					      GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH
+					      GIC_SPI 27 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-names = "host2", "host3", "host4",
+						  "host5", "host6", "host8",
+						  "host9";
+				interrupt-controller;
+				#interrupt-cells = <1>;
+			};
+
+			pru1_0: pru0@54434000 {
+				compatible = "ti,am4372-pru";
+				reg = <0x54434000 0x3000>,
+				      <0x54422000 0x400>,
+				      <0x54422400 0x100>;
+				reg-names = "iram", "control", "debug";
+				mboxes = <&mailbox &mbox_pru1_0>;
+			};
+
+			pru1_1: pru1@54438000 {
+				compatible = "ti,am4372-pru";
+				reg = <0x54438000 0x3000>,
+				      <0x54424000 0x400>,
+				      <0x54424400 0x100>;
+				reg-names = "iram", "control", "debug";
+				mboxes = <&mailbox &mbox_pru1_1>;
+			};
+
+			pruss1_mdio: mdio@54432400 {
+				compatible = "ti,davinci_mdio";
+				reg = <0x54432400 0x90>;
+				clocks = <&dpll_core_m4_ck>;
+				clock-names = "fck";
+				bus_freq = <1000000>;
+				#address-cells = <1>;
+				#size-cells = <0>;
+				status = "disabled";
+			};
+		};
+
 		mcasp0: mcasp@48038000 {
 			compatible = "ti,am33xx-mcasp-audio";
 			ti,hwmods = "mcasp0";
@@ -906,6 +976,8 @@
 		gpmc: gpmc@50000000 {
 			compatible = "ti,am3352-gpmc";
 			ti,hwmods = "gpmc";
+			dmas = <&edma 52 0>;
+			dma-names = "rxtx";
 			clocks = <&l3s_gclk>;
 			clock-names = "fck";
 			reg = <0x50000000 0x2000>;
@@ -1116,6 +1188,20 @@
 			reg = <0x48328000 0x2000>;
 			interrupts = <GIC_SPI 50 IRQ_TYPE_LEVEL_HIGH>;
 			ti,hwmods = "vpfe1";
+			status = "disabled";
+		};
+
+		/*
+		 * The SGX is disabled by default because it is an optional
+		 * module and only some AM437x variants contain this module,
+		 * such as AM4378 and AM4379. The status should be overwritten
+		 * as "OK" at the corresponding board.dts.
+		 */
+		sgx: sgx@0x56000000 {
+			compatible = "ti,am4376-sgx530", "img,sgx530";
+			ti,hwmods = "gfx";
+			reg = <0x56000000 0x1000000>;
+			interrupts = <GIC_SPI 37 IRQ_TYPE_LEVEL_HIGH>;
 			status = "disabled";
 		};
 	};

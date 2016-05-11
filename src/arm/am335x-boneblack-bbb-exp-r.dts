@@ -34,4 +34,8 @@
 	status = "okay";
 };
 
+&sgx {
+	status = "okay";
+};
+
 #include "am335x-cape-bbb-exp-r.dtsi"

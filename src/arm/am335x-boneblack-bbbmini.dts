@@ -38,6 +38,10 @@
 	status = "okay";
 };
 
+&sgx {
+	status = "okay";
+};
+
 &am33xx_pinmux {
 	dcan1_pins: pinmux_dcan1_pins {
 		pinctrl-single,pins = <
