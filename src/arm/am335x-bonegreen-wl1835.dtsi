@@ -9,8 +9,8 @@
 		regulator-max-microvolt = <1800000>;
 
 		/* WL_EN */
-		//gpio = <&gpio0 26 1>;
-		//enable-active-high;
+		gpio = <&gpio0 26 0>;
+		enable-active-high;
 	};
 
 	tibt {
@@ -95,9 +95,9 @@
 &mmc3 {
 	dmas = <&edma_xbar 12 0 1
 		&edma_xbar 13 0 2>;
+	dma-names = "tx", "rx";
 	status = "okay";
-	//vmmc-supply = <&wlan_en_reg>;
-	vmmc-supply = <&vmmcsd_fixed>;
+	vmmc-supply = <&wlan_en_reg>;
 	bus-width = <4>;
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&mmc3_pins &wlan_pins>;
@@ -114,15 +114,6 @@
 		reg = <2>;
 		interrupt-parent = <&gpio0>;
 		interrupts = <27 IRQ_TYPE_LEVEL_HIGH>;
-	};
-};
-
-&gpio0 {
-	wl_en {
-		gpio-hog;
-		gpios = <26 GPIO_ACTIVE_HIGH>;
-		output-high;
-		line-name = "WL_EN";
 	};
 };
 
