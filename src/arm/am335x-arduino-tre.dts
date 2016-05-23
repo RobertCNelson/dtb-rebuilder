@@ -8,7 +8,6 @@
 /dts-v1/;
 
 #include "am33xx.dtsi"
-#include "am33xx-es2.dtsi"
 
 / {
 	model = "TI AM335x Arduino Tre";
@@ -87,6 +86,17 @@
 		regulator-name = "vmmcsd_fixed";
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
+	};
+};
+
+&cpu0_opp_table {
+	/*
+	 * All PG 2.0 silicon may not support 1GHz but some of the early
+	 * BeagleBone Blacks have PG 2.0 silicon which is guaranteed
+	 * to support 1GHz OPP so enable it for PG 2.0 on this board.
+	 */
+	oppnitro@1000000000 {
+		opp-supported-hw = <0x06 0x0100>;
 	};
 };
 
@@ -575,7 +585,6 @@
 &aes {
 	status = "okay";
 };
-
 
 &sgx {
 	status = "okay";

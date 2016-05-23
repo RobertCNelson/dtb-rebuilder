@@ -414,11 +414,6 @@
 	ti,no-idle-on-init;
 };
 
-&cpu0 {
-	cpu0-supply = <&smps12_reg>;
-	voltage-tolerance = <1>;
-};
-
 &uart3 {
 	status = "okay";
 	interrupts-extended = <&crossbar_mpu GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>,
@@ -536,6 +531,30 @@
 			};
 		};
        };
+};
+
+&cpu0 {
+	cpu-opp-domain = <&oppdm_mpu>;
+};
+
+&oppdm_mpu {
+	vdd-supply = <&smps12_reg>;
+};
+
+&oppdm_dspeve {
+	vdd-supply = <&smps45_reg>;
+};
+
+&oppdm_gpu {
+	vdd-supply = <&smps45_reg>;
+};
+
+&oppdm_ivahd {
+	vdd-supply = <&smps45_reg>;
+};
+
+&oppdm_core {
+	vdd-supply = <&smps6_reg>;
 };
 
 &dss {
@@ -689,3 +708,4 @@
 		status = "okay";
 	};
 };
+
