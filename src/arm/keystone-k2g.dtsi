@@ -300,10 +300,11 @@
 
 		};
 
-		wdt: wdt@02260000 {
+		wdt: wdt@02250000 {
 			compatible = "ti,keystone-wdt","ti,davinci-wdt";
-			reg = <0x02260000 0x80>;
-			status = "disabled";
+			reg = <0x02250000 0x80>;
+			power-domains = <&k2g_pds K2G_DEV_TIMER64_5>;
+			clocks = <&k2g_clks K2G_DEV_TIMER64_5 0>;
 		};
 
 		dcan0: can@0260B200 {
@@ -458,7 +459,33 @@
 			gpio,syscon-dev = <&devctrl 0x240>;
 		};
 
-		#include "keystone-k2g-netcp.dtsi"
+		prussgpio0: keystone_dsp_gpio@0262026c {
+			compatible = "ti,keystone-dsp-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+			gpio,syscon-dev = <&devctrl 0x26c>;
+		};
+
+		prussgpio1: keystone_dsp_gpio@02620270 {
+			compatible = "ti,keystone-dsp-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+			gpio,syscon-dev = <&devctrl 0x270>;
+		};
+
+		prussgpio2: keystone_dsp_gpio@02620274 {
+			compatible = "ti,keystone-dsp-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+			gpio,syscon-dev = <&devctrl 0x274>;
+		};
+
+		prussgpio3: keystone_dsp_gpio@02620278 {
+			compatible = "ti,keystone-dsp-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+			gpio,syscon-dev = <&devctrl 0x278>;
+		};
 
 		dsp0: dsp0 {
 			compatible = "ti,k2g-dsp";
@@ -475,6 +502,124 @@
 			interrupt-names = "vring", "exception";
 			kick-gpio = <&dspgpio0 27 0>;
 		};
+
+		pruss0: pruss@20a80000 {
+			compatible = "ti,k2g-pruss";
+			reg = <0x20a80000 0x2000>,
+			      <0x20a82000 0x2000>,
+			      <0x20a90000 0x10000>,
+			      <0x20aa6000 0x2000>,
+			      <0x20aae000 0x31c>,
+			      <0x20ab2000 0x70>;
+			reg-names = "dram0", "dram1", "shrdram2", "cfg",
+				    "iep", "mii_rt";
+			power-domains = <&k2g_pds K2G_DEV_ICSS0>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+			dma-coherent;
+			dma-ranges;
+
+			pruss0_intc: intc@20aa0000 {
+				compatible = "ti,k2g-pruss-intc";
+				reg = <0x20aa0000 0x2000>;
+				reg-names = "intc";
+				interrupts = <GIC_SPI 224 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 225 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 226 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 227 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 228 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 230 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 231 IRQ_TYPE_EDGE_RISING>;
+				interrupt-names = "host2", "host3", "host4",
+						  "host5", "host6", "host8",
+						  "host9";
+				interrupt-controller;
+				#interrupt-cells = <1>;
+			};
+
+			pru0_0: pru0@20ab4000 {
+				compatible = "ti,k2g-pru";
+				reg = <0x20ab4000 0x3000>,
+				      <0x20aa2000 0x400>,
+				      <0x20aa2400 0x100>;
+				reg-names = "iram", "control", "debug";
+				interrupt-parent = <&pruss0_intc>;
+				interrupts = <16>, <17>;
+				interrupt-names = "vring", "kick";
+			};
+
+			pru0_1: pru1@20ab8000 {
+				compatible = "ti,k2g-pru";
+				reg = <0x20ab8000 0x3000>,
+				      <0x20aa4000 0x400>,
+				      <0x20aa4400 0x100>;
+				reg-names = "iram", "control", "debug";
+				interrupt-parent = <&pruss0_intc>;
+				interrupts = <18>, <19>;
+				interrupt-names = "vring", "kick";
+			};
+		};
+
+		pruss1: pruss@20ac0000 {
+			compatible = "ti,k2g-pruss";
+			reg = <0x20ac0000 0x2000>,
+			      <0x20ac2000 0x2000>,
+			      <0x20ad0000 0x10000>,
+			      <0x20ae6000 0x2000>,
+			      <0x20aee000 0x31c>,
+			      <0x20af2000 0x70>;
+			reg-names = "dram0", "dram1", "shrdram2", "cfg",
+				    "iep", "mii_rt";
+			power-domains = <&k2g_pds K2G_DEV_ICSS1>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+			dma-coherent;
+			dma-ranges;
+
+			pruss1_intc: intc@20ae0000 {
+				compatible = "ti,k2g-pruss-intc";
+				reg = <0x20ae0000 0x2000>;
+				reg-names = "intc";
+				interrupts = <GIC_SPI 232 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 233 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 234 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 235 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 236 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 238 IRQ_TYPE_EDGE_RISING>,
+					     <GIC_SPI 239 IRQ_TYPE_EDGE_RISING>;
+				interrupt-names = "host2", "host3", "host4",
+						  "host5", "host6", "host8",
+						  "host9";
+				interrupt-controller;
+				#interrupt-cells = <1>;
+			};
+
+			pru1_0: pru0@20af4000 {
+				compatible = "ti,k2g-pru";
+				reg = <0x20af4000 0x3000>,
+				      <0x20ae2000 0x400>,
+				      <0x20ae2400 0x100>;
+				reg-names = "iram", "control", "debug";
+				interrupt-parent = <&pruss1_intc>;
+				interrupts = <16>, <17>;
+				interrupt-names = "vring", "kick";
+			};
+
+			pru1_1: pru1@20af8000 {
+				compatible = "ti,k2g-pru";
+				reg = <0x20af8000 0x3000>,
+				      <0x20ae4000 0x400>,
+				      <0x20ae4400 0x100>;
+				reg-names = "iram", "control", "debug";
+				interrupt-parent = <&pruss1_intc>;
+				interrupts = <18>, <19>;
+				interrupt-names = "vring", "kick";
+			};
+		};
+
+		#include "keystone-k2g-netcp.dtsi"
 
 		mdio: mdio@4200f00 {
 			compatible = "ti,keystone_mdio", "ti,davinci_mdio";
@@ -697,6 +842,69 @@
 					K2G_DEV_QSPI_QSPI_CLK_I>;
 			clock-names = "fck", "datack", "cfgck", "ock", "ick";
 			status = "disabled";
+		};
+
+		pcie0_phy: phy@2320000 {
+			#phy-cells = <0>;
+			compatible = "ti,keystone-serdes-pcie";
+			reg = <0x02320000 0x4000>;
+			link-rate-kbps = <5000000>;
+			num-lanes = <1>;
+			status = "disabled";
+		};
+
+		pcie0: pcie@21800000 {
+			compatible = "ti,keystone-pcie", "snps,dw-pcie";
+			power-domains = <&k2g_pds K2G_DEV_PCIE0>;
+			clocks = <&k2g_clks
+					K2G_DEV_PCIE0 K2G_DEV_PCIE_VBUS_CLK>;
+			clock-names = "pcie";
+			#address-cells = <3>;
+			#size-cells = <2>;
+			reg =  <0x21801000 0x2000>, <0x21800000 0x1000>,
+				<0x02620128 4>;
+			ranges = <0x81000000 0 0 0x23250000 0 0x4000
+				  0x82000000 0 0x70000000 0x70000000
+				    0 0x10000000>;
+
+			status = "disabled";
+			device_type = "pci";
+			num-lanes = <1>;
+			phys = <&pcie0_phy>;
+			dma-coherent;
+
+			/* error interrupt */
+			interrupts = <GIC_SPI 60 IRQ_TYPE_EDGE_RISING>;
+			#interrupt-cells = <1>;
+			interrupt-map-mask = <0 0 0 7>;
+			interrupt-map = <0 0 0 1 &pcie_intc0 0>, /* INT A */
+					<0 0 0 2 &pcie_intc0 1>, /* INT B */
+					<0 0 0 3 &pcie_intc0 2>, /* INT C */
+					<0 0 0 4 &pcie_intc0 3>; /* INT D */
+
+			pcie_msi_intc0: msi-interrupt-controller {
+				interrupt-controller;
+				#interrupt-cells = <1>;
+				interrupt-parent = <&gic>;
+				interrupts = <GIC_SPI 52 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 53 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 54 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 55 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 56 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 57 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 58 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 59 IRQ_TYPE_EDGE_RISING>;
+			};
+
+			pcie_intc0: legacy-interrupt-controller {
+				interrupt-controller;
+				#interrupt-cells = <1>;
+				interrupt-parent = <&gic>;
+				interrupts = <GIC_SPI 48 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 49 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 50 IRQ_TYPE_EDGE_RISING>,
+					<GIC_SPI 51 IRQ_TYPE_EDGE_RISING>;
+			};
 		};
 	};
 };

@@ -13,8 +13,6 @@
 		rtc1 = &rtc;
 		display0 = &hdmi0;
 		sound0 = &hdmi;
-		ethernet2 = &pruss2_emac0;
-		ethernet3 = &pruss2_emac1;
 	};
 
 	vmain: fixedregulator-vmain {
@@ -527,12 +525,26 @@
 	pinctrl-2 = <&dcan1_pins_default>;
 };
 
+&mmc1 {
+	status = "okay";
+	vmmc-supply = <&v3_3d>;
+	vmmc_aux-supply = <&ldo1_reg>;
+	bus-width = <4>;
+	cd-gpios = <&gpio6 27 0>; /* gpio 219 */
+	max-frequency = <192000000>;
+};
+
 &mmc2 {
 	status = "okay";
 	vmmc-supply = <&v3_3d>;
 	bus-width = <8>;
 	ti,non-removable;
 	max-frequency = <96000000>;
+	/*
+	 * eMMC on AM57xx IDK boards cannot support HS200 mode because
+	 * the IO voltage is tied to 3.3V
+	 */
+	/delete-property/ mmc-hs200-1_8v;
 };
 
 &hdmi {
@@ -595,12 +607,16 @@
 &pruss1 {
 	status = "okay";
 	pru1_0: pru0@4b234000 {
-		mboxes = <&mailbox3 &mbox_pru1_0>;
+		interrupt-parent = <&pruss1_intc>;
+		interrupts = <16>, <17>;
+		interrupt-names = "vring", "kick";
 		status = "okay";
 	};
 
 	pru1_1: pru1@4b238000 {
-		mboxes = <&mailbox3 &mbox_pru1_1>;
+		interrupt-parent = <&pruss1_intc>;
+		interrupts = <18>, <19>;
+		interrupt-names = "vring", "kick";
 		status = "okay";
 	};
 };
@@ -608,12 +624,16 @@
 &pruss2 {
 	status = "okay";
 	pru2_0: pru0@4b2b4000 {
-		mboxes = <&mailbox4 &mbox_pru2_0>;
+		interrupt-parent = <&pruss2_intc>;
+		interrupts = <16>, <17>;
+		interrupt-names = "vring", "kick";
 		status = "okay";
 	};
 
 	pru2_1: pru1@4b2b8000 {
-		mboxes = <&mailbox4 &mbox_pru2_1>;
+		interrupt-parent = <&pruss2_intc>;
+		interrupts = <18>, <19>;
+		interrupt-names = "vring", "kick";
 		status = "okay";
 	};
 };
