@@ -11,6 +11,7 @@
 / {
 	ocp {
 		pruss: pruss@4a300000 {
+			status = "okay";
 			compatible = "ti,am3352-pruss";
 			ti,hwmods = "pruss";
 			reg = <0x4a300000 0x2000>,
@@ -24,7 +25,6 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 			ranges;
-			status = "okay";
 
 			pruss_intc: intc@4a320000 {
 				compatible = "ti,am3352-pruss-intc";
