@@ -16,6 +16,9 @@
 
 	aliases {
 		display0 = &hdmi0;
+
+		sound0 = &sound0;
+		sound1 = &hdmi;
 	};
 
 	evm_3v3_sw: fixedregulator-evm_3v3 {
@@ -606,6 +609,10 @@
 	status = "ok";
 
 	vdda_video-supply = <&ldo5_reg>;
+};
+
+&bb2d {
+	status = "okay";
 };
 
 &hdmi {
