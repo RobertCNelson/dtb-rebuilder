@@ -37,7 +37,7 @@
 	wl18xx_pins: pinmux_wl18xx_pins {
 		pinctrl-single,pins = <
 			0x128 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* (K17) gmii1_txd0.gpio0[28] - BT_EN */
-			0x12c ( PIN_OUTPUT_PULLDOWN | MUX_MODE7 ) /* (K18) gmii1_txclk.gpio3[9] - WL_EN */
+			0x12c (PIN_OUTPUT_PULLDOWN | MUX_MODE7 ) /* (K18) gmii1_txclk.gpio3[9] - WL_EN */
 		>;
 	};
 
