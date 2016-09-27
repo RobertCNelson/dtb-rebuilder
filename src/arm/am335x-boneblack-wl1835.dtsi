@@ -40,12 +40,6 @@
 		>;
 	};
 
-	bt_pins: pinmux_bt_pins {
-		pinctrl-single,pins = <
-			0x128 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* (K17) gmii1_txd0.gpio0[28] - BT_EN */
-		>;
-	};
-
 	mmc3_pins: pinmux_mmc3_pins {
 		pinctrl-single,pins = <
 			0x13c ( PIN_INPUT_PULLUP | MUX_MODE6 ) /* (L15) gmii1_rxd1.mmc2_clk */
@@ -119,6 +113,6 @@
 
 &uart3 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&uart3_pins_default &bt_pins>;
+	pinctrl-0 = <&uart3_pins_default>;
 	status = "okay";
 };
