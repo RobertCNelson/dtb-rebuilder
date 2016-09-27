@@ -2,6 +2,18 @@
 #include <dt-bindings/interrupt-controller/irq.h>
 
 / {
+	leds {
+		pinctrl-names = "default";
+		pinctrl-0 = <&wl18xx_pins>;
+		compatible = "gpio-leds";
+
+		wl18xx_bt_en {
+			label = "wl18xx_bt_en";
+			gpios = <&gpio0 28 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+	};
+
 	tibt {
 		compatible = "tibt";
 		nshutdown_gpio = <28>;
@@ -16,6 +28,12 @@
 };
 
 &am33xx_pinmux {
+	wl18xx_pins: pinmux_wl18xx_pins {
+		pinctrl-single,pins = <
+			0x128 (PIN_OUTPUT_PULLUP | MUX_MODE7)	/* (K17) gmii1_txd0.gpio0[28] - BT_EN */
+		>;
+	};
+
 	wlbtbuf_pin: pinmux_wlbtbuf_pin {
 		pinctrl-single,pins = <
 			0x130 ( PIN_OUTPUT_PULLUP | MUX_MODE7 ) /* (L18) gmii1_rxclk.gpio3[10] - LS_BUF_EN */
@@ -80,15 +98,6 @@
 		reg = <2>;
 		interrupt-parent = <&gpio0>;
 		interrupts = <29 IRQ_TYPE_LEVEL_HIGH>;
-	};
-};
-
-&gpio0 {
-	bt_en {
-		output;
-		gpios = <28 0>;
-		dir-changeable;
-		line-name = "BT_EN";
 	};
 };
 
