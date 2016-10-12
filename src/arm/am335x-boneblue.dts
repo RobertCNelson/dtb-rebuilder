@@ -10,9 +10,8 @@
 #include "am33xx.dtsi"
 #include "am335x-bone-common-no-capemgr.dtsi"
 #include "am335x-bone-common-universal-pins.dtsi"
-/* #include "am33xx-overlay-edma-fix.dtsi" */
-/* #include "am335x-bone-jtag.dtsi" */
 #include "am335x-boneblue-wl1835.dtsi"
+/* #include "am335x-bone-jtag.dtsi" */
 
 #define BLUE_IO(x, y) AM33XX_IOPAD((x)*4+0x800, (y))
 
@@ -42,13 +41,6 @@
 &mac {
 	status = "disabled";
 };
-
-&cpu0_opp_table {
-	opp50@300000000 {
-		status = "disabled";
-	};
-};
-
 
 /****************************************
 * Pin Muxing

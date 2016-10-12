@@ -13,7 +13,7 @@
 		};
 	};
 
-	memory {
+	memory@80000000 {
 		device_type = "memory";
 		reg = <0x80000000 0x10000000>; /* 256 MB */
 	};
@@ -28,28 +28,28 @@
 
 		compatible = "gpio-leds";
 
-		led@2 {
+		led2 {
 			label = "beaglebone:green:usr0";
 			gpios = <&gpio1 21 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "heartbeat";
 			default-state = "off";
 		};
 
-		led@3 {
+		led3 {
 			label = "beaglebone:green:usr1";
 			gpios = <&gpio1 22 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "mmc0";
 			default-state = "off";
 		};
 
-		led@4 {
+		led4 {
 			label = "beaglebone:green:usr2";
 			gpios = <&gpio1 23 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "cpu0";
 			default-state = "off";
 		};
 
-		led@5 {
+		led5 {
 			label = "beaglebone:green:usr3";
 			gpios = <&gpio1 24 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "mmc1";
@@ -57,7 +57,7 @@
 		};
 	};
 
-	vmmcsd_fixed: fixedregulator@0 {
+	vmmcsd_fixed: fixedregulator0 {
 		compatible = "regulator-fixed";
 		regulator-name = "vmmcsd_fixed";
 		regulator-min-microvolt = <3300000>;
@@ -239,6 +239,11 @@
 /include/ "tps65217.dtsi"
 
 &tps {
+	//interrupts = <GIC_SPI 7 IRQ_TYPE_NONE>; /* NMIn */
+	interrupts = <0 7 0>; /* NMIn */
+	interrupt-controller;
+	#interrupt-cells = <2>;
+
 	/*
 	 * Configure pmic to enter OFF-state instead of SLEEP-state ("RTC-only
 	 * mode") at poweroff.  Most BeagleBone versions do not support RTC-only
@@ -257,9 +262,6 @@
 	 * measurement after shutdown: it should be less than 1 mA.)
 	 */
 	ti,pmic-shutdown-controller;
-
-	interrupt-parent = <&intc>;
-	interrupts = <7>;	/* NNMI */
 
 	regulators {
 		dcdc1_reg: regulator@0 {
@@ -304,6 +306,10 @@
 			regulator-name = "vdd_3v3a";
 			regulator-always-on;
 		};
+	};
+
+	tps65217-pwrbutton {
+		compatible = "ti,tps65217-pwrbutton";
 	};
 };
 

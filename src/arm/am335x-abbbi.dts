@@ -10,7 +10,6 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
-#include "am33xx-overlay-edma-fix.dtsi"
 
 / {
 	model = "Arrow BeagleBone Black Industrial";
@@ -33,17 +32,6 @@
 	pinctrl-0 = <&emmc_pins>;
 	bus-width = <8>;
 	status = "okay";
-};
-
-&cpu0_opp_table {
-	/*
-	 * All PG 2.0 silicon may not support 1GHz but some of the early
-	 * BeagleBone Blacks have PG 2.0 silicon which is guaranteed
-	 * to support 1GHz OPP so enable it for PG 2.0 on this board.
-	 */
-	oppnitro@1000000000 {
-		opp-supported-hw = <0x06 0x0100>;
-	};
 };
 
 &am33xx_pinmux {
@@ -140,21 +128,21 @@
 
 / {
 	clk_mcasp0_fixed: clk_mcasp0_fixed {
-		#clock-cells = <0>;
-		compatible = "fixed-clock";
-		clock-frequency = <24576000>;
+	      #clock-cells = <0>;
+	      compatible = "fixed-clock";
+	      clock-frequency = <24576000>;
 	};
 
 	clk_mcasp0: clk_mcasp0 {
-		#clock-cells = <0>;
-		compatible = "gpio-gate-clock";
-		clocks = <&clk_mcasp0_fixed>;
-		enable-gpios = <&gpio1 27 0>; /* BeagleBone Black Clk enable on GPIO1_27 */
+	      #clock-cells = <0>;
+	      compatible = "gpio-gate-clock";
+	      clocks = <&clk_mcasp0_fixed>;
+	      enable-gpios = <&gpio1 27 0>; /* BeagleBone Black Clk enable on GPIO1_27 */
 	};
 
 	hdmi_audio: hdmi_audio@0 {
-		compatible = "linux,hdmi-audio";
-		status = "okay";
+	       compatible = "linux,hdmi-audio";
+	       status = "okay";
 	};
 
 	sound {
