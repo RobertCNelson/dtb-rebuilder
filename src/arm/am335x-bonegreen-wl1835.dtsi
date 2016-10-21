@@ -129,11 +129,11 @@
 	pinctrl-1 = <&uart3_pins_sleep &bt_pins>;
 	status = "okay";
 };
- 
+
 /* BT_AUD_OUT from wl1835 has to be pulled low when WL_EN is activated.	*/
 /* in case it isn't, wilink8 ends up in one of the test modes that      */
 /* intruces various issues (elp wkaeup timeouts etc.)			*/
-/* On the BBGW this pin is routed through the level shifter (U21) that	*/ 
+/* On the BBGW this pin is routed through the level shifter (U21) that	*/
 /* introduces a pullup on the line and wilink8 ends up in a bad state.  */
 /* use a gpio hog to force this pin low. An alternative may be adding 	*/
 /* an external pulldown on U21 pin 4.					*/
