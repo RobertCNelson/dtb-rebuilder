@@ -10,17 +10,4 @@
 	pinctrl-names = "default";
 
 	status = "okay";
-
-	channel@0 {
-		compatible = "spidev";
-		spi-max-frequency = <16000000>;
-		reg = <0>;
-		spi-cpha;
-	};
-
-	channel@1 {
-		compatible = "spidev";
-		spi-max-frequency = <16000000>;
-		reg = <1>;
-	};
 };

@@ -9,30 +9,9 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
-/* #include "am33xx-overlay-edma-fix.dtsi" */
 /* #include <dt-bindings/display/tda998x.h> */
 #include "am335x-boneblack-wl1835.dtsi"
 /* #include "am335x-bone-jtag.dtsi" */
-
-/* pruss: pick one: */
-
-/*
- * /etc/modprobe.d/pruss-blacklist.conf
- *
- * blacklist uio_pruss
- */
-
-/* #include "am33xx-pruss-rproc.dtsi" */
-
-/*
- * /etc/modprobe.d/pruss-blacklist.conf
- *
- * blacklist pruss
- * blacklist pruss_intc
- * blacklist pru-rproc
- */
-
-/* #include "am33xx-pruss-uio.dtsi" */
 
 / {
 	model = "TI AM335x BeagleBone Black Wireless";
@@ -63,11 +42,4 @@
 
 &mmc3 {
 	status = "okay";
-};
-
-&cpu0_opp_table {
-	//osd335x
-	opp50@300000000 {
-		status = "disabled";
-	};
 };

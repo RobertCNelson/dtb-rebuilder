@@ -13,15 +13,21 @@
 
 /*
  *&ocp {
- *	P9_19_pinmux {
- *		mode = "can";
+ *	P9_17_pinmux {
+ *		status = "disabled";
  *	};
- *	P9_20_pinmux {
- *		mode = "can";
+ *	P9_18_pinmux {
+ *		status = "disabled";
+ *	};
+ *	P9_21_pinmux {
+ *		status = "disabled";
+ *	};
+ *	P9_22_pinmux {
+ *		status = "disabled";
  *	};
  *};
  *
- *&dcan0 {
+ *&spi0 {
  *	pinctrl-0 = <>;
  *};
  *
@@ -30,16 +36,16 @@
 /* standard */
 
 &am33xx_pinmux {
-	bb_spi0_pins: pinmux_bb_spi0_pins {
+	spi0_pins: pinmux_spi0_pins {
 		pinctrl-single,pins = <
-			0x150 0x30	/* spi0_sclk.spi0_sclk, INPUT_PULLUP | MODE0 */
-			0x154 0x30	/* spi0_d0.spi0_d0, INPUT_PULLUP | MODE0 */
-			0x158 0x10	/* spi0_d1.spi0_d1, OUTPUT_PULLUP | MODE0 */
-			0x15c 0x10	/* spi0_cs0.spi0_cs0, OUTPUT_PULLUP | MODE0 */
+			0x150 (PIN_INPUT_PULLUP | MUX_MODE0)	/* spi0_sclk.spi0_sclk */
+			0x154 (PIN_INPUT_PULLUP | MUX_MODE0)	/* spi0_d0.spi0_d0 */
+			0x158 (PIN_OUTPUT_PULLUP | MUX_MODE0)	/* spi0_d1.spi0_d1 */
+			0x15c (PIN_OUTPUT_PULLUP | MUX_MODE0)	/* spi0_cs0.spi0_cs0 */
 		>;
 	};
 };
 
-&dcan0 {
-	pinctrl-0 = <&bb_spi0_pins>;
+&spi0 {
+	pinctrl-0 = <&spi0_pins>;
 };

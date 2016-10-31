@@ -9,28 +9,8 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
-/* #include "am33xx-overlay-edma-fix.dtsi" */
 #include <dt-bindings/display/tda998x.h>
-
-/* pruss: pick one: */
-
-/*
- * /etc/modprobe.d/pruss-blacklist.conf
- *
- * blacklist uio_pruss
- */
-
-/* #include "am33xx-pruss-rproc.dtsi" */
-
-/*
- * /etc/modprobe.d/pruss-blacklist.conf
- *
- * blacklist pruss
- * blacklist pruss_intc
- * blacklist pru-rproc
- */
-
-/* #include "am33xx-pruss-uio.dtsi" */
+/* #include "am335x-bone-jtag.dtsi" */
 
 / {
 	model = "TI AM335x BeagleBone Black";
@@ -54,17 +34,6 @@
 		gpios = <20 0>;
 		output-high;
 		line-name = "EMMC ResetN";
-	};
-};
-
-&cpu0_opp_table {
-	/*
-	 * All PG 2.0 silicon may not support 1GHz but some of the early
-	 * BeagleBone Blacks have PG 2.0 silicon which is guaranteed
-	 * to support 1GHz OPP so enable it for PG 2.0 on this board.
-	 */
-	oppnitro@1000000000 {
-		opp-supported-hw = <0x06 0x0100>;
 	};
 };
 
@@ -113,14 +82,6 @@
 
 &lcdc {
 	status = "okay";
-
-	/* If you want to get 24 bit RGB and 16 BGR mode instead of
-	 * current 16 bit RGB and 24 BGR modes, set the propety
-	 * below to "crossed" and uncomment the video-ports -property
-	 * in tda19988 node.
-	 */
-	blue-and-red-wiring = "straight";
-
 	port {
 		lcdc_0: endpoint@0 {
 			remote-endpoint = <&hdmi_0>;
@@ -137,11 +98,8 @@
 		pinctrl-0 = <&nxp_hdmi_bonelt_pins>;
 		pinctrl-1 = <&nxp_hdmi_bonelt_off_pins>;
 
-		/* Convert 24bit BGR to RGB, e.g. cross red and blue wiring */
-		/* video-ports = <0x234501>; */
-
 		#sound-dai-cells = <0>;
-		audio-ports = <	AFMT_I2S	0x03>;
+		audio-ports = <	TDA998x_I2S	0x03>;
 
 		ports {
 			port@0 {

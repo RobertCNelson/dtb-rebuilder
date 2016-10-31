@@ -8,7 +8,6 @@
 
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/gpio/gpio.h>
-#include <dt-bindings/reset/syscon.h>
 
 #include "skeleton.dtsi"
 
@@ -21,6 +20,9 @@
 
 	aliases {
 		serial0	= &uart0;
+		spi0 = &spi0;
+		spi1 = &spi1;
+		spi2 = &spi2;
 	};
 
 	memory {
@@ -81,18 +83,6 @@
 			reg = <0x02310000 0x200>;
 		};
 
-		psc: power-sleep-controller@02350000 {
-			compatible = "syscon", "simple-mfd";
-			reg = <0x02350000 0x1000>;
-
-			pscrst: psc-reset {
-				compatible = "syscon-reset";
-				#reset-cells = <1>;
-				#address-cells = <1>;
-				#size-cells = <0>;
-			};
-		};
-
 		devctrl: device-state-control@02620000 {
 			compatible = "ti,keystone-devctrl", "syscon";
 			reg = <0x02620000 0x1000>;
@@ -108,7 +98,7 @@
 		/include/ "keystone-clocks.dtsi"
 
 		uart0: serial@02530c00 {
-			compatible = "ti,keystone-uart", "ns16550a";
+			compatible = "ns16550a";
 			current-speed = <115200>;
 			reg-shift = <2>;
 			reg-io-width = <4>;
@@ -118,7 +108,7 @@
 		};
 
 		uart1:	serial@02531000 {
-			compatible = "ti,keystone-uart", "ns16550a";
+			compatible = "ns16550a";
 			current-speed = <115200>;
 			reg-shift = <2>;
 			reg-io-width = <4>;
@@ -198,7 +188,7 @@
 			status = "disabled";
 		};
 
-		usb: usb@2680000 {
+		keystone_usb0: usb@2680000 {
 			compatible = "ti,keystone-dwc3";
 			#address-cells = <1>;
 			#size-cells = <1>;
@@ -211,7 +201,7 @@
 			dma-ranges;
 			status = "disabled";
 
-			dwc0: dwc3@2690000 {
+			usb0: dwc3@2690000 {
 				compatible = "synopsys,dwc3";
 				reg = <0x2690000 0x70000>;
 				interrupts = <GIC_SPI 393 IRQ_TYPE_EDGE_RISING>;
@@ -297,17 +287,6 @@
 			ti,syscon-dev = <&devctrl 0x2a0>;
 		};
 
-		pcie0_phy: phy@2320000 {
-			#phy-cells = <0>;
-			compatible = "ti,keystone-serdes-pcie";
-			reg = <0x02320000 0x4000>;
-			link-rate-kbps = <5000000>;
-			num-lanes = <2>;
-			status = "disabled";
-			clocks = <&clkpcie>;
-			clock-names = "fck";
-		};
-
 		pcie0: pcie@21800000 {
 			compatible = "ti,keystone-pcie", "snps,dw-pcie";
 			clocks = <&clkpcie>;
@@ -321,6 +300,7 @@
 			status = "disabled";
 			device_type = "pci";
 			num-lanes = <2>;
+			bus-range = <0x00 0xff>;
 
 			/* error interrupt */
 			interrupts = <GIC_SPI 38 IRQ_TYPE_EDGE_RISING>;
@@ -354,14 +334,6 @@
 					<GIC_SPI 28 IRQ_TYPE_EDGE_RISING>,
 					<GIC_SPI 29 IRQ_TYPE_EDGE_RISING>;
 			};
-		};
-
-		ddr3edac: edac@21010000 {
-			compatible = "ti,keystone-ddr3-mc-edac";
-			reg = <0x21010000 0x200>;
-			interrupts = <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>;
-			interrupt-parent = <&gic>;
-			status = "disabled";
 		};
 	};
 };

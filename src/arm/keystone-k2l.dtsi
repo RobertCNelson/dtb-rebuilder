@@ -31,18 +31,11 @@
 		};
 	};
 
-	aliases {
-		rproc0 = &dsp0;
-		rproc1 = &dsp1;
-		rproc2 = &dsp2;
-		rproc3 = &dsp3;
-	};
-
 	soc {
 		/include/ "keystone-k2l-clocks.dtsi"
 
 		uart2: serial@02348400 {
-			compatible = "ti,keystone-uart", "ns16550a";
+			compatible = "ns16550a";
 			current-speed = <115200>;
 			reg-shift = <2>;
 			reg-io-width = <4>;
@@ -52,57 +45,13 @@
 		};
 
 		uart3:	serial@02348800 {
-			compatible = "ti,keystone-uart", "ns16550a";
+			compatible = "ns16550a";
 			current-speed = <115200>;
 			reg-shift = <2>;
 			reg-io-width = <4>;
 			reg = <0x02348800 0x100>;
 			clocks	= <&clkuart3>;
 			interrupts = <GIC_SPI 435 IRQ_TYPE_EDGE_RISING>;
-		};
-
-		gpio1: gpio@2348000 {
-			compatible = "ti,keystone-gpio";
-			reg = <0x02348000 0x100>;
-			gpio-controller;
-			#gpio-cells = <2>;
-			/* HW Interrupts mapped to GPIO pins */
-			interrupts = <GIC_SPI 152 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 153 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 154 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 155 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 156 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 157 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 158 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 159 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 160 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 161 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 162 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 163 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 164 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 165 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 166 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 167 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 168 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 169 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 170 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 171 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 172 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 173 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 174 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 175 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 176 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 401 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 402 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 403 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 404 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 405 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 406 IRQ_TYPE_EDGE_RISING>,
-					<GIC_SPI 407 IRQ_TYPE_EDGE_RISING>;
-			clocks = <&clkgpio>;
-			clock-names = "gpio";
-			ti,ngpio = <32>;
-			ti,davinci-gpio-unbanked = <32>;
 		};
 
 		k2l_pmx: pinmux@02620690 {
@@ -123,7 +72,7 @@
 			};
 
 			uart2_emifa_pins: pinmux_uart2_emifa_pins {
-				pinctrl-single,bits = <
+			pinctrl-single,bits = <
 					/* UART2_EMIFA_SEL */
 					0x0 0x0  0x30
 				>;
@@ -254,51 +203,6 @@
 			};
 		};
 
-		psc: power-sleep-controller@02350000 {
-			pscrst: psc-reset {
-				dsp@0 {
-					reg = <0>;
-					reset-control = <0xa3c 8 RESET_ASSERT_CLEAR>;
-					reset-status = <0x83c 8 RESET_ASSERT_CLEAR>;
-				};
-
-				dsp@1 {
-					reg = <1>;
-					reset-control = <0xa40 8 RESET_ASSERT_CLEAR>;
-					reset-status = <0x840 8 RESET_ASSERT_CLEAR>;
-				};
-
-				dsp@2 {
-					reg = <2>;
-					reset-control = <0xa44 8 RESET_ASSERT_CLEAR>;
-					reset-status = <0x844 8 RESET_ASSERT_CLEAR>;
-				};
-
-				dsp@3 {
-					reg = <3>;
-					reset-control = <0xa48 8 RESET_ASSERT_CLEAR>;
-					reset-status = <0x848 8 RESET_ASSERT_CLEAR>;
-				};
-			};
-		};
-
-		msm_ram: msmram@0c000000 {
-			compatible = "mmio-sram";
-			reg = <0x0c000000 0x200000>;
-			ranges = <0x0 0x0c000000 0x200000>;
-			#address-cells = <1>;
-			#size-cells = <1>;
-
-			sram-mpm@0 {
-				compatible = "ti,keystone-dsp-msm-ram";
-				reg = <0x0 0x80000>;
-			};
-
-			sram-bm@1f8000 {
-				reg = <0x001f8000 0x8000>;
-			};
-		};
-
 		dspgpio0: keystone_dsp_gpio@02620240 {
 			compatible = "ti,keystone-dsp-gpio";
 			gpio-controller;
@@ -325,66 +229,6 @@
 			gpio-controller;
 			#gpio-cells = <2>;
 			gpio,syscon-dev = <&devctrl 0x24c>;
-		};
-
-		dsp0: dsp0 {
-			compatible = "ti,k2l-dsp";
-			reg = <0x10800000 0x00100000>,
-			      <0x10e00000 0x00008000>,
-			      <0x10f00000 0x00008000>;
-			reg-names = "l2sram", "l1pram", "l1dram";
-			clocks = <&clkgem0>;
-			ti,syscon-dev = <&devctrl 0x844>;
-			resets = <&pscrst 0>;
-			interrupt-parent = <&kirq0>;
-			interrupts = <0 8>;
-			interrupt-names = "vring", "exception";
-			kick-gpio = <&dspgpio0 27 0>;
-		};
-
-		dsp1: dsp1 {
-			compatible = "ti,k2l-dsp";
-			reg = <0x11800000 0x00100000>,
-			      <0x11e00000 0x00008000>,
-			      <0x11f00000 0x00008000>;
-			reg-names = "l2sram", "l1pram", "l1dram";
-			clocks = <&clkgem1>;
-			ti,syscon-dev = <&devctrl 0x848>;
-			resets = <&pscrst 1>;
-			interrupt-parent = <&kirq0>;
-			interrupts = <1 9>;
-			interrupt-names = "vring", "exception";
-			kick-gpio = <&dspgpio1 27 0>;
-		};
-
-		dsp2: dsp2 {
-			compatible = "ti,k2l-dsp";
-			reg = <0x12800000 0x00100000>,
-			      <0x12e00000 0x00008000>,
-			      <0x12f00000 0x00008000>;
-			reg-names = "l2sram", "l1pram", "l1dram";
-			clocks = <&clkgem2>;
-			ti,syscon-dev = <&devctrl 0x84c>;
-			resets = <&pscrst 2>;
-			interrupt-parent = <&kirq0>;
-			interrupts = <2 10>;
-			interrupt-names = "vring", "exception";
-			kick-gpio = <&dspgpio2 27 0>;
-		};
-
-		dsp3: dsp3 {
-			compatible = "ti,k2l-dsp";
-			reg = <0x13800000 0x00100000>,
-			      <0x13e00000 0x00008000>,
-			      <0x13f00000 0x00008000>;
-			reg-names = "l2sram", "l1pram", "l1dram";
-			clocks = <&clkgem3>;
-			ti,syscon-dev = <&devctrl 0x850>;
-			resets = <&pscrst 3>;
-			interrupt-parent = <&kirq0>;
-			interrupts = <3 11>;
-			interrupt-names = "vring", "exception";
-			kick-gpio = <&dspgpio3 27 0>;
 		};
 
 		mdio: mdio@26200f00 {

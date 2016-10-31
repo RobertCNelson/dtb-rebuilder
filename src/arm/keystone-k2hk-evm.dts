@@ -16,25 +16,6 @@
 	compatible =  "ti,k2hk-evm", "ti,k2hk", "ti,keystone";
 	model = "Texas Instruments Keystone 2 Kepler/Hawking EVM";
 
-	reserved-memory {
-		#address-cells = <2>;
-		#size-cells = <2>;
-		ranges;
-
-		dsp_common_cma_pool: dsp_common_cma_pool {
-			compatible = "shared-dma-pool";
-			reg = <0x00000008 0x1f800000 0x00000000 0x800000>;
-			reusable;
-		};
-
-		dsp_common_mpm_area: dsp_reserved_mpm_area {
-			compatible = "shared-dma-pool";
-			reg = <0x00000008 0x20000000 0x00000000 0x20000000>;
-			no-map;
-			status = "okay";
-		};
-	};
-
 	soc {
 		clocks {
 			refclksys: refclksys {
@@ -72,15 +53,6 @@
 				clock-output-names = "refclk-ddr3b";
 			};
 		};
-
-		ddr3edac: edac@21010000 {
-			status = "ok";
-		};
-
-		mpm_mem: dspmem@a0000000 {
-			compatible = "ti,keystone-dsp-mem";
-			reg = <0xa0000000 0x20000000>;
-		};
 	};
 
 	leds {
@@ -111,11 +83,11 @@
 	status = "okay";
 };
 
-&usb {
+&keystone_usb0 {
 	status = "okay";
 };
 
-&dwc0 {
+&usb0 {
 	dr_mode = "host";
 };
 
@@ -189,13 +161,13 @@
 
 		partition@0 {
 			label = "u-boot-spl";
-			reg = <0x0 0x100000>;
+			reg = <0x0 0x80000>;
 			read-only;
 		};
 
 		partition@1 {
 			label = "misc";
-			reg = <0x100000 0xf00000>;
+			reg = <0x80000 0xf80000>;
 		};
 	};
 };
@@ -211,46 +183,4 @@
 		compatible = "marvell,88E1111", "ethernet-phy-ieee802.3-c22";
 		reg = <1>;
 	};
-};
-
-&gbe_serdes {
-	status = "okay";
-};
-
-&dsp0 {
-	memory-region = <&dsp_common_cma_pool>;
-};
-
-&dsp1 {
-	memory-region = <&dsp_common_cma_pool>;
-};
-
-&dsp2 {
-	memory-region = <&dsp_common_cma_pool>;
-};
-
-&dsp3 {
-	memory-region = <&dsp_common_cma_pool>;
-};
-
-&dsp4 {
-	memory-region = <&dsp_common_cma_pool>;
-};
-
-&dsp5 {
-	memory-region = <&dsp_common_cma_pool>;
-};
-
-&dsp6 {
-	memory-region = <&dsp_common_cma_pool>;
-};
-
-&dsp7 {
-	memory-region = <&dsp_common_cma_pool>;
-};
-
-&gbe {
-	/* custom mult/shift values for rftclk = 600000000 */
-	cpts_clock_mult = <3579139414>;
-	cpts_clock_shift = <31>;
 };

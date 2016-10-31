@@ -1,4 +1,3 @@
-
 #include <dt-bindings/interrupt-controller/irq.h>
 
 / {

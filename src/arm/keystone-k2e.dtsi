@@ -43,10 +43,6 @@
 		};
 	};
 
-	aliases {
-		rproc0 = &dsp0;
-	};
-
 	soc {
 		/include/ "keystone-k2e-clocks.dtsi"
 
@@ -65,7 +61,7 @@
 			status = "disabled";
 		};
 
-		usb1: usb@25000000 {
+		keystone_usb1: usb@25000000 {
 			compatible = "ti,keystone-dwc3";
 			#address-cells = <1>;
 			#size-cells = <1>;
@@ -78,38 +74,11 @@
 			dma-ranges;
 			status = "disabled";
 
-			dwc1: dwc3@25010000 {
+			usb1: dwc3@25010000 {
 				compatible = "synopsys,dwc3";
 				reg = <0x25010000 0x70000>;
 				interrupts = <GIC_SPI 414 IRQ_TYPE_EDGE_RISING>;
 				usb-phy = <&usb1_phy>, <&usb1_phy>;
-			};
-		};
-
-		psc: power-sleep-controller@02350000 {
-			pscrst: psc-reset {
-				dsp@0 {
-					reg = <0>;
-					reset-control = <0xa3c 8 RESET_ASSERT_CLEAR>;
-					reset-status = <0x83c 8 RESET_ASSERT_CLEAR>;
-				};
-			};
-		};
-
-		msm_ram: msmram@0c000000 {
-			compatible = "mmio-sram";
-			reg = <0x0c000000 0x200000>;
-			ranges = <0x0 0x0c000000 0x200000>;
-			#address-cells = <1>;
-			#size-cells = <1>;
-
-			sram-mpm@0 {
-				compatible = "ti,keystone-dsp-msm-ram";
-				reg = <0x0 0x80000>;
-			};
-
-			sram-bm@1f0000 {
-				reg = <0x001f0000 0x8000>;
 			};
 		};
 
@@ -118,32 +87,6 @@
 			gpio-controller;
 			#gpio-cells = <2>;
 			gpio,syscon-dev = <&devctrl 0x240>;
-		};
-
-		dsp0: dsp0 {
-			compatible = "ti,k2e-dsp";
-			reg = <0x10800000 0x00080000>,
-			      <0x10e00000 0x00008000>,
-			      <0x10f00000 0x00008000>;
-			reg-names = "l2sram", "l1pram", "l1dram";
-			clocks = <&clkgem0>;
-			ti,syscon-dev = <&devctrl 0x844>;
-			resets = <&pscrst 0>;
-			interrupt-parent = <&kirq0>;
-			interrupts = <0 8>;
-			interrupt-names = "vring", "exception";
-			kick-gpio = <&dspgpio0 27 0>;
-		};
-
-		pcie1_phy: phy@2326000 {
-			#phy-cells = <0>;
-			compatible = "ti,keystone-serdes-pcie";
-			reg = <0x02326000 0x4000>;
-			link-rate-kbps = <5000000>;
-			num-lanes = <2>;
-			status = "disabled";
-			clocks = <&clkpcie1>;
-			clock-names = "fck";
 		};
 
 		pcie1: pcie@21020000 {
@@ -159,6 +102,7 @@
 			status = "disabled";
 			device_type = "pci";
 			num-lanes = <2>;
+			bus-range = <0x00 0xff>;
 
 			/* error interrupt */
 			interrupts = <GIC_SPI 385 IRQ_TYPE_EDGE_RISING>;
