@@ -35,6 +35,11 @@
 		phy1 = &usb1_phy;
 		ethernet0 = &cpsw_emac0;
 		ethernet1 = &cpsw_emac1;
+		mmc0 = &mmc1;
+		mmc1 = &mmc2;
+		mmc2 = &mmc3;
+		spi0 = &spi0;
+		spi1 = &spi1;
 	};
 
 	cpus {
@@ -578,6 +583,8 @@
 			interrupts = <75
 				      76>;
 			ti,hwmods = "rtc";
+			ti,no-reset-on-init;
+			ti,no-idle-on-init;
 		};
 
 		spi0: spi@48030000 {
