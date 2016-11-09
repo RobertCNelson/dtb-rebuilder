@@ -63,9 +63,9 @@
 	/* wl18xx card enable/irq GPIOs. */
 	wlan_pins: pinmux_wlan_pins {
 		pinctrl-single,pins = <
-			0x28 (PIN_OUTPUT_PULLDOWN| MUX_MODE7)		/* gpmc_ad10.gpio0_26 WL_EN*/
+			0x28 (PIN_OUTPUT_PULLDOWN| MUX_MODE7)	/* gpmc_ad10.gpio0_26 WL_EN*/
 			0x2C (PIN_INPUT_PULLDOWN | MUX_MODE7)	/* gpmc_ad11.gpio0_27 WL_IRQ*/
-			0x7C  (PIN_OUTPUT_PULLUP   | MUX_MODE0) /* gpmc_csn0.gpio1_29 Cape_Buffer_EN*/
+			0x7C (PIN_OUTPUT_PULLUP | MUX_MODE0)	/* gpmc_csn0.gpio1_29 Cape_Buffer_EN*/
 		>;
 	};
 
@@ -73,8 +73,8 @@
 	wlan_pins_sleep: pinmux_wlan_pins_sleep {
 		pinctrl-single,pins = <
 			0x28 (PIN_OUTPUT_PULLDOWN | MUX_MODE7)	/* gpmc_ad10.gpio0_26 WL_EN*/
-			0x2C (PIN_INPUT_PULLDOWN | MUX_MODE7)	    /* gpmc_ad11.gpio0_27 WL_IRQ*/
-			0x7C  (PIN_OUTPUT_PULLUP   | MUX_MODE0) /* gpmc_csn0.gpio1_29 Cape_Buffer_EN*/
+			0x2C (PIN_INPUT_PULLDOWN | MUX_MODE7)	/* gpmc_ad11.gpio0_27 WL_IRQ*/
+			0x7C (PIN_OUTPUT_PULLUP | MUX_MODE0)	/* gpmc_csn0.gpio1_29 Cape_Buffer_EN*/
 		>;
 	};
 

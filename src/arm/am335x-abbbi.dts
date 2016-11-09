@@ -11,6 +11,7 @@
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
 
+
 / {
 	model = "Arrow BeagleBone Black Industrial";
 	compatible = "arrow,am335x-abbbi", "ti,am335x-bone", "ti,am33xx";
