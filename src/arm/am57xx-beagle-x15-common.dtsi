@@ -200,6 +200,16 @@
 			clocks = <&clkout2_clk>;
 		};
 	};
+
+	gpu-subsystem {
+		compatible = "ti,dra7-gpu-subsystem";
+		cores = <&bb2d>;
+		status = "okay";
+	};
+};
+
+&bb2d {
+	status = "okay";
 };
 
 &i2c1 {
