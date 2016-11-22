@@ -1,6 +1,7 @@
 
 DTC ?= /usr/bin/dtc-v4.1.x
 CPP ?= cpp
+KERNEL_VERSION ?= $(shell uname -r)
 
 MAKEFLAGS += -rR --no-print-directory
 
@@ -138,8 +139,8 @@ all_arch: $(ARCH_DTB)
 
 PHONY += install_arch
 install_arch: $(ARCH_DTB)
-	mkdir -p /boot/dtbs/`uname -r`/
-	cp -v $(obj)/*.dtb /boot/dtbs/`uname -r`/
+	mkdir -p /boot/dtbs/$(KERNEL_VERSION)/
+	cp -v $(obj)/*.dtb /boot/dtbs/$(KERNEL_VERSION)/
 
 RCS_FIND_IGNORE := \( -name SCCS -o -name BitKeeper -o -name .svn -o -name CVS \
                    -o -name .pc -o -name .hg -o -name .git \) -prune -o
