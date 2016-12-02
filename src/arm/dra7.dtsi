@@ -1060,7 +1060,7 @@
 			ti,hwmods = "bb2d";
 			clocks = <&dpll_core_h24x2_ck>;
 			clock-names = "fclk";
-			status = "disabled";
+			status = "okay";
 		};
 
 		i2c1: i2c@48070000 {
