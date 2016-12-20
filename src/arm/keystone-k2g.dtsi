@@ -80,6 +80,18 @@
 		ranges = <0x0 0x0 0x0 0xc0000000>;
 		dma-ranges = <0x80000000 0x8 0x00000000 0x80000000>;
 
+		msm_ram: msmram@0c000000 {
+			compatible = "mmio-sram";
+			reg = <0x0c000000 0x100000>;
+			ranges = <0x0 0x0c000000 0x100000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			sram-bm@f7000 {
+				reg = <0x000f7000 0x8000>;
+			};
+		};
+
 		k2g_pinctrl: pinmux@02621000 {
 			compatible = "pinctrl-single";
 			reg = <0x02621000 0x410>;
@@ -171,6 +183,14 @@
 			clocks = <&k2g_clks K2G_DEV_GPIO1
 					K2G_DEV_GPIO_VBUS_CLK>;
 			clock-names = "fck";
+		};
+
+		wdt: wdt@02250000 {
+			compatible = "ti,keystone-wdt", "ti,davinci-wdt";
+			reg = <0x02250000 0x80>;
+			power-domains = <&k2g_pds>;
+			ti,sci-id = <K2G_DEV_TIMER64_5>;
+			clocks = <&k2g_clks K2G_DEV_TIMER64_5 0>;
 		};
 
 		msgmgr: msgmgr@02a00000 {
