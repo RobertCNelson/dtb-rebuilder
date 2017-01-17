@@ -127,6 +127,11 @@ knav_dmas: knav_dmas@0 {
 	};
 };
 
+gbe_subsys: subsys@26200000 {
+	compatible = "syscon";
+	reg = <0x26200000 0x100>;
+};
+
 netcp: netcp@26000000 {
 	reg = <0x2620110 0x8>;
 	reg-names = "efuse";
@@ -152,7 +157,8 @@ netcp: netcp@26000000 {
 		gbe@200000 { /* ETHSS */
 			label = "netcp-gbe";
 			compatible = "ti,netcp-gbe-5";
-			reg = <0x200000 0x900>, <0x220000 0x20000>;
+			syscon-subsys = <&gbe_subsys>;
+			reg = <0x200100 0x400>, <0x220000 0x20000>;
 			/* enable-ale; */
 			tx-queue = <896>;
 			tx-channel = "nettx";
@@ -208,5 +214,25 @@ netcp: netcp@26000000 {
 			local-mac-address = [02 18 31 7e 3e 7f];
 			netcp-gbe = <&gbe1>;
 		};
+	};
+};
+
+sa_subsys: subsys@26080000 {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	compatible = "simple-bus";
+	ranges = <0 0x26080000 0x40000>;
+
+	sa_config: subsys@0 {
+		compatible = "syscon";
+		reg = <0x0 0x100>;
+	};
+
+	hwrng@24000 {
+		compatible = "ti,keystone-rng";
+		reg = <0x24000 0x1000>;
+		ti,syscon-sa-cfg = <&sa_config>;
+		clocks = <&clksa>;
+		clock-names = "fck";
 	};
 };

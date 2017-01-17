@@ -50,8 +50,6 @@
 
 #define MODE_SELECT		(1 << 8)
 
-#define MANUAL_MODE		MODE_SELECT
-
 #define PULL_ENA		(0 << 16)
 #define PULL_DIS		(1 << 16)
 #define PULL_UP			(1 << 17)
@@ -76,8 +74,8 @@
 #define DRA7XX_CORE_IOPAD(pa, val)	(((pa) & 0xffff) - 0x3400) (val)
 
 /* DRA7 IODELAY configuration parameters */
-#define A_DELAY(val)		((val) & 0xFFFF)
-#define G_DELAY(val)		(((val) & 0xFFFF) << 16)
+#define A_DELAY_PS(val)		((val) & 0xffff)
+#define G_DELAY_PS(val)		((val) & 0xffff)
 
 #endif
 

@@ -32,6 +32,8 @@ ifndef KBUILD_VERBOSE
   KBUILD_VERBOSE = 0
 endif
 
+DTC_FLAGS += -Wno-unit_address_vs_reg
+
 # Beautify output
 # ---------------------------------------------------------------------------
 #
