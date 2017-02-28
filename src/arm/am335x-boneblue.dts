@@ -585,7 +585,7 @@
 };
 
 / {
-	leds {
+	led_leds {
 		pinctrl-names = "default";
 		pinctrl-0 = <&led_pins>;
 		compatible = "gpio-leds";
