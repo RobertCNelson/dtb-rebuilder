@@ -95,7 +95,7 @@
 			0x034 0x34  /* P8_11,EQEP2B, MODE4 */
 
 			/* PRU encoder input */
-			0x03c 0x36	/* P8_15,PRU0_r31_15,MODE6 */
+			0x03c 0x35
 			0x038 0x36	/* P8_16,PRU0_r31_16,MODE6 */
 
 			/* PRU Servo output */
