@@ -1,5 +1,5 @@
 
-DTC ?= /usr/bin/dtc-v4.1.x
+DTC ?= /usr/bin/dtc
 CPP ?= cpp
 KERNEL_VERSION ?= $(shell uname -r)
 
@@ -31,6 +31,8 @@ endif
 ifndef KBUILD_VERBOSE
   KBUILD_VERBOSE = 0
 endif
+
+DTC_FLAGS += -Wno-unit_address_vs_reg
 
 # Beautify output
 # ---------------------------------------------------------------------------
