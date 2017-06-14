@@ -9,12 +9,6 @@
                         no-map;
                         status = "okay";
                 };
-
-		cmem_block_mem_1_ocmc3: cmem_block_mem@40500000 {
-			reg = <0x0 0x40500000 0x0 0x100000>;
-			no-map;
-			status = "okay";
-		};
         };
 
         cmem {
@@ -31,10 +25,5 @@
                         memory-region = <&cmem_block_mem_0>;
                         cmem-buf-pools = <1 0x0 0x0c000000>;
                 };
-
-		cmem_block_1: cmem_block@1 {
-			reg = <1>;
-			memory-region = <&cmem_block_mem_1_ocmc3>;
-		};
         };
 };
