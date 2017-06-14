@@ -42,4 +42,3 @@
 	max-frequency = <96000000>;
 	/delete-property/ mmc-hs200-1_8v;
 };
-

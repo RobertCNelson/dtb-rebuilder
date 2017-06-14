@@ -14,7 +14,6 @@
 /dts-v1/;
 
 #include "am33xx.dtsi"
-#include "am33xx-pruss-rproc.dtsi"
 
 / {
 	model = "TI AM3359 ICE-V2";
