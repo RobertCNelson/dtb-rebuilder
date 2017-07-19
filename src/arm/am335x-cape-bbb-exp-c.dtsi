@@ -97,8 +97,11 @@
 		interrupt-parent = <&gpio1>;
 		interrupts = <17 0>;
 
-		touchscreen-size-x = <1024>;
-		touchscreen-size-y = <600>;
+		touchscreen-size-x = <600>;
+		touchscreen-size-y = <1024>;
+		touchscreen-inverted-x;
+		touchscreen-inverted-y;
+		touchscreen-swapped-x-y;
 	};
 
 	tlv320aic3x: tlv320aic3x@1b {

@@ -18,6 +18,7 @@
 
 	compatible = "ti,dra7xx";
 	interrupt-parent = <&crossbar_mpu>;
+	chosen { };
 
 	aliases {
 		i2c0 = &i2c1;
@@ -56,7 +57,7 @@
 		interrupt-controller;
 		#interrupt-cells = <3>;
 		reg = <0x0 0x48211000 0x0 0x1000>,
-		      <0x0 0x48212000 0x0 0x1000>,
+		      <0x0 0x48212000 0x0 0x2000>,
 		      <0x0 0x48214000 0x0 0x2000>,
 		      <0x0 0x48216000 0x0 0x2000>;
 		interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(2) | IRQ_TYPE_LEVEL_HIGH)>;
@@ -94,19 +95,18 @@
 		};
 	};
 
-	cpu0_opp_table: opp_table0 {
+	cpu0_opp_table: opp-table {
 		compatible = "operating-points-v2-ti-cpu";
-		ti,syscon-efuse = <&scm_wkup 0x20c 0xf80000 19>;
-		ti,syscon-rev = <&scm_wkup 0x204>;
+		syscon = <&scm_wkup>;
 
-		opp_nom@1000000000 {
+		opp_nom-1000000000 {
 			opp-hz = /bits/ 64 <1000000000>;
 			opp-microvolt = <1060000 850000 1150000>;
 			opp-supported-hw = <0xFF 0x01>;
 			opp-suspend;
 		};
 
-		opp_od@1176000000 {
+		opp_od-1176000000 {
 			opp-hz = /bits/ 64 <1176000000>;
 			opp-microvolt = <1160000 885000 1160000>;
 			opp-supported-hw = <0xFF 0x02>;
@@ -186,6 +186,7 @@
 					reg = <0x1400 0x0468>;
 					#address-cells = <1>;
 					#size-cells = <0>;
+					#pinctrl-cells = <1>;
 					#interrupt-cells = <1>;
 					interrupt-controller;
 					pinctrl-single,register-width = <32>;
@@ -296,6 +297,7 @@
 				device_type = "pci";
 				ranges = <0x81000000 0 0          0x03000 0 0x00010000
 					  0x82000000 0 0x20013000 0x13000 0 0xffed000>;
+				bus-range = <0x00 0xff>;
 				#interrupt-cells = <1>;
 				num-lanes = <1>;
 				linux,pci-domain = <0>;
@@ -332,6 +334,7 @@
 				device_type = "pci";
 				ranges = <0x81000000 0 0          0x03000 0 0x00010000
 					  0x82000000 0 0x30013000 0x13000 0 0xffed000>;
+				bus-range = <0x00 0xff>;
 				#interrupt-cells = <1>;
 				num-lanes = <1>;
 				linux,pci-domain = <1>;
@@ -413,13 +416,6 @@
 		dsp1_system: dsp_system@40d00000 {
 			compatible = "syscon";
 			reg = <0x40d00000 0x100>;
-		};
-
-		dra7_iodelay_core: padconf@4844a000 {
-			compatible = "ti,dra7-iodelay";
-			reg = <0x4844a000 0x0d1c>;
-			#address-cells = <1>;
-			#size-cells = <0>;
 		};
 
 		sdma: dma-controller@4a056000 {
@@ -980,6 +976,16 @@
 			ti,hwmods = "dmm";
 		};
 
+		bb2d: bb2d@59000000 {
+			compatible = "ti,dra7-bb2d","vivante,gc";
+			reg = <0x59000000 0x0700>;
+			interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+			ti,hwmods = "bb2d";
+			clocks = <&dpll_core_h24x2_ck>;
+			clock-names = "fclk";
+			status = "disabled";
+		};
+
 		i2c1: i2c@48070000 {
 			compatible = "ti,omap4-i2c";
 			reg = <0x48070000 0x100>;
@@ -1398,6 +1404,7 @@
 			phy-names = "sata-phy";
 			clocks = <&sata_ref_clk>;
 			ti,hwmods = "sata";
+			ports-implemented = <0x1>;
 		};
 
 		rtc: rtc@48838000 {
@@ -1728,7 +1735,6 @@
 			cpdma_channels = <8>;
 			ale_entries = <1024>;
 			bd_ram_size = <0x2000>;
-			no_bd_ram = <0>;
 			mac_control = <0x20>;
 			slaves = <2>;
 			active_slave = <0>;
@@ -1990,6 +1996,12 @@
 		};
 	};
 
+	gpu-subsystem {
+		compatible = "vivante,gc-gpu-subsystem";
+		cores = <&bb2d>;
+		status = "okay";
+	};
+
 	thermal_zones: thermal-zones {
 		#include "omap4-cpu-thermal.dtsi"
 		#include "omap5-gpu-thermal.dtsi"
@@ -2002,6 +2014,27 @@
 
 &cpu_thermal {
 	polling-delay = <500>; /* milliseconds */
+	coefficients = <0 2000>;
+};
+
+&gpu_thermal {
+	coefficients = <0 2000>;
+};
+
+&core_thermal {
+	coefficients = <0 2000>;
+};
+
+&dspeve_thermal {
+	coefficients = <0 2000>;
+};
+
+&iva_thermal {
+	coefficients = <0 2000>;
+};
+
+&cpu_crit {
+	temperature = <120000>; /* milli Celsius */
 };
 
 /include/ "dra7xx-clocks.dtsi"

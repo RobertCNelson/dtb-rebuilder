@@ -8,6 +8,7 @@
 
 &lcdc {
 	status = "okay";
+	blue-and-red-wiring = "crossed";
 };
 
 / {
