@@ -894,7 +894,7 @@
 	};
 
 	baseboard_eeprom: baseboard_eeprom@50 {
-		compatible = "at,24c256";
+		compatible = "atmel,24c256";
 		reg = <0x50>;
 
 		#address-cells = <1>;
@@ -939,14 +939,17 @@
 	 * by the hardware problems. (Tip: double-check by performing a current
 	 * measurement after shutdown: it should be less than 1 mA.)
 	 */
-	ti,pmic-shutdown-controller;
 
 	interrupts = <7>; /* NMI */
 	interrupt-parent = <&intc>;
 
+	ti,pmic-shutdown-controller;
+
+	charger {
+		status = "okay";
+	};
 
 	pwrbutton {
-		interrupts = <2>;
 		status = "okay";
 	};
 
@@ -998,15 +1001,6 @@
 	};
 };
 
-&mmc1 {
-	status = "okay";
-	vmmc-supply = <&vmmcsd_fixed>;
-	bus-width = <4>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&mmc0_pins>;
-	cd-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
-};
-
 &tscadc {
 	status = "okay";
 	adc {
@@ -1017,6 +1011,14 @@
 	};
 };
 
+&mmc1 {
+	status = "okay";
+	vmmc-supply = <&vmmcsd_fixed>;
+	bus-width = <4>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&mmc0_pins>;
+	cd-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+};
 
 &aes {
 	status = "okay";
@@ -1027,9 +1029,9 @@
 };
 
 &rtc {
-	system-power-controller;
 	clocks = <&clk_32768_ck>, <&clkdiv32k_ick>;
 	clock-names = "ext-clk", "int-clk";
+	system-power-controller;
 };
 
 &spi0 {
