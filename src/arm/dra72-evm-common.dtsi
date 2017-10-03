@@ -16,9 +16,6 @@
 
 	aliases {
 		display0 = &hdmi0;
-
-		sound0 = &sound0;
-		sound1 = &hdmi;
 	};
 
 	chosen {
@@ -174,24 +171,35 @@
 			clocks = <&atl_clkin2_ck>;
 		};
 	};
-
-	vmmcwl_fixed: fixedregulator-mmcwl {
-		compatible = "regulator-fixed";
-		regulator-name = "vmmcwl_fixed";
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <1800000>;
-		gpio = <&gpio5 8 GPIO_ACTIVE_HIGH>;
-		enable-active-high;
-	};
-
-	clk_ov10633_fixed: clk_ov10633_fixed {
-		#clock-cells = <0>;
-		compatible = "fixed-clock";
-		clock-frequency = <24000000>;
-	};
 };
 
 &dra7_pmx_core {
+	mmc1_pins_default: mmc1_pins_default {
+		pinctrl-single,pins = <
+			DRA7XX_CORE_IOPAD(0x376c, PIN_INPUT | MUX_MODE14)	/* mmc1sdcd.gpio219 */
+			DRA7XX_CORE_IOPAD(0x3754, PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_clk.clk */
+			DRA7XX_CORE_IOPAD(0x3758, PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_cmd.cmd */
+			DRA7XX_CORE_IOPAD(0x375c, PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_dat0.dat0 */
+			DRA7XX_CORE_IOPAD(0x3760, PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_dat1.dat1 */
+			DRA7XX_CORE_IOPAD(0x3764, PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_dat2.dat2 */
+			DRA7XX_CORE_IOPAD(0x3768, PIN_INPUT_PULLUP | MUX_MODE0) /* mmc1_dat3.dat3 */
+		>;
+	};
+
+	mmc2_pins_default: mmc2_pins_default {
+		pinctrl-single,pins = <
+			DRA7XX_CORE_IOPAD(0x349c, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a23.mmc2_clk */
+			DRA7XX_CORE_IOPAD(0x34b0, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_cs1.mmc2_cmd */
+			DRA7XX_CORE_IOPAD(0x34a0, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a24.mmc2_dat0 */
+			DRA7XX_CORE_IOPAD(0x34a4, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a25.mmc2_dat1 */
+			DRA7XX_CORE_IOPAD(0x34a8, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a26.mmc2_dat2 */
+			DRA7XX_CORE_IOPAD(0x34ac, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a27.mmc2_dat3 */
+			DRA7XX_CORE_IOPAD(0x348c, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a19.mmc2_dat4 */
+			DRA7XX_CORE_IOPAD(0x3490, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a20.mmc2_dat5 */
+			DRA7XX_CORE_IOPAD(0x3494, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a21.mmc2_dat6 */
+			DRA7XX_CORE_IOPAD(0x3498, PIN_INPUT_PULLUP | MUX_MODE1) /* gpmc_a22.mmc2_dat7 */
+		>;
+	};
 
 	dcan1_pins_default: dcan1_pins_default {
 		pinctrl-single,pins = <
@@ -206,18 +214,6 @@
 			DRA7XX_CORE_IOPAD(0x3818, MUX_MODE15 | PULL_UP)	/* wakeup0.off */
 		>;
 	};
-
-	wlan_pins: pinmux_wlan_pins {
-		pinctrl-single,pins = <
-			DRA7XX_CORE_IOPAD(0x37e8, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_ctsn.mmc4_clk */
-			DRA7XX_CORE_IOPAD(0x37ec, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_rtsn.mmc4_cmd */
-			DRA7XX_CORE_IOPAD(0x37f0, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart2_rxd.mmc4_dat0 */
-			DRA7XX_CORE_IOPAD(0x37f4, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart2_txd.mmc4_dat1 */
-			DRA7XX_CORE_IOPAD(0x37f8, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart2_ctsn.mmc4_dat2 */
-			DRA7XX_CORE_IOPAD(0x37fc, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart2_rtsn.mmc4_dat3 */
-		>;
-	};
-
 };
 
 &i2c1 {
@@ -282,54 +278,6 @@
 			gpios = <1 GPIO_ACTIVE_HIGH>;
 			output-low;
 			line-name = "vin6_sel_s0";
-		};
-	};
-
-	ov10633@37 {
-		compatible = "ovti,ov10633";
-		reg = <0x37>;
-
-		clocks = <&clk_ov10633_fixed>;
-		clock-names = "xvclk";
-
-		mux-gpios = <&pcf_hdmi 2	GPIO_ACTIVE_HIGH>, /* VIN2_S0 */
-			    <&pcf_hdmi 6	GPIO_ACTIVE_LOW>; /* VIN2_S2 */
-		port {
-			onboardLI: endpoint {
-				remote-endpoint = <&vin2a>;
-				hsync-active = <1>;
-				vsync-active = <1>;
-				pclk-sample = <0>;
-			};
-		};
-	};
-
-	gpio_csi2_adap: tca6416@20 {
-		status = "okay";
-		compatible = "ti,tca6416";
-		reg = <0x20>;
-		gpio-controller;
-		#gpio-cells = <2>;
-	};
-
-	ov490@24 {
-		compatible = "ovti,ov490";
-		reg = <0x24>;
-
-		mux-gpios = <&gpio_csi2_adap 0	GPIO_ACTIVE_LOW>,
-						/* CSI2_SEL_I2C_CLK */
-			    <&gpio_csi2_adap 1	GPIO_ACTIVE_HIGH>,
-						/* CSI2_SEL_REF_CLK */
-			    <&gpio_csi2_adap 3	GPIO_ACTIVE_HIGH>,
-						/* CSI2_CAM0_RESETn */
-			    <&gpio_csi2_adap 4	GPIO_ACTIVE_LOW>;
-						/* CSI2_CAM0_PWR_DWN */
-		port {
-			csi2_cam0: endpoint@0 {
-				clock-lanes = <0>;
-				data-lanes = <1 2 3 4>;
-				remote-endpoint = <&csi2_phy0>;
-			};
 		};
 	};
 };
@@ -477,26 +425,6 @@
 	max-frequency = <192000000>;
 };
 
-&mmc4 {
-	status = "okay";
-	vmmc-supply = <&vmmcwl_fixed>;
-	bus-width = <4>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&wlan_pins>;
-	cap-power-off-card;
-	keep-power-in-suspend;
-	ti,non-removable;
-
-	#address-cells = <1>;
-	#size-cells = <0>;
-	wlcore: wlcore@2 {
-		compatible = "ti,wl1835";
-		reg = <2>;
-		interrupt-parent = <&gpio5>;
-		interrupts = <7 IRQ_TYPE_LEVEL_HIGH>;
-	};
-};
-
 &mac {
 	status = "okay";
 };
@@ -574,10 +502,6 @@
 	status = "ok";
 };
 
-&bb2d {
-	status = "okay";
-};
-
 &hdmi {
 	status = "ok";
 
@@ -585,29 +509,6 @@
 		hdmi_out: endpoint {
 			remote-endpoint = <&tpd12s015_in>;
 		};
-	};
-};
-
-&vip1 {
-	status = "okay";
-};
-
-&vin2a {
-	status = "okay";
-	endpoint@0 {
-		slave-mode;
-		remote-endpoint = <&onboardLI>;
-	};
-};
-
-&cal {
-	status = "okay";
-};
-
-&csi2_0 {
-	csi2_phy0: endpoint@0 {
-		slave-mode;
-		remote-endpoint = <&csi2_cam0>;
 	};
 };
 
@@ -661,40 +562,6 @@
 	mbox_ipu2_ipc3x: mbox_ipu2_ipc3x {
 		status = "okay";
 	};
-};
-
-&mmu0_dsp1 {
-	status = "okay";
-};
-
-&mmu1_dsp1 {
-	status = "okay";
-};
-
-&mmu_ipu1 {
-	status = "okay";
-};
-
-&mmu_ipu2 {
-	status = "okay";
-};
-
-&ipu2 {
-	mboxes = <&mailbox6 &mbox_ipu2_ipc3x>;
-	timers = <&timer3>;
-	watchdog-timers = <&timer4>, <&timer9>;
-};
-
-&ipu1 {
-	mboxes = <&mailbox5 &mbox_ipu1_ipc3x>;
-	timers = <&timer11>;
-	watchdog-timers = <&timer7>, <&timer8>;
-};
-
-&dsp1 {
-	mboxes = <&mailbox5 &mbox_dsp1_ipc3x>;
-	timers = <&timer5>;
-	watchdog-timers = <&timer10>;
 };
 
 &pcie1_rc {

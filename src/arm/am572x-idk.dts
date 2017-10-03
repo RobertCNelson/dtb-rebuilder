@@ -24,40 +24,6 @@
 		reg = <0x0 0x80000000 0x0 0x80000000>;
 	};
 
-	reserved-memory {
-		#address-cells = <2>;
-		#size-cells = <2>;
-		ranges;
-
-		ipu2_cma_pool: ipu2_cma@95800000 {
-			compatible = "shared-dma-pool";
-			reg = <0x0 0x95800000 0x0 0x3800000>;
-			reusable;
-			status = "okay";
-		};
-
-		dsp1_cma_pool: dsp1_cma@99000000 {
-			compatible = "shared-dma-pool";
-			reg = <0x0 0x99000000 0x0 0x4000000>;
-			reusable;
-			status = "okay";
-		};
-
-		ipu1_cma_pool: ipu1_cma@9d000000 {
-			compatible = "shared-dma-pool";
-			reg = <0x0 0x9d000000 0x0 0x2000000>;
-			reusable;
-			status = "okay";
-		};
-
-		dsp2_cma_pool: dsp2_cma@9f000000 {
-			compatible = "shared-dma-pool";
-			reg = <0x0 0x9f000000 0x0 0x800000>;
-			reusable;
-			status = "okay";
-		};
-	};
-
 	status-leds {
 		compatible = "gpio-leds";
 		cpu0-led {
@@ -133,27 +99,6 @@
 	load-gpios = <&gpio3 19 GPIO_ACTIVE_LOW>;
 };
 
-&cpu0 {
-	vdd-supply = <&smps12_reg>;
-};
-
-&ov2659_1 {
-	remote-endpoint = <&vin4b>;
-};
-
-&vin4b {
-	status = "okay";
-
-	endpoint@3 {
-		slave-mode;
-		remote-endpoint = <&ov2659_1>;
-	};
-};
-
-&vip2 {
-	status = "okay";
-};
-
 &pcie1_rc {
 	status = "okay";
 	gpios = <&gpio3 23 GPIO_ACTIVE_HIGH>;
@@ -181,66 +126,4 @@
 	mbox_dsp2_ipc3x: mbox_dsp2_ipc3x {
 		status = "okay";
 	};
-};
-
-&mmu0_dsp1 {
-	status = "okay";
-};
-
-&mmu1_dsp1 {
-	status = "okay";
-};
-
-&mmu0_dsp2 {
-	status = "okay";
-};
-
-&mmu1_dsp2 {
-	status = "okay";
-};
-
-&mmu_ipu1 {
-	status = "okay";
-};
-
-&mmu_ipu2 {
-	status = "okay";
-};
-
-&ipu2 {
-	status = "okay";
-	memory-region = <&ipu2_cma_pool>;
-	mboxes = <&mailbox6 &mbox_ipu2_ipc3x>;
-	timers = <&timer3>;
-	watchdog-timers = <&timer4>, <&timer9>;
-};
-
-&ipu1 {
-	status = "okay";
-	memory-region = <&ipu1_cma_pool>;
-	mboxes = <&mailbox5 &mbox_ipu1_ipc3x>;
-	timers = <&timer11>;
-	watchdog-timers = <&timer7>, <&timer8>;
-};
-
-&dsp1 {
-	status = "okay";
-	memory-region = <&dsp1_cma_pool>;
-	mboxes = <&mailbox5 &mbox_dsp1_ipc3x>;
-	timers = <&timer5>;
-	watchdog-timers = <&timer10>;
-};
-
-&dsp2 {
-	status = "okay";
-	memory-region = <&dsp2_cma_pool>;
-	mboxes = <&mailbox6 &mbox_dsp2_ipc3x>;
-	timers = <&timer6>;
-	watchdog-timers = <&timer13>;
-};
-
-&pruss2_mdio {
-	reset-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>,
-		      <&gpio5 9 GPIO_ACTIVE_LOW>;
-	reset-delay-us = <2>;	/* PHY datasheet states 1uS min */
 };

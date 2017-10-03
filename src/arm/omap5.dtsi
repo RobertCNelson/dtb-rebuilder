@@ -31,8 +31,6 @@
 		serial3 = &uart4;
 		serial4 = &uart5;
 		serial5 = &uart6;
-		rproc0 = &dsp;
-		rproc1 = &ipu;
 	};
 
 	cpus {
@@ -94,7 +92,7 @@
 		interrupt-controller;
 		#interrupt-cells = <3>;
 		reg = <0 0x48211000 0 0x1000>,
-		      <0 0x48212000 0 0x1000>,
+		      <0 0x48212000 0 0x2000>,
 		      <0 0x48214000 0 0x2000>,
 		      <0 0x48216000 0 0x2000>;
 		interrupt-parent = <&gic>;
@@ -196,7 +194,7 @@
 						pbias_mmc_reg: pbias_mmc_omap5 {
 							regulator-name = "pbias_mmc_omap5";
 							regulator-min-microvolt = <1800000>;
-							regulator-max-microvolt = <3300000>;
+							regulator-max-microvolt = <3000000>;
 						};
 					};
 				};
@@ -828,27 +826,6 @@
 			ti,hwmods = "wd_timer2";
 		};
 
-		dsp: dsp {
-			compatible = "ti,omap5-dsp";
-			ti,hwmods = "dsp";
-			syscon-bootreg = <&scm_conf 0x304>;
-			iommus = <&mmu_dsp>;
-			mboxes = <&mailbox &mbox_dsp>;
-			ti,rproc-standby-info = <0x4a004420>;
-			status = "disabled";
-		};
-
-		ipu: ipu@55020000 {
-			compatible = "ti,omap5-ipu";
-			reg = <0x55020000 0x10000>;
-			reg-names = "l2ram";
-			ti,hwmods = "ipu";
-			iommus = <&mmu_ipu>;
-			mboxes = <&mailbox &mbox_ipu>;
-			ti,rproc-standby-info = <0x4a008920>;
-			status = "disabled";
-		};
-
 		dmm@4e000000 {
 			compatible = "ti,omap5-dmm";
 			reg = <0x4e000000 0x800>;
@@ -1150,6 +1127,15 @@
 
 &cpu_thermal {
 	polling-delay = <500>; /* milliseconds */
+	coefficients = <65 (-1791)>;
 };
 
 /include/ "omap54xx-clocks.dtsi"
+
+&gpu_thermal {
+	coefficients = <117 (-2992)>;
+};
+
+&core_thermal {
+	coefficients = <0 2000>;
+};

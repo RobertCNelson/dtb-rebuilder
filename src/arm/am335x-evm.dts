@@ -98,7 +98,7 @@
 		};
 	};
 
-	lcd_bl: backlight {
+	backlight {
 		compatible = "pwm-backlight";
 		pwms = <&ecap0 0 50000 0>;
 		brightness-levels = <0 51 53 56 62 75 101 152 255>;
@@ -110,7 +110,6 @@
 		status = "okay";
 		pinctrl-names = "default";
 		pinctrl-0 = <&lcd_pins_s0>;
-		backlight = <&lcd_bl>;
 		panel-info {
 			ac-bias           = <255>;
 			ac-bias-intrpt    = <0>;
@@ -793,28 +792,4 @@
 &rtc {
 	clocks = <&clk_32768_ck>, <&clkdiv32k_ick>;
 	clock-names = "ext-clk", "int-clk";
-};
-
-&wkup_m3_ipc {
-	ti,scale-data-fw = "am335x-evm-scale-data.bin";
-};
-
-&pruss_soc_bus {
-	status = "okay";
-
-	pruss: pruss@4a300000 {
-		status = "okay";
-
-		pru0: pru@4a334000 {
-			status = "okay";
-		};
-
-		pru1: pru@4a338000 {
-			status = "okay";
-		};
-	};
-};
-
-&sgx {
-	status = "okay";
 };

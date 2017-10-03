@@ -10,7 +10,6 @@
 
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
-
 #include <dt-bindings/board/am335x-bbw-bbb-base.h>
 #include <dt-bindings/pinctrl/am33xx.h>
 

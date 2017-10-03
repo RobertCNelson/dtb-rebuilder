@@ -48,8 +48,6 @@
 		compatible = "osddisplays,osd057T0559-34ts", "panel-dpi";
 		label = "lcd";
 
-		backlight = <&lcd_bl>;
-
 		panel-timing {
 			clock-frequency = <33000000>;
 			hactive = <800>;
@@ -106,7 +104,7 @@
 			0x03030069>;	/* LEFT */
 	};
 
-	lcd_bl: backlight {
+	backlight {
 		compatible = "pwm-backlight";
 		pwms = <&ecap0 0 50000 PWM_POLARITY_INVERTED>;
 		brightness-levels = <0 51 53 56 62 75 101 152 255>;
@@ -143,12 +141,6 @@
 			sound-dai = <&tlv320aic3111>;
 			system-clock-frequency = <12000000>;
 		};
-	};
-
-	audio_mstrclk: mclk_osc {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <12000000>;
 	};
 };
 
@@ -423,7 +415,7 @@
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c0_pins>;
-	clock-frequency = <100000>;
+	clock-frequency = <400000>;
 
 	tps65218: tps65218@24 {
 		reg = <0x24>;
@@ -483,7 +475,7 @@
 	};
 
 	at24@50 {
-		compatible = "at24,24c256";
+		compatible = "atmel,24c256";
 		pagesize = <64>;
 		reg = <0x50>;
 	};
@@ -517,21 +509,6 @@
 		AVDD-supply = <&dcdc4>; /* v3_3AUD -> V3_3D -> DCDC4 */
 		IOVDD-supply = <&dcdc4>; /* V3_3D -> DCDC4 */
 		DVDD-supply = <&ldo1>; /* V1_8AUD -> V1_8D -> LDO1 */
-	};
-
-	ov2659@30 {
-		compatible = "ovti,ov2659";
-		reg = <0x30>;
-
-		clocks = <&audio_mstrclk>;
-		clock-names = "xvclk";
-
-		port {
-			ov2659_1: endpoint {
-				remote-endpoint = <&vpfe1_ep>;
-				link-frequencies = /bits/ 64 <70000000>;
-			};
-		};
 	};
 };
 
@@ -695,7 +672,7 @@
 };
 
 &usb1 {
-	dr_mode = "otg";
+	dr_mode = "peripheral";
 	status = "okay";
 };
 
@@ -788,7 +765,7 @@
 
 	port {
 		vpfe1_ep: endpoint {
-			remote-endpoint = <&ov2659_1>;
+			/* remote-endpoint = <&sensor>; add once we have it */
 			ti,am437x-vpfe-interface = <0>;
 			bus-width = <8>;
 			hsync-active = <0>;
@@ -818,12 +795,4 @@
 &synctimer_32kclk {
 	assigned-clocks = <&mux_synctimer32k_ck>;
 	assigned-clock-parents = <&clkdiv32k_ick>;
-};
-
-&wkup_m3_ipc {
-	ti,scale-data-fw = "am43x-evm-scale-data.bin";
-};
-
-&cpu {
-	cpu0-supply = <&dcdc2>;
 };

@@ -67,7 +67,7 @@
 	};
 
 	eeprom: eeprom@50 {
-		compatible = "at,24c256";
+		compatible = "atmel,24c256";
 		reg = <0x50>;
 	};
 
@@ -653,8 +653,4 @@
 			AM33XX_IOPAD(0x964, PIN_INPUT_PULLUP | MUX_MODE7)	/* gpmc_a8.gpio0_7 */
 		>;
 	};
-};
-
-&sgx {
-	status = "okay";
 };

@@ -11,14 +11,13 @@
 #include <dt-bindings/input/input.h>
 
 / {
-	aliases {
-		display0 = &hdmi0;
-		sound0 = &sound0;
-		sound1 = &hdmi;
-	};
-
 	chosen {
 		stdout-path = &uart1;
+	};
+
+	extcon_usb1: extcon_usb1 {
+		compatible = "linux,extcon-usb-gpio";
+		id-gpio = <&pcf_gpio_21 1 GPIO_ACTIVE_HIGH>;
 	};
 
 	sound0: sound0 {
@@ -53,11 +52,6 @@
 			sound-dai = <&tlv320aic3106>;
 			clocks = <&atl_clkin2_ck>;
 		};
-	};
-
-	extcon_usb1: extcon_usb1 {
-		compatible = "linux,extcon-usb-gpio";
-		id-gpio = <&pcf_gpio_21 1 GPIO_ACTIVE_HIGH>;
 	};
 
 	leds {
@@ -104,48 +98,6 @@
 			linux,code = <BTN_1>;
 			gpios = <&pcf_lcd 3 GPIO_ACTIVE_LOW>;
 		};
-	};
-
-	hdmi0: connector@1 {
-		compatible = "hdmi-connector";
-		label = "hdmi";
-
-		type = "a";
-
-		port {
-			hdmi_connector_in: endpoint {
-				remote-endpoint = <&tpd12s015_out>;
-			};
-		};
-	};
-
-	tpd12s015: encoder@1 {
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			port@0 {
-				reg = <0>;
-
-				tpd12s015_in: endpoint {
-					remote-endpoint = <&hdmi_out>;
-				};
-			};
-
-			port@1 {
-				reg = <1>;
-
-				tpd12s015_out: endpoint {
-					remote-endpoint = <&hdmi_connector_in>;
-				};
-			};
-		};
-	};
-
-	clk_ov10633_fixed: clk_ov10633_fixed {
-		#clock-cells = <0>;
-		compatible = "fixed-clock";
-		clock-frequency = <24000000>;
 	};
 };
 
@@ -285,20 +237,22 @@
 	rx-num-evt = <32>;
 };
 
-&vip1 {
+&mailbox5 {
 	status = "okay";
-};
-
-&hdmi {
-	status = "okay";
-
-	port {
-		hdmi_out: endpoint {
-			remote-endpoint = <&tpd12s015_in>;
-		};
+	mbox_ipu1_ipc3x: mbox_ipu1_ipc3x {
+		status = "okay";
+	};
+	mbox_dsp1_ipc3x: mbox_dsp1_ipc3x {
+		status = "okay";
 	};
 };
 
-&pcie1_rc {
+&mailbox6 {
 	status = "okay";
+	mbox_ipu2_ipc3x: mbox_ipu2_ipc3x {
+		status = "okay";
+	};
+	mbox_dsp2_ipc3x: mbox_dsp2_ipc3x {
+		status = "okay";
+	};
 };
