@@ -33,6 +33,18 @@ ifndef KBUILD_VERBOSE
 endif
 
 DTC_FLAGS += -Wno-unit_address_vs_reg
+#New DTC Flags for v1.4.5 (Debian 9.x (Buster))
+#DTC_FLAGS += -Wno-dmas_property
+#DTC_FLAGS += -Wno-gpios_property
+#DTC_FLAGS += -Wno-pwms_property
+#DTC_FLAGS += -Wno-interrupts_property
+#DTC Flags: v1.4.5
+#DTC_FLAGS += -Wno-pci_bridge
+#DTC_FLAGS += -Wno-pci_device_bus_num
+#DTC_FLAGS += -Wno-pci_device_reg
+#DTC_FLAGS += -Wno-phys_property
+#DTC_FLAGS += -Wno-simple_bus_reg
+#DTC_FLAGS += -Wno-unit_address_format
 
 # Beautify output
 # ---------------------------------------------------------------------------
