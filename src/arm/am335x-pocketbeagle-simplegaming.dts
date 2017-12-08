@@ -104,3 +104,24 @@
 		};
 	};
 };
+
+/ {
+	capeleds {
+		pinctrl-names = "default";
+		pinctrl-0 = <&P1_04_gpio_pin &P2_03_gpio_pin>;
+
+		compatible = "gpio-leds";
+
+		led@1 {
+			label = "gamingpocketcape::left";
+			gpios = <&gpio2 25 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		led@2 {
+			label = "gamingpocketcape::right";
+			gpios = <&gpio0 23 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+	};
+};
