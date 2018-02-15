@@ -21,6 +21,9 @@
 		rtc1 = &tps659038_rtc;
 		rtc2 = &rtc;
 		display0 = &hdmi0;
+
+		sound0 = &sound0;
+		sound1 = &hdmi;
 	};
 
 	chosen {
@@ -446,9 +449,10 @@
 	pinctrl-0 = <&mmc2_pins_default>;
 
 	vmmc-supply = <&vdd_3v3>;
+	vqmmc-supply = <&vdd_3v3>;
 	bus-width = <8>;
-	ti,non-removable;
-	cap-mmc-dual-data-rate;
+	non-removable;
+	no-1-8-v;
 };
 
 &sata {
@@ -588,6 +592,22 @@
 		status = "okay";
 	};
 	mbox_dsp2_ipc3x: mbox_dsp2_ipc3x {
+		status = "okay";
+	};
+};
+
+&pruss_soc_bus1 {
+	status = "okay";
+
+	pruss1: pruss@0 {
+		status = "okay";
+	};
+};
+
+&pruss_soc_bus2 {
+	status = "okay";
+
+	pruss2: pruss@0 {
 		status = "okay";
 	};
 };

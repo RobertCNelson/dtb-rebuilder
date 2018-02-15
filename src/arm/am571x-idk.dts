@@ -102,7 +102,7 @@
 
 &mmc1 {
 	pinctrl-names = "default", "hs", "sdr12", "sdr25", "sdr50", "ddr50", "sdr104";
-	pinctrl-0 = <&mmc1_pins_default>;
+	pinctrl-0 = <&mmc1_pins_default_no_clk_pu>;
 	pinctrl-1 = <&mmc1_pins_hs>;
 	pinctrl-2 = <&mmc1_pins_sdr12>;
 	pinctrl-3 = <&mmc1_pins_sdr25>;
@@ -120,4 +120,21 @@
 
 &cpu0 {
 	vdd-supply = <&smps12_reg>;
+};
+
+&ov2659_1 {
+	remote-endpoint = <&vin1b>;
+};
+
+&vin1b {
+	status = "okay";
+
+	endpoint@2 {
+		slave-mode;
+		remote-endpoint = <&ov2659_1>;
+	};
+};
+
+&vip1 {
+	status = "okay";
 };
