@@ -22,7 +22,7 @@ if [ "${deb_pkgs}" ] ; then
 fi
 
 #git_sha="origin/master"
-git_sha="origin/bb.org-4.1-dt-overlays5"
+git_sha="origin/dtc-v1.4.4"
 project="dtc"
 #server="https://git.kernel.org/pub/scm/utils/dtc"
 server="https://github.com/RobertCNelson"
@@ -53,5 +53,5 @@ make clean
 make PREFIX=/usr/local/ CC=gcc CROSS_COMPILE= all
 echo "Installing into: /usr/local/bin/"
 sudo make PREFIX=/usr/local/ install
-sudo ln -sf /usr/local/bin/dtc /usr/bin/dtc-v4.1.x
-echo "dtc: `/usr/bin/dtc-v4.1.x --version`"
+sudo ln -sf /usr/local/bin/dtc /usr/bin/dtc
+echo "dtc: `/usr/bin/dtc --version`"
