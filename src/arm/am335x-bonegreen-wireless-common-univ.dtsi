@@ -334,17 +334,7 @@
 	P8_25_gpio_input_pin: pinmux_P8_25_gpio_input_pin { pinctrl-single,pins = <
 		AM33XX_IOPAD(0x0800, PIN_INPUT | MUX_MODE7) >; };			/* gpmc_ad0.gpio1_0 */
 
-	/* P8_26 (ZCZ ball V6) gpio1_29 */
-	P8_26_default_pin: pinmux_P8_26_default_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x087c, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE7) >; };	/* gpmc_csn0.gpio1_29 */
-	P8_26_gpio_pin: pinmux_P8_26_gpio_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x087c, PIN_OUTPUT | INPUT_EN | MUX_MODE7) >; };		/* gpmc_csn0.gpio1_29 */
-	P8_26_gpio_pu_pin: pinmux_P8_26_gpio_pu_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x087c, PIN_OUTPUT_PULLUP | INPUT_EN | MUX_MODE7) >; };	/* gpmc_csn0.gpio1_29 */
-	P8_26_gpio_pd_pin: pinmux_P8_26_gpio_pd_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x087c, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE7) >; };	/* gpmc_csn0.gpio1_29 */
-	P8_26_gpio_input_pin: pinmux_P8_26_gpio_input_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x087c, PIN_INPUT | MUX_MODE7) >; };			/* gpmc_csn0.gpio1_29 */
+	/* P8_26 (ZCZ ball V6) gpio-hog wl1835 */
 
 	/* P8_27 (ZCZ ball U5) hdmi */
 	P8_27_default_pin: pinmux_P8_27_default_pin { pinctrl-single,pins = <
@@ -1042,25 +1032,7 @@
 	P9_29_pruin_pin: pinmux_P9_29_pruin_pin { pinctrl-single,pins = <
 		AM33XX_IOPAD(0x0994, PIN_INPUT | MUX_MODE6) >; };			/* mcasp0_fsx.pru0_in1 */
 
-	/* P9_30 (ZCZ ball D12) gpio3_16 */
-	P9_30_default_pin: pinmux_P9_30_default_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE7) >; };	/* mcasp0_axr0.gpio3_16 */
-	P9_30_gpio_pin: pinmux_P9_30_gpio_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_OUTPUT | INPUT_EN | MUX_MODE7) >; };		/* mcasp0_axr0.gpio3_16 */
-	P9_30_gpio_pu_pin: pinmux_P9_30_gpio_pu_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_OUTPUT_PULLUP | INPUT_EN | MUX_MODE7) >; };	/* mcasp0_axr0.gpio3_16 */
-	P9_30_gpio_pd_pin: pinmux_P9_30_gpio_pd_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE7) >; };	/* mcasp0_axr0.gpio3_16 */
-	P9_30_gpio_input_pin: pinmux_P9_30_gpio_input_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_INPUT | MUX_MODE7) >; };			/* mcasp0_axr0.gpio3_16 */
-	P9_30_pwm_pin: pinmux_P9_30_pwm_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE1) >; };	/* mcasp0_axr0.ehrpwm0_tripzone_input */
-	P9_30_spi_pin: pinmux_P9_30_spi_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_OUTPUT_PULLUP | INPUT_EN | MUX_MODE3) >; };	/* mcasp0_axr0.spi1_d1 */
-	P9_30_pruout_pin: pinmux_P9_30_pruout_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE5) >; };	/* mcasp0_axr0.pru0_out2 */
-	P9_30_pruin_pin: pinmux_P9_30_pruin_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0998, PIN_INPUT | MUX_MODE6) >; };			/* mcasp0_axr0.pru0_in2 */
+	/* P9_30 (ZCZ ball D12) gpio-hog wl1835 */
 
 	/* P9_31 (ZCZ ball A13) audio */
 	P9_31_default_pin: pinmux_P9_31_default_pin { pinctrl-single,pins = <
@@ -1541,17 +1513,7 @@
 		pinctrl-4 = <&P8_25_gpio_input_pin>;
 	};
 
-	/* P8_26 (ZCZ ball V6) */
-	P8_26_pinmux {
-		compatible = "bone-pinmux-helper";
-		status = "okay";
-		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "gpio_input";
-		pinctrl-0 = <&P8_26_default_pin>;
-		pinctrl-1 = <&P8_26_gpio_pin>;
-		pinctrl-2 = <&P8_26_gpio_pu_pin>;
-		pinctrl-3 = <&P8_26_gpio_pd_pin>;
-		pinctrl-4 = <&P8_26_gpio_input_pin>;
-	};
+	/* P8_26 (ZCZ ball V6) gpio-hog wl1835 */
 
 	/* P8_27 (ZCZ ball U5) hdmi */
 	P8_27_pinmux {
@@ -2147,21 +2109,7 @@
 		pinctrl-8 = <&P9_29_pruin_pin>;
 	};
 
-	/* P9_30 (ZCZ ball D12) */
-	P9_30_pinmux {
-		compatible = "bone-pinmux-helper";
-		status = "okay";
-		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "gpio_input", "spi", "pwm", "pruout", "pruin";
-		pinctrl-0 = <&P9_30_default_pin>;
-		pinctrl-1 = <&P9_30_gpio_pin>;
-		pinctrl-2 = <&P9_30_gpio_pu_pin>;
-		pinctrl-3 = <&P9_30_gpio_pd_pin>;
-		pinctrl-4 = <&P9_30_gpio_input_pin>;
-		pinctrl-5 = <&P9_30_spi_pin>;
-		pinctrl-6 = <&P9_30_pwm_pin>;
-		pinctrl-7 = <&P9_30_pruout_pin>;
-		pinctrl-8 = <&P9_30_pruin_pin>;
-	};
+	/* P9_30 (ZCZ ball D12) gpio-hog wl1835 */
 
 	/* P9_31 (ZCZ ball A13) audio */
 	P9_31_pinmux {
@@ -2436,13 +2384,6 @@
 			dir-changeable;
 		};
 
-		P8_26 {
-			gpio-name = "P8_26";
-			gpio = <&gpio1 29 0>;
-			input;
-			dir-changeable;
-		};
-
 		P8_27 {
 			gpio-name = "P8_27";
 			gpio = <&gpio2 22 0>;
@@ -2712,13 +2653,6 @@
 		P9_29 {
 			gpio-name = "P9_29";
 			gpio = <&gpio3 15 0>;
-			input;
-			dir-changeable;
-		};
-
-		P9_30 {
-			gpio-name = "P9_30";
-			gpio = <&gpio3 16 0>;
 			input;
 			dir-changeable;
 		};
