@@ -1,5 +1,5 @@
 
-DTC ?= dtc
+DTC ?= /usr/bin/dtc
 CPP ?= cpp
 
 MAKEFLAGS += -rR --no-print-directory
@@ -30,6 +30,20 @@ endif
 ifndef KBUILD_VERBOSE
   KBUILD_VERBOSE = 0
 endif
+
+DTC_FLAGS += -Wno-unit_address_vs_reg
+#New DTC Flags for v1.4.5 (Debian 9.x (Buster))
+#DTC_FLAGS += -Wno-dmas_property
+#DTC_FLAGS += -Wno-gpios_property
+#DTC_FLAGS += -Wno-pwms_property
+#DTC_FLAGS += -Wno-interrupts_property
+#DTC Flags: v1.4.5
+#DTC_FLAGS += -Wno-pci_bridge
+#DTC_FLAGS += -Wno-pci_device_bus_num
+#DTC_FLAGS += -Wno-pci_device_reg
+#DTC_FLAGS += -Wno-phys_property
+#DTC_FLAGS += -Wno-simple_bus_reg
+#DTC_FLAGS += -Wno-unit_address_format
 
 # Beautify output
 # ---------------------------------------------------------------------------
@@ -65,8 +79,14 @@ endif
 # If the user is running make -s (silent mode), suppress echoing of
 # commands
 
+ifneq ($(filter 4.%,$(MAKE_VERSION)),)	# make-4
+ifneq ($(filter %s ,$(firstword x$(MAKEFLAGS))),)
+  quiet=silent_
+endif
+else					# make-3.8x
 ifneq ($(filter s% -s%,$(MAKEFLAGS)),)
   quiet=silent_
+endif
 endif
 
 export quiet Q KBUILD_VERBOSE
@@ -82,7 +102,7 @@ install_%:
 
 ifeq ($(ARCH),)
 
-ALL_DTS		:= $(wildcard src/*/*.dts)
+ALL_DTS		:= $(shell find src/* -name \*.dts)
 
 ALL_DTB		:= $(patsubst %.dts,%.dtb,$(ALL_DTS))
 
@@ -92,7 +112,7 @@ $(ALL_DTB): FORCE
 
 else
 
-ARCH_DTS	:= $(wildcard src/$(ARCH)/*.dts)
+ARCH_DTS	:= $(shell find src/$(ARCH) -name \*.dts)
 
 ARCH_DTB	:= $(patsubst %.dts,%.dtb,$(ARCH_DTS))
 
@@ -118,7 +138,7 @@ dtc_cpp_flags  = -Wp,-MD,$(depfile).pre.tmp -nostdinc	\
 
 quiet_cmd_dtc = DTC     $@
 cmd_dtc = $(CPP) $(dtc_cpp_flags) -x assembler-with-cpp -o $(dtc-tmp) $< ; \
-        $(DTC) -O dtb -o $@ -b 0 \
+        $(DTC) -O dtb -o $@ -b 0 -@ \
                 -i $(src) $(DTC_FLAGS) \
                 -d $(depfile).dtc.tmp $(dtc-tmp) ; \
         cat $(depfile).pre.tmp $(depfile).dtc.tmp > $(depfile)
@@ -132,8 +152,8 @@ all_arch: $(ARCH_DTB)
 
 PHONY += install_arch
 install_arch: $(ARCH_DTB)
-	mkdir -p /boot/dtbs/`uname -r`/
-	cp -v $(obj)/*.dtb /boot/dtbs/`uname -r`/
+	mkdir -p /boot/dtbs/$(KERNEL_VERSION)/
+	cp -v $(obj)/*.dtb /boot/dtbs/$(KERNEL_VERSION)/
 
 RCS_FIND_IGNORE := \( -name SCCS -o -name BitKeeper -o -name .svn -o -name CVS \
                    -o -name .pc -o -name .hg -o -name .git \) -prune -o
