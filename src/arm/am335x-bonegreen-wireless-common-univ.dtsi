@@ -166,19 +166,7 @@
 	P8_13_pwm_pin: pinmux_P8_13_pwm_pin { pinctrl-single,pins = <
 		AM33XX_IOPAD(0x0824, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE4) >; };	/* gpmc_ad9.ehrpwm2b */
 
-	/* P8_14 (ZCZ ball T11) gpio0_26 */
-	P8_14_default_pin: pinmux_P8_14_default_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0828, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE7) >; };	/* gpmc_ad10.gpio0_26 */
-	P8_14_gpio_pin: pinmux_P8_14_gpio_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0828, PIN_OUTPUT | INPUT_EN | MUX_MODE7) >; };		/* gpmc_ad10.gpio0_26 */
-	P8_14_gpio_pu_pin: pinmux_P8_14_gpio_pu_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0828, PIN_OUTPUT_PULLUP | INPUT_EN | MUX_MODE7) >; };	/* gpmc_ad10.gpio0_26 */
-	P8_14_gpio_pd_pin: pinmux_P8_14_gpio_pd_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0828, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE7) >; };	/* gpmc_ad10.gpio0_26 */
-	P8_14_gpio_input_pin: pinmux_P8_14_gpio_input_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0828, PIN_INPUT | MUX_MODE7) >; };			/* gpmc_ad10.gpio0_26 */
-	P8_14_pwm_pin: pinmux_P8_14_pwm_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x0828, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE4) >; };	/* gpmc_ad10.ehrpwm2_tripzone_input */
+	/* P8_14 (ZCZ ball T11) wl1835: wl_en */
 
 	/* P8_15 (ZCZ ball U13) gpio1_15 */
 	P8_15_default_pin: pinmux_P8_15_default_pin { pinctrl-single,pins = <
@@ -214,19 +202,7 @@
 	P8_16_pruin_pin: pinmux_P8_16_pruin_pin { pinctrl-single,pins = <
 		AM33XX_IOPAD(0x0838, PIN_INPUT | MUX_MODE6) >; };			/* gpmc_ad14.pru0_in14 */
 
-	/* P8_17 (ZCZ ball U12) gpio0_27 */
-	P8_17_default_pin: pinmux_P8_17_default_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x082c, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE7) >; };	/* gpmc_ad11.gpio0_27 */
-	P8_17_gpio_pin: pinmux_P8_17_gpio_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x082c, PIN_OUTPUT | INPUT_EN | MUX_MODE7) >; };		/* gpmc_ad11.gpio0_27 */
-	P8_17_gpio_pu_pin: pinmux_P8_17_gpio_pu_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x082c, PIN_OUTPUT_PULLUP | INPUT_EN | MUX_MODE7) >; };	/* gpmc_ad11.gpio0_27 */
-	P8_17_gpio_pd_pin: pinmux_P8_17_gpio_pd_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x082c, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE7) >; };	/* gpmc_ad11.gpio0_27 */
-	P8_17_gpio_input_pin: pinmux_P8_17_gpio_input_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x082c, PIN_INPUT | MUX_MODE7) >; };			/* gpmc_ad11.gpio0_27 */
-	P8_17_pwm_pin: pinmux_P8_17_pwm_pin { pinctrl-single,pins = <
-		AM33XX_IOPAD(0x082c, PIN_OUTPUT_PULLDOWN | INPUT_EN | MUX_MODE4) >; };	/* gpmc_ad11.ehrpwm0_synco */
+	/* P8_17 (ZCZ ball U12) wl1835: wl_irq */
 
 	/* P8_18 (ZCZ ball V12) gpio2_1 */
 	P8_18_default_pin: pinmux_P8_18_default_pin { pinctrl-single,pins = <
@@ -1357,18 +1333,7 @@
 		pinctrl-5 = <&P8_13_pwm_pin>;
 	};
 
-	/* P8_14 (ZCZ ball T11) */
-	P8_14_pinmux {
-		compatible = "bone-pinmux-helper";
-		status = "okay";
-		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "gpio_input", "pwm";
-		pinctrl-0 = <&P8_14_default_pin>;
-		pinctrl-1 = <&P8_14_gpio_pin>;
-		pinctrl-2 = <&P8_14_gpio_pu_pin>;
-		pinctrl-3 = <&P8_14_gpio_pd_pin>;
-		pinctrl-4 = <&P8_14_gpio_input_pin>;
-		pinctrl-5 = <&P8_14_pwm_pin>;
-	};
+	/* P8_14 (ZCZ ball T11) wl1835: wl_en */
 
 	/* P8_15 (ZCZ ball U13) */
 	P8_15_pinmux {
@@ -1399,18 +1364,7 @@
 		pinctrl-6 = <&P8_16_pruin_pin>;
 	};
 
-	/* P8_17 (ZCZ ball U12) */
-	P8_17_pinmux {
-		compatible = "bone-pinmux-helper";
-		status = "okay";
-		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "gpio_input", "pwm";
-		pinctrl-0 = <&P8_17_default_pin>;
-		pinctrl-1 = <&P8_17_gpio_pin>;
-		pinctrl-2 = <&P8_17_gpio_pu_pin>;
-		pinctrl-3 = <&P8_17_gpio_pd_pin>;
-		pinctrl-4 = <&P8_17_gpio_input_pin>;
-		pinctrl-5 = <&P8_17_pwm_pin>;
-	};
+	/* P8_17 (ZCZ ball U12) wl1835: wl_irq */
 
 	/* P8_18 (ZCZ ball V12) */
 	P8_18_pinmux {
@@ -2300,13 +2254,6 @@
 			dir-changeable;
 		};
 
-		P8_14 {
-			gpio-name = "P8_14";
-			gpio = <&gpio0 26 0>;
-			input;
-			dir-changeable;
-		};
-
 		P8_15 {
 			gpio-name = "P8_15";
 			gpio = <&gpio1 15 0>;
@@ -2317,13 +2264,6 @@
 		P8_16 {
 			gpio-name = "P8_16";
 			gpio = <&gpio1 14 0>;
-			input;
-			dir-changeable;
-		};
-
-		P8_17 {
-			gpio-name = "P8_17";
-			gpio = <&gpio0 27 0>;
 			input;
 			dir-changeable;
 		};
