@@ -54,9 +54,9 @@
 
 	gpio_pin: pinmux_gpio_pin {
 		pinctrl-single,pins = <
-			AM33XX_IOPAD(0x800, PIN_INPUT_PULLDOWN | MUX_MODE7 )
-			AM33XX_IOPAD(0x804, PIN_INPUT_PULLDOWN | MUX_MODE7 )
-			AM33XX_IOPAD(0x9e8, PIN_OUTPUT_PULLDOWN | MUX_MODE7 )
+			AM33XX_IOPAD(0x800, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (U7) gpmc_ad0.gpio1[0] */
+			AM33XX_IOPAD(0x804, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (V7) gpmc_ad1.gpio1[1] */
+			AM33XX_IOPAD(0x9e8, PIN_OUTPUT_PULLDOWN | MUX_MODE7 )	/* (B14) EMU1.gpio3[8] */
 		>;
 	};
 
@@ -136,25 +136,25 @@
 
 	mmc1_pins_default: pinmux_mmc1_pins {
 		pinctrl-single,pins = <
-			AM33XX_IOPAD(0x8f0, PIN_INPUT_PULLUP | MUX_MODE0 ) /* (F17) mmc0_dat3.mmc0_dat3 */
-			AM33XX_IOPAD(0x8f4, PIN_INPUT_PULLUP | MUX_MODE0 ) /* (F18) mmc0_dat2.mmc0_dat2 */
-			AM33XX_IOPAD(0x8f8, PIN_INPUT_PULLUP | MUX_MODE0 ) /* (G15) mmc0_dat1.mmc0_dat1 */
-			AM33XX_IOPAD(0x8fc, PIN_INPUT_PULLUP | MUX_MODE0 ) /* (G16) mmc0_dat0.mmc0_dat0 */
-			AM33XX_IOPAD(0x900, PIN_INPUT_PULLUP | MUX_MODE0 ) /* (G17) mmc0_clk.mmc0_clk */
-			AM33XX_IOPAD(0x904, PIN_INPUT_PULLUP | MUX_MODE0 ) /* (G18) mmc0_cmd.mmc0_cmd */
-			AM33XX_IOPAD(0x888, PIN_INPUT | MUX_MODE7 )
+			AM33XX_IOPAD(0x8f0, PIN_INPUT_PULLUP | MUX_MODE0 )	/* (F17) mmc0_dat3.mmc0_dat3 */
+			AM33XX_IOPAD(0x8f4, PIN_INPUT_PULLUP | MUX_MODE0 )	/* (F18) mmc0_dat2.mmc0_dat2 */
+			AM33XX_IOPAD(0x8f8, PIN_INPUT_PULLUP | MUX_MODE0 )	/* (G15) mmc0_dat1.mmc0_dat1 */
+			AM33XX_IOPAD(0x8fc, PIN_INPUT_PULLUP | MUX_MODE0 )	/* (G16) mmc0_dat0.mmc0_dat0 */
+			AM33XX_IOPAD(0x900, PIN_INPUT_PULLUP | MUX_MODE0 )	/* (G17) mmc0_clk.mmc0_clk */
+			AM33XX_IOPAD(0x904, PIN_INPUT_PULLUP | MUX_MODE0 )	/* (G18) mmc0_cmd.mmc0_cmd */
+			AM33XX_IOPAD(0x888, PIN_INPUT | MUX_MODE7 )		/* (T13) gpmc_csn3.gpio2[0] */
 		>;
 	};
 
 	mmc1_pins_sleep: pinmux_mmc1_pins_sleep {
 		pinctrl-single,pins = <
-			AM33XX_IOPAD(0x8f0, PIN_INPUT_PULLDOWN | MUX_MODE7 ) /* (F17) mmc0_dat3.mmc0_dat3 */
-			AM33XX_IOPAD(0x8f4, PIN_INPUT_PULLDOWN | MUX_MODE7 ) /* (F18) mmc0_dat2.mmc0_dat2 */
-			AM33XX_IOPAD(0x8f8, PIN_INPUT_PULLDOWN | MUX_MODE7 ) /* (G15) mmc0_dat1.mmc0_dat1 */
-			AM33XX_IOPAD(0x8fc, PIN_INPUT_PULLDOWN | MUX_MODE7 ) /* (G16) mmc0_dat0.mmc0_dat0 */
-			AM33XX_IOPAD(0x900, PIN_INPUT_PULLDOWN | MUX_MODE7 ) /* (G17) mmc0_clk.mmc0_clk */
-			AM33XX_IOPAD(0x904, PIN_INPUT_PULLDOWN | MUX_MODE7 ) /* (G18) mmc0_cmd.mmc0_cmd */
-			AM33XX_IOPAD(0x888, PIN_INPUT_PULLDOWN | MUX_MODE7 )
+			AM33XX_IOPAD(0x8f0, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (F17) mmc0_dat3.mmc0_dat3 */
+			AM33XX_IOPAD(0x8f4, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (F18) mmc0_dat2.mmc0_dat2 */
+			AM33XX_IOPAD(0x8f8, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (G15) mmc0_dat1.mmc0_dat1 */
+			AM33XX_IOPAD(0x8fc, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (G16) mmc0_dat0.mmc0_dat0 */
+			AM33XX_IOPAD(0x900, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (G17) mmc0_clk.mmc0_clk */
+			AM33XX_IOPAD(0x904, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (G18) mmc0_cmd.mmc0_cmd */
+			AM33XX_IOPAD(0x888, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (T13) gpmc_csn3.gpio2[0] */
 		>;
 	};
 };
@@ -227,10 +227,10 @@
 		dcdc2_reg: regulator@1 {
 			reg = <0x1>;
 			regulator-compatible = "dcdc2";
-			/* FIXME: VDD_MPU voltage limits 0.95V - 1.325V with +/-4% tolerance */
+			/* VDD_MPU voltage limits 0.95V - 1.325V with +/-4% tolerance */
 			regulator-name = "vdd_mpu";
-			regulator-min-microvolt = <0xe1d48>;
-			regulator-max-microvolt = <0x1437c8>;
+			regulator-min-microvolt = <925000>;
+			regulator-max-microvolt = <1325000>;
 			regulator-boot-on;
 			regulator-always-on;
 		};
@@ -262,8 +262,8 @@
 			reg = <0x5>;
 			regulator-compatible = "ldo3";
 			regulator-always-on;
-			regulator-min-microvolt = <0x1b7740>;
-			regulator-max-microvolt = <0x1b7740>;
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
 		};
 
 		ldo4_reg: regulator@6 {
@@ -306,8 +306,8 @@
 	bus-width = <0x4>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&mmc1_pins_default>;
-	gpios = <0x2a 0x13 0x1>;
-	cd-gpios = <&gpio0 0x12 GPIO_ACTIVE_HIGH>;
+	gpios = <&gpio0 19 GPIO_ACTIVE_LOW>;
+	cd-gpios = <&gpio0 18 GPIO_ACTIVE_HIGH>;
 	cd-inverted;
 	vmmc-supply = <&vmmcsd_fixed>;
 };
