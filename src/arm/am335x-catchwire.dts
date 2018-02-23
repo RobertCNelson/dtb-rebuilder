@@ -13,6 +13,12 @@
 	model = "TI AM335x CATCHWIRE";
 	compatible = "ti,am33xx";
 
+	cpus {
+		cpu@0 {
+			cpu0-supply = <&dcdc2_reg>;
+		};
+	};
+
 	memory {
 		device_type = "memory";
 		reg = <0x80000000 0x20000000>; /* 512 MB */
@@ -62,6 +68,7 @@
 
 	cpsw_default: cpsw_default {
 		pinctrl-single,pins = <
+			/* Slave 1 */
 			AM33XX_IOPAD(0x914, PIN_OUTPUT_PULLDOWN | MUX_MODE2 )	/* (J16) gmii1_txen.rgmii1_tctl */
 			AM33XX_IOPAD(0x918, PIN_INPUT_PULLDOWN | MUX_MODE2 )	/* (J17) gmii1_rxdv.rgmii1_rctl */
 			AM33XX_IOPAD(0x91c, PIN_OUTPUT_PULLDOWN | MUX_MODE2 )	/* (J18) gmii1_txd3.rgmii1_td3 */
@@ -75,6 +82,7 @@
 			AM33XX_IOPAD(0x93c, PIN_INPUT_PULLDOWN | MUX_MODE2 )	/* (L15) gmii1_rxd1.rgmii1_rd1 */
 			AM33XX_IOPAD(0x940, PIN_INPUT_PULLDOWN | MUX_MODE2 )	/* (M16) gmii1_rxd0.rgmii1_rd0 */
 
+			/* Slave 2 */
 			AM33XX_IOPAD(0x840, PIN_OUTPUT_PULLDOWN | MUX_MODE2 )	/* (R13) gpmc_a0.rgmii2_tctl */
 			AM33XX_IOPAD(0x844, PIN_INPUT_PULLDOWN | MUX_MODE2 )	/* (V14) gpmc_a1.rgmii2_rctl */
 			AM33XX_IOPAD(0x848, PIN_OUTPUT_PULLDOWN | MUX_MODE2 )	/* (U14) gpmc_a2.rgmii2_td3 */
@@ -92,6 +100,7 @@
 
 	cpsw_sleep: cpsw_sleep {
 		pinctrl-single,pins = <
+			/* Slave 1 */
 			AM33XX_IOPAD(0x914, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (J16) gmii1_txen.rgmii1_tctl */
 			AM33XX_IOPAD(0x918, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (J17) gmii1_rxdv.rgmii1_rctl */
 			AM33XX_IOPAD(0x91c, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (J18) gmii1_txd3.rgmii1_td3 */
@@ -105,6 +114,7 @@
 			AM33XX_IOPAD(0x93c, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (L15) gmii1_rxd1.rgmii1_rd1 */
 			AM33XX_IOPAD(0x940, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (M16) gmii1_rxd0.rgmii1_rd0 */
 
+			/* Slave 2 */
 			AM33XX_IOPAD(0x840, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (R13) gpmc_a0.rgmii2_tctl */
 			AM33XX_IOPAD(0x844, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (V14) gpmc_a1.rgmii2_rctl */
 			AM33XX_IOPAD(0x848, PIN_INPUT_PULLDOWN | MUX_MODE7 )	/* (U14) gpmc_a2.rgmii2_td3 */
@@ -122,7 +132,7 @@
 
 	davinci_mdio_default: davinci_mdio_default {
 		pinctrl-single,pins = <
-			AM33XX_IOPAD(0x948, SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE0 )	/* (M17) mdio_data.mdio_data */
+			AM33XX_IOPAD(0x948, PIN_INPUT_PULLUP | SLEWCTRL_FAST | MUX_MODE0 )	/* (M17) mdio_data.mdio_data */
 			AM33XX_IOPAD(0x94c, PIN_OUTPUT_PULLUP | MUX_MODE0 )			/* (M18) mdio_clk.mdio_clk */
 		>;
 	};
@@ -292,7 +302,6 @@
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&cpsw_default>;
 	pinctrl-1 = <&cpsw_sleep>;
-
 };
 
 &davinci_mdio {
@@ -306,8 +315,8 @@
 	bus-width = <0x4>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&mmc1_pins_default>;
-	gpios = <&gpio0 19 GPIO_ACTIVE_LOW>;
-	cd-gpios = <&gpio0 18 GPIO_ACTIVE_HIGH>;
+	gpios = <&gpio1 19 GPIO_ACTIVE_LOW>;
+	cd-gpios = <&gpio1 18 GPIO_ACTIVE_HIGH>;
 	cd-inverted;
 	vmmc-supply = <&vmmcsd_fixed>;
 };
