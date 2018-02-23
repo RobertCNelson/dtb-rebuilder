@@ -16,6 +16,7 @@
 	cpus {
 		cpu@0 {
 			cpu0-supply = <&dcdc2_reg>;
+			operating-points = <1000000 1325000>;
 		};
 	};
 
@@ -312,7 +313,7 @@
 
 &mmc1 {
 	status = "okay";
-	bus-width = <0x4>;
+	bus-width = <4>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&mmc1_pins_default>;
 	gpios = <&gpio1 19 GPIO_ACTIVE_LOW>;
