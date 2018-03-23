@@ -66,6 +66,78 @@
 		};
 	};
 
+	cpu0_opp_table: opp_table0 {
+		compatible = "operating-points-v2";
+
+		/*
+		 * The three following nodes are marked with opp-suspend
+		 * because the can not be enabled simultaneously on a
+		 * single SoC.
+		 */
+		opp50@300000000 {
+			opp-hz = /bits/ 64 <300000000>;
+			opp-microvolt = <950000 931000 969000>;
+			opp-supported-hw = <0x06 0x0010>;
+			opp-suspend;
+		};
+
+		opp100@275000000 {
+			opp-hz = /bits/ 64 <275000000>;
+			opp-microvolt = <1100000 1078000 1122000>;
+			opp-supported-hw = <0x01 0x00FF>;
+			opp-suspend;
+		};
+
+		opp100@300000000 {
+			opp-hz = /bits/ 64 <300000000>;
+			opp-microvolt = <1100000 1078000 1122000>;
+			opp-supported-hw = <0x06 0x0020>;
+			opp-suspend;
+		};
+
+		opp100@500000000 {
+			opp-hz = /bits/ 64 <500000000>;
+			opp-microvolt = <1100000 1078000 1122000>;
+			opp-supported-hw = <0x01 0xFFFF>;
+		};
+
+		opp100@600000000 {
+			opp-hz = /bits/ 64 <600000000>;
+			opp-microvolt = <1100000 1078000 1122000>;
+			opp-supported-hw = <0x06 0x0040>;
+		};
+
+		opp120@600000000 {
+			opp-hz = /bits/ 64 <600000000>;
+			opp-microvolt = <1200000 1176000 1224000>;
+			opp-supported-hw = <0x01 0xFFFF>;
+		};
+
+		opp120@720000000 {
+			opp-hz = /bits/ 64 <720000000>;
+			opp-microvolt = <1200000 1176000 1224000>;
+			opp-supported-hw = <0x06 0x0080>;
+		};
+
+		oppturbo@720000000 {
+			opp-hz = /bits/ 64 <720000000>;
+			opp-microvolt = <1260000 1234800 1285200>;
+			opp-supported-hw = <0x01 0xFFFF>;
+		};
+
+		oppturbo@800000000 {
+			opp-hz = /bits/ 64 <800000000>;
+			opp-microvolt = <1260000 1234800 1285200>;
+			opp-supported-hw = <0x06 0x0100>;
+		};
+
+		oppnitro@1000000000 {
+			opp-hz = /bits/ 64 <1000000000>;
+			opp-microvolt = <1325000 1298500 1351500>;
+			opp-supported-hw = <0x04 0x0200>;
+		};
+	};
+
 	pmu {
 		compatible = "arm,cortex-a8-pmu";
 		interrupts = <3>;
@@ -142,10 +214,11 @@
 				};
 
 				scm_conf: scm_conf@0 {
-					compatible = "syscon";
+					compatible = "syscon", "simple-bus";
 					reg = <0x0 0x800>;
 					#address-cells = <1>;
 					#size-cells = <1>;
+					ranges = <0 0 0x800>;
 
 					scm_clocks: clocks {
 						#address-cells = <1>;
