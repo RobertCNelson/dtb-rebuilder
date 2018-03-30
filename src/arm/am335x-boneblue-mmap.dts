@@ -214,6 +214,18 @@
 		pinctrl-4 = <&H18_spi_pin>;
 	};
 
+	/* C18 SPI1_SS2 */
+	C18_pinmux {
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "spi";
+		pinctrl-0 = <&C18_default_pin>;
+		pinctrl-1 = <&C18_gpio_pin>;
+		pinctrl-2 = <&C18_gpio_pu_pin>;
+		pinctrl-3 = <&C18_gpio_pd_pin>;
+		pinctrl-4 = <&C18_spi_pin>;
+	};
+
 	/* Encoder 4 (U13) */
 	P8_15_pinmux {
 		compatible = "bone-pinmux-helper";
@@ -252,6 +264,35 @@
 		pinctrl-3 = <&U16_gpio_pd_pin>;
 	};
 
+	/* P9_21 uart2_txd */
+	P9_21_pinmux {
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "spi", "uart", "i2c", "pwm";
+		pinctrl-0 = <&P9_21_default_pin>;
+		pinctrl-1 = <&P9_21_gpio_pin>;
+		pinctrl-2 = <&P9_21_gpio_pu_pin>;
+		pinctrl-3 = <&P9_21_gpio_pd_pin>;
+		pinctrl-4 = <&P9_21_spi_pin>;
+		pinctrl-5 = <&P9_21_uart_pin>;
+		pinctrl-6 = <&P9_21_i2c_pin>;
+		pinctrl-7 = <&P9_21_pwm_pin>;
+	};
+
+	/* P9_22 uart2_rxd */
+	P9_22_pinmux {
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "spi", "uart", "i2c", "pwm";
+		pinctrl-0 = <&P9_22_default_pin>;
+		pinctrl-1 = <&P9_22_gpio_pin>;
+		pinctrl-2 = <&P9_22_gpio_pu_pin>;
+		pinctrl-3 = <&P9_22_gpio_pd_pin>;
+		pinctrl-4 = <&P9_22_spi_pin>;
+		pinctrl-5 = <&P9_22_uart_pin>;
+		pinctrl-6 = <&P9_22_i2c_pin>;
+		pinctrl-7 = <&P9_22_pwm_pin>;
+	};
 
 	/* BLUE_GP0_PIN_3 gpio1_17*/
 	P9_23_pinmux {

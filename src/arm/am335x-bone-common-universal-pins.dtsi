@@ -666,7 +666,7 @@
 
 	/* P9_21 (ZCZ ball B17) */
 	P9_21_default_pin: pinmux_P9_21_default_pin {
-		pinctrl-single,pins = <0x154  0x37>; };     /* Mode 7, Pull-Up, RxActive */
+		pinctrl-single,pins = <0x154  0x31>; };     /* Mode 1, Pull-Up, RxActive */
 	P9_21_gpio_pin: pinmux_P9_21_gpio_pin {
 		pinctrl-single,pins = <0x154  0x2F>; };     /* Mode 7, RxActive */
 	P9_21_gpio_pu_pin: pinmux_P9_21_gpio_pu_pin {
@@ -684,7 +684,7 @@
 
 	/* P9_22 (ZCZ ball A17) */
 	P9_22_default_pin: pinmux_P9_22_default_pin {
-		pinctrl-single,pins = <0x150  0x37>; };     /* Mode 7, Pull-Up, RxActive */
+		pinctrl-single,pins = <0x150  0x31>; };     /* Mode 1, Pull-Up, RxActive */
 	P9_22_gpio_pin: pinmux_P9_22_gpio_pin {
 		pinctrl-single,pins = <0x150  0x2F>; };     /* Mode 7, RxActive */
 	P9_22_gpio_pu_pin: pinmux_P9_22_gpio_pu_pin {
