@@ -226,6 +226,30 @@
 		pinctrl-4 = <&C18_spi_pin>;
 	};
 
+	P8_11_pinmux {
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "pruout", "qep";
+		pinctrl-0 = <&P8_11_default_pin>;
+		pinctrl-1 = <&P8_11_gpio_pin>;
+		pinctrl-2 = <&P8_11_gpio_pu_pin>;
+		pinctrl-3 = <&P8_11_gpio_pd_pin>;
+		pinctrl-4 = <&P8_11_pruout_pin>;
+		pinctrl-5 = <&P8_11_qep_pin>;
+	};
+
+	P8_12_pinmux {
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "pruout", "qep";
+		pinctrl-0 = <&P8_12_default_pin>;
+		pinctrl-1 = <&P8_12_gpio_pin>;
+		pinctrl-2 = <&P8_12_gpio_pu_pin>;
+		pinctrl-3 = <&P8_12_gpio_pd_pin>;
+		pinctrl-4 = <&P8_12_pruout_pin>;
+		pinctrl-5 = <&P8_12_qep_pin>;
+	};
+
 	/* Encoder 4 (U13) */
 	P8_15_pinmux {
 		compatible = "bone-pinmux-helper";
@@ -239,6 +263,28 @@
 		pinctrl-5 = <&P8_15_pruin_pin>;
 		pinctrl-6 = <&P8_15_qep_pin>;
 		pinctrl-7 = <&P8_15_pruecapin_pu_pin>;
+	};
+
+	P8_33_pinmux { /* hdmi */
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "qep";
+		pinctrl-0 = <&P8_33_default_pin>;
+		pinctrl-1 = <&P8_33_gpio_pin>;
+		pinctrl-2 = <&P8_33_gpio_pu_pin>;
+		pinctrl-3 = <&P8_33_gpio_pd_pin>;
+		pinctrl-4 = <&P8_33_qep_pin>;
+	};
+
+	P8_35_pinmux { /* hdmi */
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd";
+		pinctrl-0 = <&P8_35_default_pin>;
+		pinctrl-1 = <&P8_35_gpio_pin>;
+		pinctrl-2 = <&P8_35_gpio_pu_pin>;
+		pinctrl-3 = <&P8_35_gpio_pd_pin>;
+		pinctrl-4 = <&P8_35_qep_pin>;
 	};
 
 	/* UART4 RX DSM */
@@ -317,6 +363,19 @@
 		pinctrl-3 = <&D13_gpio_pd_pin>;
 	};
 
+	P9_27_pinmux {
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "qep", "pruout", "pruin";
+		pinctrl-0 = <&P9_27_default_pin>;
+		pinctrl-1 = <&P9_27_gpio_pin>;
+		pinctrl-2 = <&P9_27_gpio_pu_pin>;
+		pinctrl-3 = <&P9_27_gpio_pd_pin>;
+		pinctrl-4 = <&P9_27_qep_pin>;
+		pinctrl-5 = <&P9_27_pruout_pin>;
+		pinctrl-6 = <&P9_27_pruin_pin>;
+	};
+
 	/* BLUE_GP0_PIN_6 gpio3_17 */
 	P9_28_pinmux {
 		compatible = "bone-pinmux-helper";
@@ -331,6 +390,19 @@
 		pinctrl-6 = <&P9_28_pwm2_pin>;
 		pinctrl-7 = <&P9_28_pruout_pin>;
 		pinctrl-8 = <&P9_28_pruin_pin>;
+	};
+
+	P9_92_pinmux {
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "qep", "pruout", "pruin";
+		pinctrl-0 = <&P9_92_default_pin>;
+		pinctrl-1 = <&P9_92_gpio_pin>;
+		pinctrl-2 = <&P9_92_gpio_pu_pin>;
+		pinctrl-3 = <&P9_92_gpio_pd_pin>;
+		pinctrl-4 = <&P9_92_qep_pin>;
+		pinctrl-5 = <&P9_92_pruout_pin>;
+		pinctrl-6 = <&P9_92_pruin_pin>;
 	};
 
 	/* BLUE_GP1_PIN_3 gpio3_2 */
