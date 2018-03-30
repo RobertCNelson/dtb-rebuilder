@@ -377,13 +377,19 @@
 
 &ehrpwm1 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&P8_19_pwm_pin &P8_13_pwm_pin>;
+	pinctrl-0 = <
+		//&P8_19_pwm_pin
+		//&P8_13_pwm_pin
+	>;
 	status = "okay";
 };
 
 &ehrpwm2 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&P9_14_pwm_pin &P9_16_pwm_pin>;
+	pinctrl-0 = <
+		//&P9_14_pwm_pin
+		//&P9_16_pwm_pin
+	>;
 	status = "okay";
 };
 
@@ -393,7 +399,10 @@
 *******************************************************************************/
 &eqep0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&P9_92_qep_pin &P9_27_qep_pin>;
+	pinctrl-0 = <
+		//&P9_92_qep_pin
+		//&P9_27_qep_pin
+	>;
 
 	count_mode = <0>;  /* 0 - Quadrature mode, normal 90 phase offset cha & chb.  1 - Direction mode.  cha input = clock, chb input = direction */
 	swap_inputs = <0>; /* Are channel A and channel B swapped? (0 - no, 1 - yes) */
@@ -406,7 +415,10 @@
 
 &eqep1 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&P8_33_qep_pin &P8_35_qep_pin>;
+	pinctrl-0 = <
+		//&P8_33_qep_pin
+		//&P8_35_qep_pin
+	>;
 
 	count_mode = <0>;  /* 0 - Quadrature mode, normal 90 phase offset cha & chb.  1 - Direction mode.  cha input = clock, chb input = direction */
 	swap_inputs = <0>; /* Are channel A and channel B swapped? (0 - no, 1 - yes) */
@@ -419,7 +431,10 @@
 
 &eqep2 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&P8_12_qep_pin &P8_11_qep_pin>;
+	pinctrl-0 = <
+		//&P8_12_qep_pin
+		//&P8_11_qep_pin
+	>;
 
 	count_mode = <0>;  /* 0 - Quadrature mode, normal 90 phase offset cha & chb.  1 - Direction mode.  cha input = clock, chb input = direction */
 	swap_inputs = <0>; /* Are channel A and channel B swapped? (0 - no, 1 - yes) */
@@ -438,8 +453,8 @@
 &uart1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <
-		&P9_24_uart_pin	/* uart1_txd */
-		&P9_26_uart_pin	/* uart1_rxd */
+		//&P9_24_uart_pin	/* uart1_txd */
+		//&P9_26_uart_pin	/* uart1_rxd */
 	>;
 	status = "okay";
 };
@@ -447,8 +462,8 @@
 &uart2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <
-		&P9_21_uart_pin	/* uart2_txd */
-		&P9_22_uart_pin	/* uart2_rxd */
+		//&P9_21_uart_pin	/* uart2_txd */
+		//&P9_22_uart_pin	/* uart2_rxd */
 	>;
 	status = "okay";
 };
@@ -460,8 +475,8 @@
 &uart5 {
 	pinctrl-names = "default";
 	pinctrl-0 = <
-		&P8_37_uart_pin	/* uart5_txd */
-		&P8_38_uart_pin	/* uart5_rxd */
+		//&P8_37_uart_pin	/* uart5_txd */
+		//&P8_38_uart_pin	/* uart5_rxd */
 	>;
 	status = "okay";
 };
@@ -480,7 +495,10 @@
 *******************************************************************************/
 &i2c1 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&P9_17_i2c_pin &P9_18_i2c_pin>;
+	pinctrl-0 = <
+		//&P9_17_i2c_pin
+		//&P9_18_i2c_pin
+	>;
 	#address-cells = <1>;
 	#size-cells = <0>;
 	status = "okay";
@@ -501,11 +519,12 @@
 *******************************************************************************/
 &spi1 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&P9_31_spi_pin	/* spi1_sclk */
-		&P9_29_spi_pin		/* spi1_d0 */
-		&P9_30_spi_pin		/* spi1_d1 */
-		&H18_spi_pin		/* spi1_cs0 */
-		&C18_spi_pin		/* spi1_cs1 */
+	pinctrl-0 = <
+		//&P9_31_spi_pin	/* spi1_sclk */
+		//&P9_29_spi_pin	/* spi1_d0 */
+		//&P9_30_spi_pin	/* spi1_d1 */
+		//&H18_spi_pin		/* spi1_cs0 */
+		//&C18_spi_pin		/* spi1_cs1 */
 	>;
 	#address-cells = <1>;
 	#size-cells = <0>;
