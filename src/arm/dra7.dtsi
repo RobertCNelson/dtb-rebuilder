@@ -2125,12 +2125,6 @@
 
 	};
 
-	gpu-subsystem {
-		compatible = "vivante,gc-gpu-subsystem";
-		cores = <&bb2d>;
-		status = "okay";
-	};
-
 	thermal_zones: thermal-zones {
 		#include "omap4-cpu-thermal.dtsi"
 		#include "omap5-gpu-thermal.dtsi"
