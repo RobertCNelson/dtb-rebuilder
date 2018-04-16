@@ -72,6 +72,8 @@
 	interrupts = <7>; /* NMI */
 	interrupt-parent = <&intc>;
 
+	ti,pmic-shutdown-controller;
+
 	pwrbutton {
 		interrupts = <2>;
 		status = "okay";

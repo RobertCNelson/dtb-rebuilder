@@ -185,6 +185,10 @@
 	cd-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
 };
 
+&rtc {
+	system-power-controller;
+};
+
 &tscadc {
 	status = "okay";
 	adc {
