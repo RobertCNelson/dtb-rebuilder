@@ -68,6 +68,18 @@
 		>;
 	};
 
+	ehrpwm0_pins: pinmux_ehrpwm0_pins {
+		pinctrl-single,pins = <
+			AM33XX_IOPAD(0x990, PIN_OUTPUT_PULLDOWN | MUX_MODE1)	/* (A13) mcasp0_aclkx.ehrpwm0A */
+		>;
+	};
+
+	ehrpwm1_pins: pinmux_ehrpwm1_pins {
+		pinctrl-single,pins = <
+			AM33XX_IOPAD(0x848, PIN_OUTPUT_PULLDOWN | MUX_MODE6)	/* (U14) gpmc_a2.ehrpwm1A */
+		>;
+	};
+
 	mmc0_pins: pinmux_mmc0_pins {
 		pinctrl-single,pins = <
 			AM33XX_IOPAD(0x960, PIN_INPUT | MUX_MODE7)		/* (C15) spi0_cs1.gpio0[6] */
@@ -99,8 +111,6 @@
 		>;
 	};
 
-	//AM33XX_IOPAD(0x848, PIN_OUTPUT_PULLDOWN | MUX_MODE6)	/* (U14) gpmc_a2.ehrpwm1A */
-
 	user_leds_s0: user_leds_s0 {
 		pinctrl-single,pins = <
 			AM33XX_IOPAD(0x854, PIN_OUTPUT | MUX_MODE7)		/* (V15) gpmc_a5.gpio1[21] - USR_LED_0 */
@@ -123,6 +133,26 @@
 			AM33XX_IOPAD(0x874, PIN_OUTPUT_PULLDOWN | MUX_MODE6)	/* (U17) gpmc_wpn.uart4_txd */
 		>;
 	};
+};
+
+&epwmss0 {
+	status = "okay";
+};
+
+&ehrpwm0 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&ehrpwm0_pins>;
+};
+
+&epwmss1 {
+	status = "okay";
+};
+
+&ehrpwm1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&ehrpwm1_pins>;
 };
 
 &i2c0 {
