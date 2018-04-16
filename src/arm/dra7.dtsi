@@ -92,8 +92,6 @@
 			clock-latency = <300000>; /* From omap-cpufreq driver */
 
 			/* cooling options */
-			cooling-min-level = <0>;
-			cooling-max-level = <2>;
 			#cooling-cells = <2>; /* min followed by max */
 
 			vbb-supply = <&abb_mpu>;
@@ -1028,16 +1026,6 @@
 			reg = <0x4e000000 0x800>;
 			interrupts = <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>;
 			ti,hwmods = "dmm";
-		};
-
-		bb2d: bb2d@59000000 {
-			compatible = "ti,dra7-bb2d","vivante,gc";
-			reg = <0x59000000 0x0700>;
-			interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
-			ti,hwmods = "bb2d";
-			clocks = <&dpll_core_h24x2_ck>;
-			clock-names = "fclk";
-			status = "disabled";
 		};
 
 		i2c1: i2c@48070000 {

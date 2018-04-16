@@ -167,10 +167,6 @@
 	};
 };
 
-&bb2d {
-	status = "okay";
-};
-
 &i2c1 {
 	status = "okay";
 	clock-frequency = <400000>;
@@ -446,6 +442,7 @@
 	pinctrl-0 = <&mmc2_pins_default>;
 
 	vmmc-supply = <&vdd_3v3>;
+	vqmmc-supply = <&vdd_3v3>;
 	bus-width = <8>;
 	ti,non-removable;
 	cap-mmc-dual-data-rate;
