@@ -30,6 +30,13 @@
 		ethernet = &ethernet;
 	};
 
+	/* fixed 26MHz oscillator */
+	hfclk_26m: oscillator {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <26000000>;
+	};
+
 	leds {
 		compatible = "gpio-leds";
 
@@ -148,6 +155,7 @@
 	};
 
 	etb@5401b000 {
+		status = "disabled";
 		compatible = "arm,coresight-etb10", "arm,primecell";
 		reg = <0x5401b000 0x1000>;
 
@@ -162,6 +170,7 @@
 	};
 
 	etm@54010000 {
+		status = "disabled";
 		compatible = "arm,coresight-etm3x", "arm,primecell";
 		reg = <0x54010000 0x1000>;
 
@@ -204,6 +213,25 @@
 		pinctrl-single,pins = <
 			OMAP3_CORE1_IOPAD(0x219e, PIN_INPUT | MUX_MODE0)	/* uart3_rx_irrx.uart3_rx_irrx */
 			OMAP3_CORE1_IOPAD(0x21a0, PIN_OUTPUT | MUX_MODE0)	/* uart3_tx_irtx.uart3_tx_irtx OUTPUT | MODE0 */
+		>;
+	};
+
+	spi3_pins: pinmux_spi3_pins {
+		pinctrl-single,pins = <
+			0x128 (PIN_INPUT | MUX_MODE1) /* sdmmc2_clk.mcspi3_clk gpio_130 */
+			0x12a (PIN_OUTPUT | MUX_MODE1) /* sdmmc2_cmd.mcspi3_simo gpio_131 */
+			0x12c (PIN_INPUT_PULLUP | MUX_MODE1) /* sdmmc2_dat0.mcspi3_somi gpio_132 */
+			0x130 (PIN_OUTPUT | MUX_MODE1) /* sdmmc2_dat2.mcspi3_cs1 gpio_134 */
+			0x132 (PIN_OUTPUT | MUX_MODE1) /* sdmmc2_dat3.mcspi3_cs0 gpio_135 */
+		>;
+	};
+
+	spi4_pins: pinmux_spi4_pins {
+		pinctrl-single,pins = <
+			0x15c (PIN_INPUT | MUX_MODE1) /* mcbsp1_clkr.mcspi4_clk gpio_156 */
+			0x160 (PIN_OUTPUT | MUX_MODE1) /* mcbsp1_dx.mcspi4_simo gpio_158 */
+			0x162 (PIN_INPUT_PULLUP | MUX_MODE1) /* mcbsp1_dr.mcspi4_somi gpio_159 */
+			0x166 (PIN_OUTPUT | MUX_MODE1) /* mcbsp1_fsx.mcspi4_cs0 gpio_161 */
 		>;
 	};
 
@@ -274,6 +302,9 @@
 		interrupts = <7>; /* SYS_NIRQ cascaded to intc */
 		interrupt-parent = <&intc>;
 
+		clocks = <&hfclk_26m>;
+		clock-names = "fck";
+
 		twl_audio: audio {
 			compatible = "ti,twl4030-audio";
 			codec {
@@ -281,7 +312,7 @@
 		};
 
 		twl_power: power {
-			compatible = "ti,twl4030-power-beagleboard-xm", "ti,twl4030-power-idle-osc-off";
+			compatible = "ti,twl4030-power-reset";
 			ti,use_poweroff;
 		};
 	};
@@ -310,6 +341,36 @@
 
 &mmc3 {
 	status = "disabled";
+};
+
+&mcspi3 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi3_pins>;
+	status = "okay";
+
+	spidev0: spi@0 {
+		compatible = "spidev";
+		reg = <0>;
+		spi-max-frequency = <48000000>;
+	};
+
+	spidev1: spi@1 {
+		compatible = "spidev";
+		reg = <1>;
+		spi-max-frequency = <48000000>;
+	};
+};
+
+&mcspi4 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi4_pins>;
+	status = "okay";
+
+	spidev2: spi@0 {
+		compatible = "spidev";
+		reg = <0>;
+		spi-max-frequency = <48000000>;
+	};
 };
 
 &twl_gpio {
