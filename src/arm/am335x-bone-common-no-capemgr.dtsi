@@ -264,9 +264,9 @@
 
 	ti,pmic-shutdown-controller;
 
-	charger {
-		status = "okay";
-	};
+//	charger {
+//		status = "okay";
+//	};
 
 	pwrbutton {
 		status = "okay";
