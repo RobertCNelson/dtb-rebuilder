@@ -147,12 +147,6 @@
 			system-clock-frequency = <12000000>;
 		};
 	};
-
-	audio_mstrclk: mclk_osc {
-		compatible = "fixed-clock";
-		#clock-cells = <0>;
-		clock-frequency = <12000000>;
-	};
 };
 
 &am43xx_pinmux {
@@ -161,6 +155,7 @@
 
 		unused_pins: unused_pins {
 			pinctrl-single,pins = <
+				AM4372_IOPAD(0x848, DS0_PIN_OUTPUT_PULLUP | PIN_OUTPUT_PULLUP | MUX_MODE7)
 				AM4372_IOPAD(0x850, DS0_PIN_INPUT | PIN_INPUT_PULLDOWN | MUX_MODE7)
 				AM4372_IOPAD(0x858, DS0_PIN_INPUT | PIN_INPUT_PULLDOWN | MUX_MODE7)
 				AM4372_IOPAD(0x860, DS0_PIN_INPUT | PIN_INPUT_PULLDOWN | MUX_MODE7)
@@ -595,12 +590,12 @@
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c0_pins>;
-	clock-frequency = <100000>;
+	clock-frequency = <400000>;
 
 	tps65218: tps65218@24 {
 		reg = <0x24>;
 		compatible = "ti,tps65218";
-		interrupts = <GIC_SPI 7 IRQ_TYPE_NONE>; /* NMIn */
+		interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>; /* NMIn */
 		interrupt-controller;
 		#interrupt-cells = <2>;
 
@@ -691,21 +686,6 @@
 		AVDD-supply = <&dcdc4>; /* v3_3AUD -> V3_3D -> DCDC4 */
 		IOVDD-supply = <&dcdc4>; /* V3_3D -> DCDC4 */
 		DVDD-supply = <&ldo1>; /* V1_8AUD -> V1_8D -> LDO1 */
-	};
-
-	ov2659@30 {
-		compatible = "ovti,ov2659";
-		reg = <0x30>;
-
-		clocks = <&audio_mstrclk>;
-		clock-names = "xvclk";
-
-		port {
-			ov2659_1: endpoint {
-				remote-endpoint = <&vpfe1_ep>;
-				link-frequencies = /bits/ 64 <70000000>;
-			};
-		};
 	};
 };
 
@@ -973,7 +953,7 @@
 
 	port {
 		vpfe1_ep: endpoint {
-			remote-endpoint = <&ov2659_1>;
+			/* remote-endpoint = <&sensor>; add once we have it */
 			ti,am437x-vpfe-interface = <0>;
 			bus-width = <8>;
 			hsync-active = <0>;
@@ -1007,19 +987,11 @@
 	rx-num-evt = <32>;
 };
 
-&synctimer_32kclk {
+&mux_synctimer32k_ck {
 	assigned-clocks = <&mux_synctimer32k_ck>;
 	assigned-clock-parents = <&clkdiv32k_ick>;
 };
 
-&wkup_m3_ipc {
-	ti,scale-data-fw = "am43x-evm-scale-data.bin";
-};
-
 &cpu {
 	cpu0-supply = <&dcdc2>;
-};
-
-&sgx {
-	status = "okay";
 };

@@ -98,7 +98,7 @@
 		};
 	};
 
-	lcd_bl: backlight {
+	backlight {
 		compatible = "pwm-backlight";
 		pwms = <&ecap0 0 50000 0>;
 		brightness-levels = <0 51 53 56 62 75 101 152 255>;
@@ -110,7 +110,6 @@
 		status = "okay";
 		pinctrl-names = "default";
 		pinctrl-0 = <&lcd_pins_s0>;
-		backlight = <&lcd_bl>;
 		panel-info {
 			ac-bias           = <255>;
 			ac-bias-intrpt    = <0>;
@@ -779,7 +778,7 @@
 		compatible = "ti,wl1835";
 		reg = <2>;
 		interrupt-parent = <&gpio3>;
-		interrupts = <17 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <17 IRQ_TYPE_EDGE_RISING>;
 	};
 };
 
@@ -798,22 +797,6 @@
 };
 
 &rtc {
-	clocks = <&clk_32768_ck>, <&clkdiv32k_ick>;
+	clocks = <&clk_32768_ck>, <&l4_per_clkctrl AM3_CLKDIV32K_CLKCTRL 0>;
 	clock-names = "ext-clk", "int-clk";
-};
-
-&wkup_m3_ipc {
-	ti,scale-data-fw = "am335x-evm-scale-data.bin";
-};
-
-&pruss_soc_bus {
-	status = "okay";
-
-	pruss: pruss@0 {
-		status = "okay";
-	};
-};
-
-&sgx {
-	status = "okay";
 };

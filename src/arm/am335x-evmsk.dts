@@ -205,13 +205,7 @@
 
 &am33xx_pinmux {
 	pinctrl-names = "default";
-	pinctrl-0 = <&gpio_keys_s0 &clkout2_pin &ddr3_vtt_toggle>;
-
-	ddr3_vtt_toggle: ddr3_vtt_toggle {
-		pinctrl-single,pins = <
-			0x164 (PIN_OUTPUT | MUX_MODE7)	/* ecap0_in_pwm0_out.gpio0_7 */
-		>;
-	};
+	pinctrl-0 = <&gpio_keys_s0 &clkout2_pin>;
 
 	lcd_pins_default: lcd_pins_default {
 		pinctrl-single,pins = <
@@ -553,12 +547,6 @@
 	};
 };
 
-&wkup_m3_ipc {
-	ti,needs-vtt-toggle;
-	ti,vtt-gpio-pin = <7>;
-	ti,scale-data-fw = "am335x-evm-scale-data.bin";
-};
-
 #include "tps65910.dtsi"
 
 &tps {
@@ -702,7 +690,7 @@
 		compatible = "ti,wl1271";
 		reg = <2>;
 		interrupt-parent = <&gpio0>;
-		interrupts = <31 IRQ_TYPE_LEVEL_HIGH>; /* gpio 31 */
+		interrupts = <31 IRQ_TYPE_EDGE_RISING>; /* gpio 31 */
 		ref-clock-frequency = <38400000>;
 	};
 };
@@ -741,19 +729,7 @@
 	blue-and-red-wiring = "crossed";
 };
 
-&sgx {
-	status = "okay";
-};
-
 &rtc {
-	clocks = <&clk_32768_ck>, <&clkdiv32k_ick>;
+	clocks = <&clk_32768_ck>, <&l4_per_clkctrl AM3_CLKDIV32K_CLKCTRL 0>;
 	clock-names = "ext-clk", "int-clk";
-};
-
-&pruss_soc_bus {
-	status = "okay";
-
-	pruss: pruss@0 {
-		status = "okay";
-	};
 };

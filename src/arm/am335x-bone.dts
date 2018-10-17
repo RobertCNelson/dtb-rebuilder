@@ -25,7 +25,3 @@
 &mmc1 {
 	vmmc-supply = <&ldo3_reg>;
 };
-
-&sgx {
-	status = "okay";
-};
