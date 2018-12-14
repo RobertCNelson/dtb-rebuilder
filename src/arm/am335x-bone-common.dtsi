@@ -419,7 +419,7 @@
 };
 
 &cpsw_emac0 {
-	phy-handle = <&ethphy0>;
+	phy_id = <&davinci_mdio>, <0>;
 	phy-mode = "mii";
 };
 
@@ -436,10 +436,6 @@
 	pinctrl-0 = <&davinci_mdio_default>;
 	pinctrl-1 = <&davinci_mdio_sleep>;
 	status = "okay";
-
-	ethphy0: ethernet-phy@0 {
-		reg = <0>;
-	};
 };
 
 &mmc1 {
