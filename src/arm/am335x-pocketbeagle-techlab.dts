@@ -50,6 +50,16 @@
 	};
 };
 
+&i2c2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	mma8453@1c {
+		status = "okay";
+		compatible = "fsl,mma8453";
+		reg = <0x1c>;
+	};
+};
+
 / {
 	techlab_sevenseg {
 		compatible = "gpio-leds";
