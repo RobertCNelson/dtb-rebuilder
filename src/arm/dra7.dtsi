@@ -1184,6 +1184,56 @@
 			status = "disabled";
 		};
 
+		pruss_soc_bus1: pruss_soc_bus@4b226004 {
+			reg = <0x4b226004 0x4>;
+			ti,hwmods = "pruss1";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x0 0x4b200000 0x80000>;
+			status = "disabled";
+
+			pruss1: pruss@0 {
+				reg = <0 0x80000>;
+				interrupts = <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 193 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-names = "host2", "host3", "host4",
+				                  "host5", "host6", "host7",
+				                  "host8", "host9";
+				status = "disabled";
+			};
+		};
+
+		pruss_soc_bus2: pruss_soc_bus@4b2a6004 {
+			reg = <0x4b2a6004 0x4>;
+			ti,hwmods = "pruss2";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x0 0x4b280000 0x80000>;
+			status = "disabled";
+
+			pruss2: pruss@0 {
+				reg = <0 0x80000>;
+				interrupts = <GIC_SPI 196 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 197 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 199 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 201 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 202 IRQ_TYPE_LEVEL_HIGH>,
+				             <GIC_SPI 203 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-names = "host2", "host3", "host4",
+				                  "host5", "host6", "host7",
+				                  "host8", "host9";
+				status = "disabled";
+			};
+		};
+
 		abb_mpu: regulator-abb-mpu {
 			compatible = "ti,abb-v3";
 			regulator-name = "abb_mpu";
@@ -1923,6 +1973,18 @@
 			status = "disabled";
 		};
 
+		gpu: gpu@56000000 {
+			compatible = "ti,dra7-sgx544", "img,sgx544";
+			reg = <0x56000000 0x10000>;
+			reg-names = "gpu_ocp_base";
+			interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>;
+			ti,hwmods = "gpu";
+			clocks = <&l3_iclk_div>, <&gpu_core_gclk_mux>,
+				<&gpu_hyd_gclk_mux>;
+			clock-names = "iclk", "fclk1", "fclk2";
+			status = "disabled";
+		};
+
 		dss: dss@58000000 {
 			compatible = "ti,dra7-dss";
 			/* 'reg' defined in dra72x.dtsi and dra74x.dtsi */
@@ -2119,6 +2181,68 @@
 			ti,absolute-max-voltage-uv = <1500000>;
 		};
 
+		vpe {
+			compatible = "ti,vpe";
+			ti,hwmods = "vpe";
+			clocks = <&dpll_core_h23x2_ck>;
+			clock-names = "fck";
+			reg = <0x489d0000 0x120>,
+			      <0x489d0700 0x80>,
+			      <0x489d5700 0x18>,
+			      <0x489dd000 0x400>;
+			reg-names = "vpe_top",
+				    "sc",
+				    "csc",
+				    "vpdma";
+			interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		vip1: vip@0x48970000 {
+			compatible = "ti,vip1";
+			reg = <0x48970000 0x114>,
+			      <0x48975500 0xD8>,
+			      <0x48975700 0x18>,
+			      <0x48975800 0x80>,
+			      <0x48975a00 0xD8>,
+			      <0x48975c00 0x18>,
+			      <0x48975d00 0x80>,
+			      <0x4897d000 0x400>;
+			reg-names = "vip",
+				    "parser0",
+				    "csc0",
+				    "sc0",
+				    "parser1",
+				    "csc1",
+				    "sc1",
+				    "vpdma";
+			ti,hwmods = "vip1";
+			interrupts = <GIC_SPI 351 IRQ_TYPE_LEVEL_HIGH>,
+				     <GIC_SPI 392 IRQ_TYPE_LEVEL_HIGH>;
+			/* CTRL_CORE_SMA_SW_1 */
+			syscon-pol = <&scm_conf 0x534>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				vin1a: port@0 {
+					reg = <0>;
+				};
+				vin2a: port@1 {
+					reg = <1>;
+				};
+				vin1b: port@2 {
+					reg = <2>;
+				};
+				vin2b: port@3 {
+					reg = <3>;
+				};
+			};
+		};
 	};
 
 	thermal_zones: thermal-zones {

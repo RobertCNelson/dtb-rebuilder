@@ -114,3 +114,19 @@
 	pinctrl-1 = <&mmc2_pins_hs>;
 	pinctrl-2 = <&mmc2_pins_ddr_rev20 &mmc2_iodelay_ddr_conf>;
 };
+
+&ov2659_1 {
+	remote-endpoint = <&vin1b_ep>;
+};
+
+&vin1b {
+	vin1b_ep: endpoint@2 {
+		slave-mode;
+		remote-endpoint = <&ov2659_1>;
+	};
+};
+
+&vip1 {
+	status = "okay";
+};
+

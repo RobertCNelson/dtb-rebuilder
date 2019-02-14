@@ -6,19 +6,12 @@
  * published by the Free Software Foundation.
  */
 
-#include "dra74x.dtsi"
+#include "dra74x-p.dtsi"
 
 / {
 	compatible = "ti,dra762", "ti,dra7";
 
 	ocp {
-		emif1: emif@4c000000 {
-			compatible = "ti,emif-dra7xx";
-			reg = <0x4c000000 0x200>;
-			interrupts = <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
-		};
-
 		target-module@42c01900 {
 			compatible = "ti,sysc-dra7-mcan", "ti,sysc";
 			ranges = <0x0 0x42c00000 0x2000>;
@@ -47,13 +40,36 @@
 				bosch,mram-cfg = <0x0 0 0 32 0 0 1 1>;
 			};
 		};
+
+		cal: cal@489b0000 {
+			compatible = "ti,dra76-cal";
+			ti,hwmods = "cal";
+			reg = <0x489B0000 0x400>,
+			      <0x489B0800 0x40>,
+			      <0x489B0900 0x40>;
+				reg-names = "cal_top",
+					    "cal_rx_core0",
+					    "cal_rx_core1";
+			interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
+			syscon-camerrx = <&scm_conf 0x6DC>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				csi2_0: port@0 {
+					reg = <0>;
+				};
+				csi2_1: port@1 {
+					reg = <1>;
+				};
+			};
+		};
 	};
 
-};
-
-/* MCAN interrupts are hard-wired to irqs 67, 68 */
-&crossbar_mpu {
-	ti,irqs-skip = <10 67 68 133 139 140>;
 };
 
 &scm_conf_clocks {

@@ -94,3 +94,18 @@
 		status = "okay";
 	};
 };
+
+&ov2659_1 {
+	remote-endpoint = <&vin4b_ep>;
+};
+
+&vin4b {
+	vin4b_ep: endpoint@3 {
+		slave-mode;
+		remote-endpoint = <&ov2659_1>;
+	};
+};
+
+&vip2 {
+	status = "okay";
+};
