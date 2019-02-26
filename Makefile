@@ -41,10 +41,14 @@ DTC_FLAGS += -Wno-unit_address_vs_reg
 #DTC Flags: v1.4.5
 #DTC_FLAGS += -Wno-pci_bridge
 #DTC_FLAGS += -Wno-pci_device_bus_num
-#DTC_FLAGS += -Wno-pci_device_reg
+DTC_FLAGS += -Wno-pci_device_reg
 #DTC_FLAGS += -Wno-phys_property
 #DTC_FLAGS += -Wno-simple_bus_reg
-#DTC_FLAGS += -Wno-unit_address_format
+DTC_FLAGS += -Wno-unit_address_format
+DTC_FLAGS += -Wno-unique_unit_address
+DTC_FLAGS += -Wno-avoid_unnecessary_addr_size
+DTC_FLAGS += -Wno-alias_paths
+DTC_FLAGS += -Wno-graph_child_address
 
 # Beautify output
 # ---------------------------------------------------------------------------
