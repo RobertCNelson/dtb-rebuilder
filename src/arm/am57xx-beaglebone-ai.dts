@@ -220,7 +220,7 @@
 	brcmf_pwrseq: brcmf_pwrseq {
 		compatible = "mmc-pwrseq-simple";
 		pinctrl-names = "default";
-		pinctrl-0 = <&brcmf_pwrseq_pins_default>;		
+		pinctrl-0 = <&brcmf_pwrseq_pins_default>;
 		reset-gpios = <&gpio3 22 GPIO_ACTIVE_LOW>,     // BT-REG-ON
 			<&gpio3 18 GPIO_ACTIVE_LOW>;   // WL-REG-ON
 	};
@@ -1076,4 +1076,3 @@
 	status = "okay";
 	clock-frequency = <400000>;
 };
-
