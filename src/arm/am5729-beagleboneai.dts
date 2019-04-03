@@ -286,6 +286,7 @@
 	brcmf_pwrseq_pins_default: brcmf_pwrseq_pins_default {
 		pinctrl-single,pins = <
 			DRA7XX_CORE_IOPAD(0x352c, PIN_OUTPUT_PULLUP | MUX_MODE14) /* AF3: vin1a_d14.gpio3_18 - WL_REG_ON */
+			DRA7XX_CORE_IOPAD(0x353c, PIN_OUTPUT_PULLUP | MUX_MODE14) /* AE5: vin1a_d18.gpio3_22 - BT_REG_ON */
 		>;
 	};
 
@@ -298,7 +299,6 @@
 			DRA7XX_CORE_IOPAD(0x345c, PIN_INPUT | MUX_MODE8) /* P5: vin1a_d23.uart6_rtsn - UART6_RTSN */
 			DRA7XX_CORE_IOPAD(0x3534, PIN_INPUT_PULLDOWN | MUX_MODE14) /* AF1: vin1a_d16.gpio3_20 - BT_HOST_WAKE */
 			DRA7XX_CORE_IOPAD(0x3538, PIN_OUTPUT_PULLDOWN | MUX_MODE14) /* AE3: vin1a_d6.gpio3_21 - BT_WAKE */
-			DRA7XX_CORE_IOPAD(0x353c, PIN_OUTPUT_PULLDOWN | MUX_MODE14) /* AE5: vin1a_d18.gpio3_22 - BT_REG_ON */
 		>;
 	};
 
@@ -922,6 +922,7 @@
 	pinctrl-0 = <&mmc4_pins_default &wifibt_extra_pins_default>;
 	pinctrl-1 = <&mmc4_pins_hs &wifibt_extra_pins_default>;
 
+	ti,needs-special-reset;
 	vmmc-supply = <&vdd_3v3>;
 	cap-power-off-card;
 	keep-power-in-suspend;
@@ -936,13 +937,13 @@
 	mmc-pwrseq = <&brcmf_pwrseq>;
 
 	brcmf: wifi@1 {
-		status = "disabled";
+		status = "okay";
 		reg = <1>;
 		compatible = "brcm,bcm4329-fmac";
 
 		//brcm,drive-strength = <10>;
-		//brcm,broken-sg-support;
-		brcm,sd-head-align = <4>;
+		//brcm,broken_sg_support;
+		brcm,sd_head_align = <4>;
 		brcm,sd_sgentry_align = <512>;
 
 		interrupt-parent = <&gpio3>;
