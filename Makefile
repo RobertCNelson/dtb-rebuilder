@@ -1,6 +1,7 @@
 
-DTC ?= /usr/bin/dtc-v4.1.x
+DTC ?= dtc
 CPP ?= cpp
+KERNEL_VERSION ?= $(shell uname -r)
 
 MAKEFLAGS += -rR --no-print-directory
 
@@ -30,6 +31,24 @@ endif
 ifndef KBUILD_VERBOSE
   KBUILD_VERBOSE = 0
 endif
+
+DTC_FLAGS += -Wno-unit_address_vs_reg
+#New DTC Flags for v1.4.5 (Debian 9.x (Buster))
+#DTC_FLAGS += -Wno-dmas_property
+#DTC_FLAGS += -Wno-gpios_property
+#DTC_FLAGS += -Wno-pwms_property
+#DTC_FLAGS += -Wno-interrupts_property
+#DTC Flags: v1.4.5
+#DTC_FLAGS += -Wno-pci_bridge
+#DTC_FLAGS += -Wno-pci_device_bus_num
+DTC_FLAGS += -Wno-pci_device_reg
+#DTC_FLAGS += -Wno-phys_property
+#DTC_FLAGS += -Wno-simple_bus_reg
+DTC_FLAGS += -Wno-unit_address_format
+DTC_FLAGS += -Wno-unique_unit_address
+DTC_FLAGS += -Wno-avoid_unnecessary_addr_size
+DTC_FLAGS += -Wno-alias_paths
+DTC_FLAGS += -Wno-graph_child_address
 
 # Beautify output
 # ---------------------------------------------------------------------------
@@ -138,8 +157,8 @@ all_arch: $(ARCH_DTB)
 
 PHONY += install_arch
 install_arch: $(ARCH_DTB)
-	mkdir -p /boot/dtbs/`uname -r`/
-	cp -v $(obj)/*.dtb /boot/dtbs/`uname -r`/
+	mkdir -p /boot/dtbs/$(KERNEL_VERSION)/
+	cp -v $(obj)/*.dtb /boot/dtbs/$(KERNEL_VERSION)/
 
 RCS_FIND_IGNORE := \( -name SCCS -o -name BitKeeper -o -name .svn -o -name CVS \
                    -o -name .pc -o -name .hg -o -name .git \) -prune -o

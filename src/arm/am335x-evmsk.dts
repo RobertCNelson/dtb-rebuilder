@@ -668,6 +668,7 @@
 	ti,non-removable;
 	bus-width = <4>;
 	cap-power-off-card;
+	keep-power-in-suspend;
 	pinctrl-names = "default";
 	pinctrl-0 = <&mmc2_pins>;
 
@@ -714,4 +715,8 @@
 	status = "okay";
 
 	blue-and-red-wiring = "crossed";
+};
+
+&sgx {
+	status = "okay";
 };

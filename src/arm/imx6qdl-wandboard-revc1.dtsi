@@ -11,24 +11,6 @@
 
 #include "imx6qdl-wandboard.dtsi"
 
-/ {
-	rfkill {
-		compatible = "wand,imx6qdl-wandboard-rfkill";
-		pinctrl-names = "default";
-		pinctrl-0 = <>;
-
-		bluetooth-on = <&gpio5 21 0>;
-		bluetooth-wake = <&gpio5 30 0>;
-		bluetooth-host-wake = <&gpio5 20 0>;
-
-		wifi-ref-on = <&gpio5 31 0>; /* Wifi Power Enable */
-		wifi-rst-n = <&gpio6 0 0>; /* WIFI_ON reset */
-		wifi-reg-on = <&gpio1 26 0>; /* WL_REG_ON */
-		wifi-host-wake = <&gpio1 29 0>; /* WL_HOST_WAKE */
-		wifi-wake = <&gpio1 30 0>; /* WL_WAKE */
-	};
-};
-
 &iomuxc {
 	pinctrl-0 = <&pinctrl_hog>;
 

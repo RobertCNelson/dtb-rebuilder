@@ -783,3 +783,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&dcan1_pins_default>;
 };
+
+&sgx {
+	status = "okay";
+};

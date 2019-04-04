@@ -16,6 +16,7 @@
 	interrupt-parent = <&wakeupgen>;
 	#address-cells = <1>;
 	#size-cells = <1>;
+	chosen { };
 
 	memory@0 {
 		device_type = "memory";
@@ -912,6 +913,20 @@
 			dma-names = "tx", "rx";
 		};
 
+		/*
+		 * The SGX is disabled by default because it is an optional
+		 * module and only some AM437x variants contain this module,
+		 * such as AM4378 and AM4379. The status should be overwritten
+		 * as "OK" at the corresponding board.dts.
+		 */
+		sgx: sgx@0x56000000 {
+			compatible = "ti,am4376-sgx530", "img,sgx530";
+			ti,hwmods = "gfx";
+			reg = <0x56000000 0x1000000>;
+			interrupts = <GIC_SPI 37 IRQ_TYPE_LEVEL_HIGH>;
+			status = "disabled";
+		};
+
 		rng: rng@48310000 {
 			compatible = "ti,omap4-rng";
 			ti,hwmods = "rng";
@@ -925,7 +940,8 @@
 			reg = <0x48038000 0x2000>,
 			      <0x46000000 0x400000>;
 			reg-names = "mpu", "dat";
-			interrupts = <80>, <81>;
+			interrupts = <GIC_SPI 80 IRQ_TYPE_LEVEL_HIGH>,
+				     <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
 			interrupt-names = "tx", "rx";
 			status = "disabled";
 			dmas = <&edma 8 2>,
@@ -939,7 +955,8 @@
 			reg = <0x4803C000 0x2000>,
 			      <0x46400000 0x400000>;
 			reg-names = "mpu", "dat";
-			interrupts = <82>, <83>;
+			interrupts = <GIC_SPI 82 IRQ_TYPE_LEVEL_HIGH>,
+				     <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
 			interrupt-names = "tx", "rx";
 			status = "disabled";
 			dmas = <&edma 10 2>,

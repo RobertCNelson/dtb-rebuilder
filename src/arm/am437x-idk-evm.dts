@@ -414,3 +414,7 @@
 &cpu {
 	cpu0-supply = <&tps>;
 };
+
+&sgx {
+	status = "okay";
+};
