@@ -18,7 +18,7 @@
 	#size-cells = <1>;
 	chosen { };
 
-	aliases {
+	aliases: aliases {
 		i2c0 = &i2c0;
 		i2c1 = &i2c1;
 		i2c2 = &i2c2;
@@ -1174,6 +1174,13 @@
 			ti,hwmods = "rng";
 			reg = <0x48310000 0x2000>;
 			interrupts = <111>;
+		};
+
+		sgx@0x56000000 {
+			compatible = "ti,sgx";
+			ti,hwmods = "gfx";
+			reg = <0x56000000 0x1000000>;
+			interrupts = <37>;
 		};
 	};
 };
