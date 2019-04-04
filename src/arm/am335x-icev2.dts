@@ -505,10 +505,6 @@
 	};
 };
 
-&pruss_soc_bus {
+&pruss {
 	status = "okay";
-
-	pruss: pruss@4a300000 {
-		status = "okay";
-	};
 };

@@ -1,17 +1,32 @@
-/*
- * Copyright 2013 Freescale Semiconductor, Inc.
- *
- * Author: Fabio Estevam <fabio.estevam@freescale.com>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
- *
- */
+// SPDX-License-Identifier: GPL-2.0
+//
+// Copyright 2013 Freescale Semiconductor, Inc.
+//
+// Author: Fabio Estevam <fabio.estevam@freescale.com>
 
 #include "imx6qdl-wandboard.dtsi"
 
 / {
+	rfkill {
+		compatible = "wand,imx6qdl-wandboard-rfkill";
+		pinctrl-names = "default";
+		pinctrl-0 = <>;
+
+		bluetooth-on = <&gpio5 30 0>;		/* BT_RST_N */
+		bluetooth-wake = <&gpio5 21 0>;		/* BT_WAKE */
+		bluetooth-host-wake = <&gpio5 20 0>;	/* BT_HOST_WAKE */
+
+		wifi-ref-on = <&gpio6 0 0>;		/* WIFI_ON: M4: CSI0_DAT14 */
+		wifi-reg-on = <&gpio1 26 0>;		/* WL_REG_ON: W22: ENET_RXD1 */
+		wifi-host-wake = <&gpio1 29 0>;		/* WL_HOST_WAKE: W20: ENET_TXD1 */
+
+		//HACK: use un-populated pins for missing rfkill pins, dont want to fix the driver...
+		//GPIO6_IO17 - SD3_DAT7
+		//GPIO6_IO18 - SD3_DAT6
+		wifi-rst-n = <&gpio6 17 0>;	/* NOT POPULATED */
+		wifi-wake = <&gpio6 18 0>;	/* NOT POPULATED */
+	};
+
 	reg_eth_phy: regulator-eth-phy {
 		compatible = "regulator-fixed";
 		regulator-name = "ETH_PHY";

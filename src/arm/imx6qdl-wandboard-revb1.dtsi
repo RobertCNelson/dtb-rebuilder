@@ -1,15 +1,28 @@
-/*
- * Copyright 2013 Freescale Semiconductor, Inc.
- *
- * Author: Fabio Estevam <fabio.estevam@freescale.com>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
- *
- */
+// SPDX-License-Identifier: GPL-2.0
+//
+// Copyright 2013 Freescale Semiconductor, Inc.
+//
+// Author: Fabio Estevam <fabio.estevam@freescale.com>
 
 #include "imx6qdl-wandboard.dtsi"
+
+/ {
+	rfkill {
+		compatible = "wand,imx6qdl-wandboard-rfkill";
+		pinctrl-names = "default";
+		pinctrl-0 = <>;
+
+		bluetooth-on = <&gpio3 13 0>;
+		bluetooth-wake = <&gpio3 14 0>;
+		bluetooth-host-wake = <&gpio3 15 0>;
+
+		wifi-ref-on = <&gpio2 29 0>;
+		wifi-rst-n = <&gpio5 2 0>;
+		wifi-reg-on = <&gpio1 26 0>;
+		wifi-host-wake = <&gpio1 29 0>;
+		wifi-wake = <&gpio1 30 0>;
+	};
+};
 
 &iomuxc {
 	pinctrl-0 = <&pinctrl_hog>;
@@ -36,6 +49,5 @@
 &usdhc2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usdhc2>;
-	non-removable;
 	status = "okay";
 };
