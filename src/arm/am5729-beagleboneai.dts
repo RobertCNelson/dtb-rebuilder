@@ -15,7 +15,8 @@
 #include <dt-bindings/pinctrl/dra.h>
 
 / {
-	compatible = "ti,am5728", "ti,dra742", "ti,dra74", "ti,dra7";
+	model = "BeagleBoard.org BeagleBone AI";
+	compatible = "beagleboard.org,am5729-beagleboneai", "ti,am5728", "ti,dra742", "ti,dra74", "ti,dra7";
 
 	aliases {
 		rtc0 = &tps659038_rtc;
@@ -222,7 +223,7 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&brcmf_pwrseq_pins_default>;
 		reset-gpios = <&gpio3 22 GPIO_ACTIVE_LOW>,     // BT-REG-ON
-			<&gpio3 18 GPIO_ACTIVE_LOW>;   // WL-REG-ON
+				<&gpio3 18 GPIO_ACTIVE_LOW>;   // WL-REG-ON
 	};
 
 	unused_pins: unused_pins {
@@ -285,6 +286,7 @@
 	brcmf_pwrseq_pins_default: brcmf_pwrseq_pins_default {
 		pinctrl-single,pins = <
 			DRA7XX_CORE_IOPAD(0x352c, PIN_OUTPUT_PULLUP | MUX_MODE14) /* AF3: vin1a_d14.gpio3_18 - WL_REG_ON */
+			DRA7XX_CORE_IOPAD(0x353c, PIN_OUTPUT_PULLUP | MUX_MODE14) /* AE5: vin1a_d18.gpio3_22 - BT_REG_ON */
 		>;
 	};
 
@@ -297,7 +299,6 @@
 			DRA7XX_CORE_IOPAD(0x345c, PIN_INPUT | MUX_MODE8) /* P5: vin1a_d23.uart6_rtsn - UART6_RTSN */
 			DRA7XX_CORE_IOPAD(0x3534, PIN_INPUT_PULLDOWN | MUX_MODE14) /* AF1: vin1a_d16.gpio3_20 - BT_HOST_WAKE */
 			DRA7XX_CORE_IOPAD(0x3538, PIN_OUTPUT_PULLDOWN | MUX_MODE14) /* AE3: vin1a_d6.gpio3_21 - BT_WAKE */
-			DRA7XX_CORE_IOPAD(0x353c, PIN_OUTPUT_PULLDOWN | MUX_MODE14) /* AE5: vin1a_d18.gpio3_22 - BT_REG_ON */
 		>;
 	};
 
@@ -779,14 +780,22 @@
 		id = <0>;
 		blocks = <0x5>;
 		irq-trigger = <0x1>;
+		st,mod-12b = <1>; /* 12-bit ADC */
+		st,ref-sel = <0>; /* internal ADC reference */
+		st,adc-freq = <1>; /* 3.25 MHz ADC clock speed */
+		st,sample-time = <4>; /* ADC converstion time: 80 clocks */
 
 		pinctrl-names = "default";
 		pinctrl-0 = <&adc_pins_default>;
 
+		stmpe_adc {
+			compatible = "st,stmpe-adc";
+			st,norequest-mask = <0x00>; /* mask any channels to be used by touchscreen */
+		};
+
 		stmpe_touchscreen {
+			status = "disabled";
 			compatible = "st,stmpe-ts";
-			/* 3.25 MHz ADC clock speed */
-			st,adc-freq = <1>;
 			/* 8 sample average control */
 			st,ave-ctrl = <3>;
 			/* 7 length fractional part in z */
@@ -796,12 +805,6 @@
 			 * current limit value
 			 */
 			st,i-drive = <1>;
-			/* 12-bit ADC */
-			st,mod-12b = <1>;
-			/* internal ADC reference */
-			st,ref-sel = <0>;
-			/* ADC converstion time: 80 clocks */
-			st,sample-time = <4>;
 			/* 1 ms panel driver settling time */
 			st,settling = <3>;
 			/* 5 ms touch detect interrupt delay */
@@ -915,10 +918,11 @@
 	/* DDR50: DDR up to 50 MHz (1.8 V signaling). */
 	status = "okay";
 
-	pinctrl-names = "default";
-	//pinctrl-0 = <&mmc4_pins_hs &wifibt_extra_pins_default>;
+	pinctrl-names = "default", "hs";
 	pinctrl-0 = <&mmc4_pins_default &wifibt_extra_pins_default>;
+	pinctrl-1 = <&mmc4_pins_hs &wifibt_extra_pins_default>;
 
+	ti,needs-special-reset;
 	vmmc-supply = <&vdd_3v3>;
 	cap-power-off-card;
 	keep-power-in-suspend;
@@ -926,7 +930,6 @@
 	ti,non-removable;
 	non-removable;
 	no-1-8-v;
-	//max-frequency = <50000000>;
 	max-frequency = <24000000>;
 
 	#address-cells = <1>;
@@ -940,7 +943,9 @@
 
 		//brcm,drive-strength = <10>;
 		//brcm,broken-sg-support;
+		//brcm,broken_sg_support;
 		brcm,sd-head-align = <4>;
+		brcm,sd_head_align = <4>;
 		brcm,sd_sgentry_align = <512>;
 
 		interrupt-parent = <&gpio3>;
@@ -972,11 +977,11 @@
 };
 
 &gpu {
-	status = "disabled";
+	status = "okay";
 };
 
 &bb2d {
-	status = "disabled";
+	status = "okay";
 };
 
 &dss {
@@ -1002,40 +1007,92 @@
 	status = "okay";
 };
 
+&mailbox1 {
+	status = "okay";
+};
+
+&mailbox2 {
+	status = "okay";
+};
+
+&mailbox3 {
+	status = "okay";
+};
+
+&mailbox4 {
+	status = "okay";
+};
+
 &mailbox5 {
 	status = "okay";
-	mbox_ipu1_ipc3x: mbox_ipu1_ipc3x {
-		status = "okay";
-	};
-	mbox_dsp1_ipc3x: mbox_dsp1_ipc3x {
-		status = "okay";
-	};
 };
 
 &mailbox6 {
 	status = "okay";
-	mbox_ipu2_ipc3x: mbox_ipu2_ipc3x {
-		status = "okay";
-	};
-	mbox_dsp2_ipc3x: mbox_dsp2_ipc3x {
-		status = "okay";
-	};
+};
+
+&mailbox7 {
+	status = "okay";
+};
+
+&mailbox8 {
+	status = "okay";
+};
+
+&mailbox9 {
+	status = "okay";
+};
+
+&mailbox10 {
+	status = "okay";
+};
+
+&mailbox11 {
+	status = "okay";
+};
+
+&mailbox12 {
+	status = "okay";
+};
+
+&mailbox13 {
+	status = "okay";
+};
+
+&ipu1 {
+	status = "okay";
+	memory-region = <&ipu1_memory_region>;
+};
+
+&ipu2 {
+	status = "okay";
+	memory-region = <&ipu2_memory_region>;
+};
+
+&dsp1 {
+	status = "okay";
+	memory-region = <&dsp1_memory_region>;
+};
+
+&dsp2 {
+	status = "okay";
+	memory-region = <&dsp2_memory_region>;
 };
 
 &pruss_soc_bus1 {
 	status = "okay";
+};
 
-	pruss1: pruss@4b200000 {
-		status = "okay";
-	};
+&pruss1 {
+	status = "okay";
 };
 
 &pruss_soc_bus2 {
 	status = "okay";
+};
 
-	pruss2: pruss@4b280000 {
-		status = "okay";
-	};
+&pruss2 {
+	status = "okay";
 };
 
 &cpu_alert0 {
@@ -1070,6 +1127,10 @@
 	status = "disabled";
 };
 
+/* bluetooth */
+&uart6 {
+	status = "okay";
+};
 
 /* cape header stuff */
 &i2c4 {
