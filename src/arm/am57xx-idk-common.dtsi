@@ -12,8 +12,6 @@
 	aliases {
 		rtc0 = &tps659038_rtc;
 		rtc1 = &rtc;
-		ethernet2 = &pruss2_emac0;
-		ethernet3 = &pruss2_emac1;
 	};
 
 	chosen {
@@ -99,45 +97,6 @@
 			label = "out7";
 			gpios = <&tpic2810 7 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
-		};
-	};
-
-	/* Dual-MAC Ethernet application node on PRU-ICSS2 */
-	pruss2_eth {
-		compatible = "ti,am57-prueth";
-		prus = <&pru2_0>, <&pru2_1>;
-		firmware-name = "ti-pruss/am57xx-pru0-prueth-fw.elf",
-				"ti-pruss/am57xx-pru1-prueth-fw.elf";
-		sram = <&ocmcram1>;
-		interrupt-parent = <&pruss2_intc>;
-		ti,pru-interrupt-map =  <0 42 0 0>, /* PORT1_RX_EOF_EVENT */
-					<0 20 2 2>, /* PRU_ARM_EVENT0 */
-					<0 22 4 4>, /* PRU_ARM_EVENT2 */
-					<0 41 7 8>, /* MII_LINK0_EVENT */
-
-					<1 54 1 1>, /* PORT2_RX_EOF_EVENT */
-					<1 21 3 3>, /* PRU_ARM_EVENT1 */
-					<1 23 5 5>, /* PRU_ARM_EVENT3 */
-					<1 53 8 9>; /* MII_LINK1_EVENT */
-		mii-rt = <&pruss2_mii_rt>;
-		iep = <&pruss2_iep>;
-
-		pruss2_emac0: ethernet-mii0 {
-			phy-handle = <&pruss2_eth0_phy>;
-			phy-mode = "mii";
-			interrupts = <20>, <22>;
-			interrupt-names = "rx", "tx";
-			/* Filled in by bootloader */
-			local-mac-address = [00 00 00 00 00 00];
-		};
-
-		pruss2_emac1: ethernet-mii1 {
-			phy-handle = <&pruss2_eth1_phy>;
-			phy-mode = "mii";
-			interrupts = <21>, <23>;
-			interrupt-names = "rx", "tx";
-			/* Filled in by bootloader */
-			local-mac-address = [00 00 00 00 00 00];
 		};
 	};
 };
@@ -532,27 +491,4 @@
 
 &cpu0 {
 	vdd-supply = <&smps12_reg>;
-};
-
-&pruss1 {
-	status = "okay";
-};
-
-&pruss2 {
-	status = "okay";
-};
-
-&pruss2_mdio {
-	status = "okay";
-	pruss2_eth0_phy: ethernet-phy@0 {
-		reg = <0>;
-		interrupt-parent = <&gpio3>;
-		interrupts = <30 IRQ_TYPE_EDGE_FALLING>;
-	};
-
-	pruss2_eth1_phy: ethernet-phy@1 {
-		reg = <1>;
-		interrupt-parent = <&gpio3>;
-		interrupts = <31 IRQ_TYPE_EDGE_FALLING>;
-	};
 };
